@@ -1,0 +1,13 @@
+:root{
+  --container: 1280px;
+
+  /* Colores (se llenan desde Zeplin) */
+  --c-bg: #ffffff;
+  --c-text: #111111;
+  --c-primary: #f5c400;
+  --c-muted: #6b7280;
+
+  /* Tipografía */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --radius: 12px;
+}
