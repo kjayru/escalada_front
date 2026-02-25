@@ -142,12 +142,10 @@
     </section>
 
     <!-- Mountain Pre-Footer -->
-    <section class="mountain-prefooter relative overflow-hidden" style="min-height: 675px;">
-      <img src="/images/potrero-1.png" alt="Sierra Madre" class="absolute inset-0 w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-black/30"></div>
-      <div class="relative z-10 flex flex-col items-center justify-center py-24 px-4 text-center" style="min-height: 675px;">
-        <img src="/images/logoescalada.svg" alt="Escalada Libre" class="w-40 lg:w-52 mb-8 filter brightness-0 invert" />
-        <h2 class="text-4xl lg:text-6xl font-bold text-white mb-8 tracking-wider">¡GRACIAS POR TU APOYO!</h2>
+    <section class="mountain-prefooter" style="min-height: 675px;">
+      <div class="flex flex-col items-center justify-center py-24 px-4 text-center" style="min-height: 675px;">
+        <img src="/images/logoescalada.svg" alt="Escalada Libre" class="w-40 lg:w-52 mb-8" />
+        <h2 class="text-4xl lg:text-6xl font-bold text-[#1a1a1a] mb-8 tracking-wider">¡GRACIAS POR TU APOYO!</h2>
         <NuxtLink
           to="/como-apoyar"
           class="px-10 py-4 bg-[#F8C52D] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#e0b525] transition-colors"
