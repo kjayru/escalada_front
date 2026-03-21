@@ -11,24 +11,11 @@
         <!-- Grid de navegación -->
         <div class="grid grid-cols-2 md:grid-cols-4 py-8 gap-y-3">
 
-          <div class="flex flex-col gap-2">
-            <NuxtLink to="/" class="footer-nav-link">Home</NuxtLink>
-            <NuxtLink to="/nosotros" class="footer-nav-link">Nosotros</NuxtLink>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <NuxtLink to="/actividades" class="footer-nav-link">Actividades</NuxtLink>
-            <NuxtLink to="/historia" class="footer-nav-link">Historia</NuxtLink>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <NuxtLink to="/como-apoyar" class="footer-nav-link">Cómo apoyar</NuxtLink>
-            <NuxtLink to="/blog" class="footer-nav-link">Blog</NuxtLink>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <NuxtLink to="/transparencia" class="footer-nav-link">Transparencia</NuxtLink>
-            <NuxtLink to="/contacto" class="footer-nav-link">Contacto</NuxtLink>
+          <div v-for="(col, i) in footerColumns" :key="i" class="flex flex-col gap-2">
+            <template v-for="item in col" :key="item.id">
+              <a v-if="isExternal(item.url)" :href="item.url" target="_blank" rel="noopener noreferrer" class="footer-nav-link">{{ item.label }}</a>
+              <NuxtLink v-else :to="item.url" class="footer-nav-link">{{ item.label }}</NuxtLink>
+            </template>
           </div>
 
         </div>
@@ -52,6 +39,42 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import type { MenuItem } from '~/types/api'
+
+const api = useApi()
+const { data: footerMenu } = await useAsyncData('footer-menu', () =>
+  api.menus.getByName('footer').catch(() => null)
+)
+
+const fallbackItems: MenuItem[] = [
+  { id: 1, label: 'Home',          url: '/',             sort_order: 1, children: [] },
+  { id: 2, label: 'Actividades',   url: '/actividades',  sort_order: 2, children: [] },
+  { id: 3, label: 'Cómo apoyar',   url: '/como-apoyar',  sort_order: 3, children: [] },
+  { id: 4, label: 'Transparencia', url: '/transparencia',sort_order: 4, children: [] },
+  { id: 5, label: 'Nosotros',      url: '/nosotros',     sort_order: 5, children: [] },
+  { id: 6, label: 'Historia',      url: '/historia',     sort_order: 6, children: [] },
+  { id: 7, label: 'Blog',          url: '/blog',         sort_order: 7, children: [] },
+  { id: 8, label: 'Contacto',      url: '/contacto',     sort_order: 8, children: [] },
+]
+
+const footerItems = computed<MenuItem[]>(() =>
+  footerMenu.value?.items?.length ? footerMenu.value.items : fallbackItems
+)
+
+// Dividir en 4 columnas (distribuidas uniformemente)
+const footerColumns = computed(() => {
+  const items = footerItems.value
+  const cols = 4
+  const perCol = Math.ceil(items.length / cols)
+  const result: MenuItem[][] = []
+  for (let i = 0; i < items.length; i += perCol) {
+    result.push(items.slice(i, i + perCol))
+  }
+  return result
+})
+
+const isExternal = (url: string) => url.startsWith('http')
 </script>
 
 <style scoped>

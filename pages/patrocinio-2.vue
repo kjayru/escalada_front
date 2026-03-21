@@ -4,8 +4,8 @@
     <!-- Logo del patrocinador -->
     <section class="bg-white pt-16 pb-10 lg:pt-20 lg:pb-12 flex justify-center">
       <img
-        src="/images/exposure.png"
-        alt="Exposure Industria Montaña"
+        :src="sponsorLogoSrc"
+        :alt="sponsor?.name ?? 'Patrocinador'"
         class="h-[94px] w-auto object-contain"
       />
     </section>
@@ -81,7 +81,9 @@
               <!-- Botón CTA -->
               <div>
                 <a
-                  href="#"
+                  :href="sponsorUrl"
+                  :target="sponsorUrl !== '#' ? '_blank' : undefined"
+                  :rel="sponsorUrl !== '#' ? 'noopener noreferrer' : undefined"
                   class="inline-block px-10 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm tracking-widest hover:bg-[#e0b525] transition-colors"
                 >
                   COMPRAR AQUÍ
@@ -252,8 +254,15 @@ useSeoMeta({
   description: 'El Aspect Pro de Exposure, diseñado para misiones a tope, grandes días en el valle y altos picos alpinos. Patrocinador oficial de Escalada Libre México A.C.',
 })
 
-const imagenActiva = ref(0)
+const api = useApi()
+const { data: sponsors } = await useAsyncData('sponsor-page-2', () =>
+  api.sponsors.getAll().catch(() => [])
+)
+const sponsor = computed(() => sponsors.value?.[0] ?? null)
+const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? '/images/exposure.png')
+const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
 
+const imagenActiva = ref(0)
 const imagenActual = computed(() => imagenes[imagenActiva.value] ?? imagenes[0]!)
 
 const imagenes = [

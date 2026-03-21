@@ -4,35 +4,21 @@
       <nav class="flex items-center justify-between py-4 lg:py-6">
         <!-- Logo -->
         <NuxtLink to="/" class="logo flex items-center gap-3 group">
-          <img src="/logo.svg" alt="Escalada Libre A.C." class="h-12 w-auto" />
-          <div class="hidden sm:block">
-            <div class="text-sm font-bold text-gray-900 tracking-wide">ESCALADA</div>
-            <div class="text-sm font-bold text-gray-900 tracking-wide">LIBRE A.C.</div>
-          </div>
+          <img src="/images/logoescalada.svg" alt="Escalada Libre A.C." class="h-12 w-auto" />
+         
         </NuxtLink>
         
         <!-- Desktop Navigation -->
         <ul class="nav-menu hidden lg:flex items-center gap-8">
-          <li>
-            <NuxtLink to="/" class="nav-link">Inicio</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/nosotros" class="nav-link">Nosotros</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/actividades" class="nav-link">Actividades</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/historia" class="nav-link">Historia</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/blog" class="nav-link">Blog</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/transparencia" class="nav-link">Transparencia</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/contacto" class="nav-link">Contacto</NuxtLink>
+          <li v-for="item in mainMenuItems" :key="item.id">
+            <a
+              v-if="isExternalUrl(item.url)"
+              :href="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="nav-link"
+            >{{ item.label }}</a>
+            <NuxtLink v-else :to="item.url" class="nav-link">{{ item.label }}</NuxtLink>
           </li>
           <li>
             <NuxtLink 
@@ -63,68 +49,21 @@
       <Transition name="mobile-menu">
         <div v-if="mobileMenuOpen" class="lg:hidden pb-4 border-t border-gray-200 mt-4">
           <ul class="space-y-2 pt-4">
-            <li>
-              <NuxtLink 
-                to="/" 
+            <li v-for="item in mainMenuItems" :key="item.id">
+              <a
+                v-if="isExternalUrl(item.url)"
+                :href="item.url"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="mobile-nav-link"
                 @click="mobileMenuOpen = false"
-              >
-                Inicio
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/nosotros" 
+              >{{ item.label }}</a>
+              <NuxtLink
+                v-else
+                :to="item.url"
                 class="mobile-nav-link"
                 @click="mobileMenuOpen = false"
-              >
-                Nosotros
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/actividades" 
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >
-                Actividades
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/historia" 
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >
-                Historia
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/blog" 
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >
-                Blog
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/transparencia" 
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >
-                Transparencia
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink 
-                to="/contacto" 
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >
-                Contacto
-              </NuxtLink>
+              >{{ item.label }}</NuxtLink>
             </li>
             <li class="pt-2">
               <NuxtLink 
@@ -146,15 +85,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import type { MenuItem } from '~/types/api'
 
 const mobileMenuOpen = ref(false)
-
-// Close mobile menu on route change
 const route = useRoute()
-watch(() => route.path, () => {
-  mobileMenuOpen.value = false
-})
+watch(() => route.path, () => { mobileMenuOpen.value = false })
+
+const api = useApi()
+const { data: menu } = await useAsyncData('main-menu', () =>
+  api.menus.getByName('main').catch(() => null)
+)
+
+const fallbackItems: MenuItem[] = [
+  { id: 1, label: 'Inicio', url: '/', sort_order: 1, children: [] },
+  { id: 2, label: 'Nosotros', url: '/nosotros', sort_order: 2, children: [] },
+  { id: 3, label: 'Actividades', url: '/actividades', sort_order: 3, children: [] },
+  { id: 4, label: 'Historia', url: '/historia', sort_order: 4, children: [] },
+  { id: 5, label: 'Blog', url: '/blog', sort_order: 5, children: [] },
+  { id: 6, label: 'Transparencia', url: '/transparencia', sort_order: 6, children: [] },
+  { id: 7, label: 'Contacto', url: '/contacto', sort_order: 7, children: [] },
+]
+
+const mainMenuItems = computed<MenuItem[]>(() =>
+  menu.value?.items?.length ? menu.value.items : fallbackItems
+)
+
+const isExternalUrl = (url: string) => url.startsWith('http')
 </script>
 
 <style scoped>

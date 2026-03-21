@@ -15,10 +15,10 @@
     <section class="py-20 lg:py-28 bg-white">
       <div class="max-w-[860px] mx-auto px-8 lg:px-12">
         <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-8">
-          ¿Por qué donar? Porque creemos en la montaña y en su comunidad
+          {{ mainCampaign?.name ?? '¿Por qué donar? Porque creemos en la montaña y en su comunidad' }}
         </h1>
         <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed">
-          Las donaciones hacen posible que la escalada en México siga creciendo de forma segura, responsable y con respeto al entorno. Gracias al apoyo de personas como tú, podemos reequipar rutas, instalar señalética, ofrecer talleres, fortalecer la relación con comunidades locales y proteger las zonas de escalada. Cada aporte, grande o pequeño, es una forma de cuidar lo que amamos y asegurar que futuras generaciones también puedan disfrutarlo. Tu donativo no solo apoya un deporte: impulsa un movimiento.
+          {{ mainCampaign?.description ?? 'Las donaciones hacen posible que la escalada en Costa Rica siga creciendo de forma segura, responsable y con respeto al entorno. Cada aporte, grande o pequeño, es una forma de cuidar lo que amamos.' }}
         </p>
       </div>
     </section>
@@ -33,7 +33,7 @@
             Cómo nos puedes apoyar
           </h2>
           <p class="text-base lg:text-lg text-[#6A6867] mt-3">
-            Existen cuatro maneras en las que puedes apoyarnos:
+            {{ campaignSubtitle }}
           </p>
         </div>
 
@@ -51,16 +51,16 @@
             <div class="flex flex-col lg:flex-row flex-1">
               <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
                 <img
-                  src="/images/patrocinador1.png"
-                  alt="Donar por PayPal"
+                  :src="paypalMethod?.image ?? '/images/patrocinador1.png'"
+                  :alt="paypalMethod?.title ?? 'Donar por PayPal'"
                   class="w-full h-full object-cover"
                   style="min-height: 400px;"
                 />
               </div>
               <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">Por paypal</h3>
+                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ paypalMethod?.title ?? 'Por paypal' }}</h3>
                 <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  Desde nuestro sitio web, puedes realizar tu donación por medio de Paypal.
+                  {{ paypalMethod?.body ?? 'Desde nuestro sitio web, puedes realizar tu donación por medio de Paypal.' }}
                 </p>
                 <div>
                   <NuxtLink
@@ -85,16 +85,16 @@
             <div class="flex flex-col lg:flex-row flex-1">
               <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
                 <img
-                  src="/images/patrocinador2.png"
-                  alt="Transferencia interbancaria"
+                  :src="bankMethod?.image ?? '/images/patrocinador2.png'"
+                  :alt="bankMethod?.title ?? 'Transferencia interbancaria'"
                   class="w-full h-full object-cover"
                   style="min-height: 400px;"
                 />
               </div>
               <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">Transferencia interbancaria</h3>
+                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ bankMethod?.title ?? 'Transferencia interbancaria' }}</h3>
                 <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  Puedes realizar transferencia con los datos que te compartimos.
+                  {{ bankMethod?.body ?? 'Puedes realizar transferencia con los datos que te compartimos.' }}
                 </p>
                 <div>
                   <NuxtLink
@@ -119,21 +119,24 @@
             <div class="flex flex-col lg:flex-row flex-1">
               <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
                 <img
-                  src="/images/img-20200308-wa-00051.png"
-                  alt="Donar en gyms"
+                  :src="gymMethod?.image ?? '/images/img-20200308-wa-00051.png'"
+                  :alt="gymMethod?.title ?? 'Donar en gyms'"
                   class="w-full h-full object-cover"
                   style="min-height: 400px;"
                 />
               </div>
               <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">Gyms</h3>
+                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ gymMethod?.title ?? 'Gyms' }}</h3>
                 <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  Puedes acudir a cualquiera de los gimnasios que nos apoyan.
+                  {{ gymMethod?.body ?? 'Puedes acudir a cualquiera de los gimnasios que nos apoyan.' }}
                 </p>
                 <div>
-                  <button class="px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider">
+                  <NuxtLink
+                    to="/como-apoyar/gyms"
+                    class="px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider inline-block"
+                  >
                     VER LISTADO DE GYMS
-                  </button>
+                  </NuxtLink>
                 </div>
               </div>
             </div>
@@ -150,16 +153,16 @@
             <div class="flex flex-col lg:flex-row flex-1">
               <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
                 <img
-                  src="/images/pico-norte-1.png"
-                  alt="Comprar productos Escalada Libre"
+                  :src="productMethod?.image ?? '/images/pico-norte-1.png'"
+                  :alt="productMethod?.title ?? 'Comprar productos Escalada Libre'"
                   class="w-full h-full object-cover"
                   style="min-height: 400px;"
                 />
               </div>
               <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">Comprando nuestros productos</h3>
+                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ productMethod?.title ?? 'Comprando nuestros productos' }}</h3>
                 <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  También nos puedes apoyar comprando productos de Escalada Libre.
+                  {{ productMethod?.body ?? 'También nos puedes apoyar comprando productos de Escalada Libre.' }}
                 </p>
                 <div>
                   <NuxtLink
@@ -294,8 +297,35 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import type { SupportMethod } from '~/types/api'
+
+const api = useApi()
+
+const { data: campaign } = await useAsyncData('support-campaign-como-apoyar',
+  () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null)
+)
+
+const methods = computed(() => campaign.value?.methods ?? [])
+
+const methodByType = (type: string): SupportMethod | undefined =>
+  methods.value.find((m) => m.type === type)
+
+const paypalMethod  = computed(() => methodByType('paypal'))
+const bankMethod    = computed(() => methodByType('transfer'))
+const gymMethod     = computed(() => methodByType('gyms'))
+const productMethod = computed(() => methodByType('products'))
+
+const mainCampaign = computed(() => campaign.value)
+
+const campaignSubtitle = computed(() =>
+  methods.value.length
+    ? `${methods.value.length} maneras de apoyarnos`
+    : 'Existen cuatro maneras en las que puedes apoyarnos:'
+)
+
 useSeoMeta({
   title: 'Cómo apoyar - Escalada Libre',
-  description: 'Descubre cómo puedes apoyar a Escalada Libre México A.C. a través de donaciones, transferencias, gyms o comprando nuestros productos.',
+  description: 'Descubre cómo puedes apoyar a Escalada Libre Costa Rica a través de donaciones, transferencias, gyms o comprando nuestros productos.',
 })
 </script>

@@ -15,21 +15,20 @@
     <section class="mosaic-section bg-white">
       <div class="mosaic-grid">
 
-        <!-- Left tall photo -->
+        <!-- Left tall photo (pos 0) -->
         <div class="mosaic-left-tall">
           <img
-            src="/images/n-1.png"
-            alt="Actividades de escalada"
+            :src="mosaicImg(0)"
+            :alt="mosaicAlt(0)"
             class="w-full h-full object-cover"
           />
         </div>
 
         <!-- Center top: title + text -->
         <div class="mosaic-center-text flex flex-col items-center justify-center px-8 py-12 text-center">
-          <h1 class="text-3xl lg:text-[35px] font-medium text-[#6A6867] mb-4">Actividades</h1>
-          <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed max-w-xs mb-8">
-            Listado de actividades enfocadas en el cuidado, la seguridad y el disfrute responsable de las áreas de montaña.
-          </p>
+          <h1 class="text-3xl lg:text-[35px] font-medium text-[#6A6867] mb-4">{{ introTitle }}</h1>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed max-w-xs mb-8" v-html="introDesc"></p>
           <a
             href="#cronologia"
             class="inline-block px-8 py-3 border border-[#6A6867] text-[#6A6867] font-medium hover:bg-[#6A6867] hover:text-white transition-colors text-sm"
@@ -38,74 +37,74 @@
           </a>
         </div>
 
-        <!-- Top-right photo -->
+        <!-- Top-right photo (pos 1) -->
         <div class="mosaic-top-right">
           <img
-            src="/images/img-20200308-wa-00051.png"
-            alt="Actividad escalada"
+            :src="mosaicImg(1)"
+            :alt="mosaicAlt(1)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Center-left photo -->
+        <!-- Center-left photo (pos 2) -->
         <div class="mosaic-center-left">
           <img
-            src="/images/reforestacion-casualas-1.png"
-            alt="Actividad al aire libre"
+            :src="mosaicImg(2)"
+            :alt="mosaicAlt(2)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Center-right photo -->
+        <!-- Center-right photo (pos 3) -->
         <div class="mosaic-center-right">
           <img
-            src="/images/huasteca-41.png"
-            alt="Montaña escalada"
+            :src="mosaicImg(3)"
+            :alt="mosaicAlt(3)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Far-right tall photo -->
+        <!-- Far-right tall photo (pos 4) -->
         <div class="mosaic-right-tall">
           <img
-            src="/images/potrero-1.png"
-            alt="Escalada en roca"
+            :src="mosaicImg(4)"
+            :alt="mosaicAlt(4)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Bottom-left photo -->
+        <!-- Bottom-left photo (pos 5) -->
         <div class="mosaic-bottom-left">
           <img
-            src="/images/slide1.png"
-            alt="Comunidad de escalada"
+            :src="mosaicImg(5)"
+            :alt="mosaicAlt(5)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Bottom-center photo -->
+        <!-- Bottom-center photo (pos 6) -->
         <div class="mosaic-bottom-center">
           <img
-            src="/images/patrocinador1.png"
-            alt="Equipo escalada"
+            :src="mosaicImg(6)"
+            :alt="mosaicAlt(6)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Bottom-center-right photo -->
+        <!-- Bottom-center-right photo (pos 7) -->
         <div class="mosaic-bottom-center-right">
           <img
-            src="/images/patrocinador2.png"
-            alt="Escalada libre actividad"
+            :src="mosaicImg(7)"
+            :alt="mosaicAlt(7)"
             class="w-full h-full object-cover"
           />
         </div>
 
-        <!-- Bottom-right fill photo -->
+        <!-- Bottom-right fill photo (pos 8) -->
         <div class="mosaic-bottom-right-fill">
           <img
-            src="/images/unrioenelrio-home-1.png"
-            alt="Escalada historia"
+            :src="mosaicImg(8)"
+            :alt="mosaicAlt(8)"
             class="w-full h-full object-cover"
           />
         </div>
@@ -155,18 +154,23 @@
               <ul class="divide-y divide-gray-100">
                 <li
                   v-for="activity in year.activities"
-                  :key="activity.name"
+                  :key="activity.id"
                   class="flex items-center justify-between px-4 lg:px-20 py-4 hover:bg-gray-50 transition-colors"
                 >
                   <span class="text-base lg:text-lg text-[#6A6867]">{{ activity.name }}</span>
-                  <button
+                  <a
+                    v-if="activity.file"
+                    :href="activity.file.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="flex-shrink-0 ml-4 w-8 h-8 flex items-center justify-center text-[#6A6867] hover:text-[#F8C52D] transition-colors"
                     :aria-label="`Descargar ${activity.name}`"
+                    download
                   >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -248,44 +252,86 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+const api = useApi()
 
+const { data: page } = await useAsyncData('page-actividades', () =>
+  api.pages.getBySlug('actividades').catch(() => null),
+)
+const { data: allActivities } = await useAsyncData('activities', () =>
+  api.activities.getAll(),
+)
+
+// SEO
 useSeoMeta({
-  title: 'Actividades - Escalada Libre',
-  description: 'Listado de actividades enfocadas en el cuidado, la seguridad y el disfrute responsable de las áreas de montaña.',
+  title: page.value?.seo_title ?? 'Actividades - Escalada Libre',
+  description:
+    page.value?.seo_description ??
+    'Listado de actividades enfocadas en el cuidado, la seguridad y el disfrute responsable de las áreas de montaña.',
 })
 
-const openYear = ref<string>('2018')
+// Galería dinámica del mosaico
+const gallerySection = computed(() =>
+  page.value?.sections?.find(s => s.type === 'gallery'),
+)
+const galleryImages = computed(() => gallerySection.value?.media ?? [])
+
+const MOSAIC_FALLBACKS = [
+  '/images/n-1.png',
+  '/images/img-20200308-wa-00051.png',
+  '/images/reforestacion-casualas-1.png',
+  '/images/huasteca-41.png',
+  '/images/potrero-1.png',
+  '/images/slide1.png',
+  '/images/patrocinador1.png',
+  '/images/patrocinador2.png',
+  '/images/unrioenelrio-home-1.png',
+]
+
+const mosaicImg = (i: number) =>
+  galleryImages.value[i]?.url ?? MOSAIC_FALLBACKS[i] ?? ''
+const mosaicAlt = (i: number) =>
+  galleryImages.value[i]?.alt || 'Actividades de escalada'
+
+// Intro text desde CMS (sección tipo 'text' o settings.key='intro')
+const introSection = computed(() =>
+  page.value?.sections?.find(
+    s => s.settings?.key === 'intro' || s.type === 'text',
+  ),
+)
+const introTitle = computed(() => introSection.value?.heading ?? 'Actividades')
+const introDesc = computed(
+  () =>
+    introSection.value?.body ??
+    'Listado de actividades enfocadas en el cuidado, la seguridad y el disfrute responsable de las áreas de montaña.',
+)
+
+// Cronología: agrupadas por año desde la API /activities
+const years = computed(() => {
+  if (!allActivities.value?.length) return []
+  
+  const grouped: Record<number, NonNullable<typeof allActivities.value>> = {}
+  
+  for (const activity of allActivities.value) {
+    if (!grouped[activity.year]) {
+      grouped[activity.year] = []
+    }
+    grouped[activity.year]!.push(activity)
+  }
+  
+  // Ordenar años descendente y actividades por orden ascendente
+  return Object.entries(grouped)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, activities]) => ({
+      year,
+      activities: activities.sort((a, b) => a.order - b.order),
+    }))
+})
+
+const openYear = ref<string>(years.value[0]?.year ?? '')
 
 const toggleYear = (year: string) => {
   openYear.value = openYear.value === year ? '' : year
 }
-
-const years = [
-  {
-    year: '2018',
-    activities: [
-      { name: 'Instalación letrero Médicos' },
-      { name: 'Requipado Surf Bowl' },
-      { name: 'Competencia Mad Complex' },
-      { name: 'Reequipado Cazuelas' },
-      { name: 'Clínica de Multilargos' },
-      { name: 'Tensa Fest 2019' },
-      { name: 'Reinstalación de Letrero Médicos' },
-      { name: 'Primera reunión CONANP' },
-      { name: 'Mantenimiento Ruta Mundito' },
-      { name: 'Tercera reunión CONANP' },
-      { name: 'Limpieza Acantilados Santiago' },
-      { name: 'Reequipado Club Mex' },
-    ],
-  },
-  { year: '2019', activities: [] },
-  { year: '2020', activities: [] },
-  { year: '2021', activities: [] },
-  { year: '2022', activities: [] },
-  { year: '2023', activities: [] },
-  { year: '2024', activities: [] },
-]
 </script>
 
 <style scoped>

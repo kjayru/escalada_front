@@ -5,8 +5,8 @@
       <!-- Background Image -->
       <div class="hero-image absolute inset-0 z-0">
         <img 
-          src="/images/huasteca-41.png" 
-          alt="La Huasteca - Escalada en México"
+          :src="heroImage"
+          :alt="heroLocation"
           class="w-full h-full object-cover"
         />
       </div>
@@ -35,12 +35,12 @@
           <!-- Small Title -->
           <div class="flex items-center gap-3 mb-6">
             <div class="w-12 h-px bg-white"></div>
-            <span class="text-white text-sm font-medium tracking-[0.3em] uppercase">ESCALADA LIBRE</span>
+            <span class="text-white text-sm font-medium tracking-[0.3em] uppercase">{{ heroLabel }}</span>
           </div>
           
           <!-- Main Title -->
           <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-white mb-8 leading-tight">
-            Proteger, conservar y promover la escalada en México.
+            {{ heroTitle }}
           </h1>
         </div>
       </div>
@@ -59,7 +59,7 @@
       <!-- Location Tag - Fixed Bottom Right -->
       <div class="absolute bottom-8 right-8 z-20 hidden lg:block">
         <div class="text-white text-sm font-medium tracking-wider px-4 py-2 border border-white/30 backdrop-blur-sm rounded">
-          La Huasteca
+          {{ heroLocation }}
         </div>
       </div>
     </section>
@@ -72,9 +72,7 @@
         <div class="absolute top-0 left-0 right-0 z-30 bg-gray-50 pt-16 lg:pt-20 pb-16 lg:pb-20">
           <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center">
-              <p class="text-xl lg:text-2xl text-gray-600 leading-relaxed">
-                Somos ciudadanos con interés en beneficiar las actividades recreativas de montaña.
-              </p>
+              <p class="text-xl lg:text-2xl text-gray-600 leading-relaxed" v-html="introText"></p>
             </div>
           </div>
         </div>
@@ -82,7 +80,7 @@
         <!-- Sky Layer -->
         <div class="parallax-sky absolute inset-0 z-0">
           <img 
-            src="/images/hg.png" 
+            :src="parallaxSkyImage"
             alt="Cielo"
             class="w-full h-full object-cover"
           />
@@ -91,8 +89,8 @@
         <!-- Mountain Layer -->
         <div class="parallax-mountain absolute bottom-0 left-0 right-0 z-10 h-[70%]">
           <img 
-            src="/images/potrero-1.png" 
-            alt="El Potrero Chico"
+            :src="parallaxMountainImage"
+            :alt="parallaxLocation"
             class="w-full h-full object-cover object-bottom"
           />
         </div>
@@ -100,7 +98,7 @@
         <!-- Location Tag -->
         <div class="absolute bottom-8 right-8 z-20">
           <div class="text-white text-sm font-medium tracking-wider px-4 py-2 bg-black/30 backdrop-blur-sm rounded">
-            El Potrero Chico, Hidalgo N.L. México
+            {{ parallaxLocation }}
           </div>
         </div>
       </div>
@@ -113,11 +111,9 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl mx-auto text-center">
             <h2 class="text-3xl lg:text-4xl font-normal text-gray-800 mb-6 leading-snug">
-              Contribuimos al cuidado de los Ecosistemas Terrestres;
+              {{ conservacionTitle }}
             </h2>
-            <p class="text-base lg:text-lg text-gray-600 leading-relaxed">
-              Una Vida Sana, el Desarrollo de Sociedades Pacificas, el Desarrollo de los Pueblos y el Desarrollo Sustentable mediante la elaboración de planes y programas para la protección y mantenimiento de las áreas donde es posible su práctica.
-            </p>
+            <p class="text-base lg:text-lg text-gray-600 leading-relaxed" v-html="conservacionBody"></p>
           </div>
         </div>
       </div>
@@ -125,52 +121,52 @@
       <!-- Image -->
       <div class="relative h-[500px] lg:h-[700px] overflow-hidden">
         <img 
-          src="/images/n-1.png" 
-          alt="El Salto, Coahuila"
+          :src="conservacionImage"
+          :alt="conservacionLocation"
           class="w-full h-full object-cover"
         />
         
         <!-- Location Tag -->
         <div class="absolute bottom-8 left-8 z-20">
           <div class="text-white text-sm font-medium tracking-wider px-4 py-2 bg-black/30 backdrop-blur-sm rounded">
-            El Salto, Coahuila de Zaragoza, Santiago N.L. México
+            {{ conservacionLocation }}
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 01 - Nosotros -->
-    <section class="nosotros-section py-16 lg:py-24 bg-white">
+    <!-- Secciones destacadas 01/02/03 -->
+    <section
+      v-for="(item, idx) in featuredSections"
+      :key="item.num"
+      :class="['py-16 lg:py-24', idx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+    >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <!-- Text Content -->
-          <div class="relative h-[500px] lg:h-[600px]">
-            <!-- Big Number Background -->
+          <!-- Contenido de texto -->
+          <div :class="['relative h-[500px] lg:h-[600px]', idx % 2 !== 0 ? 'order-last' : '']">            <!-- Número de fondo -->
             <div class="absolute top-0 left-0 text-[240px] font-bold text-gray-200 leading-none select-none">
-              01
+              {{ item.num }}
             </div>
-            
-            <!-- Tag -->
+            <!-- Etiqueta -->
             <div class="absolute top-[120px] left-[60px] flex items-center gap-4">
               <div class="w-[80px] h-[3px] bg-[#F8C52D]"></div>
-              <span class="text-[#F8C52D] text-[18px] font-medium tracking-[6px] uppercase">
-                NOSOTROS
-              </span>
+              <span class="text-[#F8C52D] text-[18px] font-medium tracking-[6px] uppercase">{{ item.tag }}</span>
             </div>
-            
-            <!-- Title -->
-            <h2 class="absolute top-[160px] left-[60px] right-0 text-[40px] font-normal text-[#6A6867] leading-tight max-w-[500px]">
-              Protegemos las montañas y a la comunidad.
-            </h2>
-            
-            <!-- Description -->
+            <!-- Título -->
+            <NuxtLink
+              :to="item.link"
+              class="absolute top-[160px] left-[60px] right-0 text-[40px] font-normal text-[#6A6867] leading-tight max-w-[500px] block hover:text-gray-900 transition-colors cursor-pointer"
+            >
+              <h2>{{ item.title }}</h2>
+            </NuxtLink>
+            <!-- Descripción -->
             <p class="absolute top-[320px] left-[60px] right-0 text-[20px] font-normal text-[#6A6867] leading-[35px] max-w-[500px]">
-              Somos un grupo de deportistas del Noreste de México con interés en beneficiar, de manera segura y sustentable, al fomento del montañismo y escalada en sus diferentes modalidades
+              {{ item.body }}
             </p>
-            
-            <!-- Link -->
-            <NuxtLink 
-              to="/nosotros"
+            <!-- Enlace -->
+            <NuxtLink
+              :to="item.link"
               class="absolute top-[470px] left-[60px] inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
             >
               Ver más
@@ -179,120 +175,9 @@
               </svg>
             </NuxtLink>
           </div>
-          
-          <!-- Image -->
-          <div class="order-first lg:order-last">
-            <img 
-              src="/images/img-20200308-wa-00051.png" 
-              alt="Escalada Libre equipamiento"
-              class="w-full h-auto"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 02 - Actividades -->
-    <section class="actividades-section py-16 lg:py-24 bg-gray-50">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <!-- Image -->
-          <div>
-            <img 
-              src="/images/reforestacion-casualas-1.png" 
-              alt="Reforestación en Santiago"
-              class="w-full h-auto"
-            />
-          </div>
-          
-          <!-- Text Content -->
-          <div class="relative h-[500px] lg:h-[600px]">
-            <!-- Big Number Background -->
-            <div class="absolute top-0 left-0 text-[240px] font-bold text-gray-200 leading-none select-none">
-              02
-            </div>
-            
-            <!-- Tag -->
-            <div class="absolute top-[120px] left-[60px] flex items-center gap-4">
-              <div class="w-[80px] h-[3px] bg-[#F8C52D]"></div>
-              <span class="text-[#F8C52D] text-[18px] font-medium tracking-[6px] uppercase">
-                ACTIVIDADES
-              </span>
-            </div>
-            
-            <!-- Title -->
-            <h2 class="absolute top-[160px] left-[60px] right-0 text-[40px] font-normal text-[#6A6867] leading-tight max-w-[500px]">
-              Reforestación completa.
-            </h2>
-            
-            <!-- Description -->
-            <p class="absolute top-[320px] left-[60px] right-0 text-[20px] font-normal text-[#6A6867] leading-[35px] max-w-[500px]">
-              Llenamos de vida en zonas de Santiago, N.L. cubriendo áreas que lo necesitaban debido a daños ocasionados por incendios.
-            </p>
-            
-            <!-- Link -->
-            <NuxtLink 
-              to="/actividades"
-              class="absolute top-[470px] left-[60px] inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
-            >
-              Ver más
-              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 03 - Historia -->
-    <section class="historia-section py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <!-- Text Content -->
-          <div class="relative h-[500px] lg:h-[600px]">
-            <!-- Big Number Background -->
-            <div class="absolute top-0 left-0 text-[240px] font-bold text-gray-200 leading-none select-none">
-              03
-            </div>
-            
-            <!-- Tag -->
-            <div class="absolute top-[120px] left-[60px] flex items-center gap-4">
-              <div class="w-[80px] h-[3px] bg-[#F8C52D]"></div>
-              <span class="text-[#F8C52D] text-[18px] font-medium tracking-[6px] uppercase">
-                HISTORIA
-              </span>
-            </div>
-            
-            <!-- Title -->
-            <h2 class="absolute top-[160px] left-[60px] right-0 text-[40px] font-normal text-[#6A6867] leading-tight max-w-[500px]">
-              Sucesos en la pared de escalada "Las ánimas".
-            </h2>
-            
-            <!-- Description -->
-            <p class="absolute top-[320px] left-[60px] right-0 text-[20px] font-normal text-[#6A6867] leading-[35px] max-w-[500px]">
-              Debido a ciertas inspecciones que realizó el Instituto Nacional de Antropología e Historia, el Instituto decidió intervenir en la zona. En una primer acercamiento, el INAH buscó cerrar el área para la escalada.
-            </p>
-            
-            <!-- Link -->
-            <NuxtLink 
-              to="/historia"
-              class="absolute top-[470px] left-[60px] inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
-            >
-              Ver más
-              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </NuxtLink>
-          </div>
-          
-          <!-- Image -->
-          <div class="order-first lg:order-last">
-            <img 
-              src="/images/unrioenelrio-home-1.png" 
-              alt="Noticia sobre Las Ánimas"
-              class="w-full h-auto"
-            />
+          <!-- Imagen -->
+          <div :class="idx % 2 === 0 ? 'order-first lg:order-last' : ''">
+            <img :src="item.image" :alt="item.title" class="w-full h-auto" />
           </div>
         </div>
       </div>
@@ -319,78 +204,18 @@
         :loop="true"
         class="h-full w-full"
       >
-        <!-- Slide 1 -->
-        <SwiperSlide>
-          <div class="relative h-full w-full bg-cover bg-center" style="background-image: url('/images/slide1.png');">
+        <!-- Slides dinámicos de patrocinadores -->
+        <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
+          <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
             <div class="absolute inset-0 bg-black/40"></div>
             <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
               <div class="max-w-xl">
-                <img 
-                  src="/images/exposure.png" 
-                  alt="Exposure"
-                  class="w-64 mb-8"
-                />
-                <p class="text-white text-lg mb-8 leading-relaxed">
-                  Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.
-                </p>
-                <a 
-                  href="#"
-                  class="inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
-                >
-                  Ver más
-                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-
-        <!-- Slide 2 -->
-        <SwiperSlide>
-          <div class="relative h-full w-full bg-cover bg-center" style="background-image: url('/images/slide1.png');">
-            <div class="absolute inset-0 bg-black/40"></div>
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-              <div class="max-w-xl">
-                <img 
-                  src="/images/exposure.png" 
-                  alt="Exposure"
-                  class="w-64 mb-8"
-                />
-                <p class="text-white text-lg mb-8 leading-relaxed">
-                  Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.
-                </p>
-                <a 
-                  href="#"
-                  class="inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
-                >
-                  Ver más
-                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-
-        <!-- Slide 3 -->
-        <SwiperSlide>
-          <div class="relative h-full w-full bg-cover bg-center" style="background-image: url('/images/slide1.png');">
-            <div class="absolute inset-0 bg-black/40"></div>
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-              <div class="max-w-xl">
-                <img 
-                  src="/images/exposure.png" 
-                  alt="Exposure"
-                  class="w-64 mb-8"
-                />
-                <p class="text-white text-lg mb-8 leading-relaxed">
-                  Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.
-                </p>
-                <a 
-                  href="#"
+                <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.description }}</p>
+                <a
+                  :href="sponsor.url"
+                  :target="sponsor.url !== '#' ? '_blank' : undefined"
+                  :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
                   class="inline-flex items-center text-[#F8C52D] font-medium hover:text-[#e0b525] transition-colors"
                 >
                   Ver más
@@ -428,68 +253,129 @@
         </h2>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Card 1 - Con fondo patrocinador1.png -->
-          <div class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px] flex items-center justify-center" style="background-image: url('/images/patrocinador1.png');">
-            <div class="relative z-10 p-12 flex flex-col items-center justify-center text-center">
+          <template v-if="otrosPlacements?.length">
+            <template v-for="(item, idx) in otrosPlacements" :key="item.id">
+              <!-- Primeras 2 cards: ícono + texto centrado sobre imagen de fondo -->
+              <div
+                v-if="idx < 2"
+                class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px] flex items-center justify-center"
+                :class="!item.banner?.url ? 'bg-gray-100' : ''"
+                :style="item.banner?.url ? `background-image: url('${item.banner.url}')` : ''"
+              >
+                <div class="relative z-10 p-12 flex flex-col items-center justify-center text-center">
+                  <div class="mb-8">
+                    <div :class="['w-24 h-24 rounded-full border-2 flex items-center justify-center mx-auto mb-6', item.banner?.url ? 'border-white' : 'border-gray-400']">
+                      <img v-if="item.sponsor.logo?.url" :src="item.sponsor.logo.url" :alt="item.sponsor.name" class="w-14 h-14 object-contain" :class="item.banner?.url ? 'filter brightness-0 invert' : ''" />
+                      <svg v-else :class="['w-12 h-12', item.banner?.url ? 'text-white' : 'text-gray-400']" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                    <div :class="['w-px h-16 mx-auto mb-6', item.banner?.url ? 'bg-white' : 'bg-gray-400']"></div>
+                  </div>
+                  <p :class="['text-lg mb-8 max-w-xs leading-relaxed font-medium', item.banner?.url ? 'text-white' : 'text-[#6A6867]']">
+                    {{ item.body ?? item.title ?? item.sponsor.name }}
+                  </p>
+                  <a
+                    v-if="item.link_url"
+                    :href="item.link_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors"
+                  >
+                    Ver más
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </a>
+                </div>
+                <div v-if="item.banner?.url" class="absolute inset-0 bg-black bg-opacity-30"></div>
+              </div>
+
+              <!-- Tercera card en adelante: imagen de producto a pantalla completa -->
+              <div v-else class="relative bg-[#1e3a3a] overflow-hidden group cursor-pointer">
+                <img
+                  v-if="item.banner?.url"
+                  :src="item.banner.url"
+                  :alt="item.title ?? item.sponsor.name"
+                  class="w-full h-full object-cover min-h-[500px]"
+                />
+                <div v-else class="min-h-[500px] flex items-center justify-center p-12">
+                  <div class="text-center">
+                    <img v-if="item.sponsor.logo?.url" :src="item.sponsor.logo.url" :alt="item.sponsor.name" class="max-w-[55%] max-h-24 object-contain filter brightness-0 invert mx-auto mb-6" />
+                    <span v-else class="text-white text-2xl font-bold">{{ item.sponsor.name }}</span>
+                  </div>
+                </div>
+                <div v-if="item.link_url" class="absolute bottom-8 right-8">
+                  <a
+                    :href="item.link_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors"
+                  >
+                    Ver más
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </template>
+          </template>
+
+          <!-- Fallback hardcodeado -->
+          <template v-else>
+            <!-- Card 1 - Con fondo patrocinador1.png -->
+            <div class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px] flex items-center justify-center" style="background-image: url('/images/patrocinador1.png');">
+              <div class="relative z-10 p-12 flex flex-col items-center justify-center text-center">
+                <div class="mb-8">
+                  <div class="w-24 h-24 rounded-full border-2 border-white flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <div class="w-px h-16 bg-white mx-auto mb-6"></div>
+                </div>
+                <p class="text-white text-lg mb-8 max-w-xs leading-relaxed font-medium">
+                  VINCULAMOS EL MUNDO DE LA JOYERÍA CON LAS MONTAÑAS.
+                </p>
+                <a href="#" class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors">
+                  Ver más
+                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+            </div>
+
+            <!-- Card 2 - Solo ícono y texto -->
+            <div class="relative bg-gray-100 p-12 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-gray-200 transition-colors min-h-[500px]">
               <div class="mb-8">
-                <div class="w-24 h-24 rounded-full border-2 border-white flex items-center justify-center mx-auto mb-6">
-                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-24 h-24 rounded-full border-2 border-gray-400 flex items-center justify-center mx-auto mb-6">
+                  <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                   </svg>
                 </div>
-                <div class="w-px h-16 bg-white mx-auto mb-6"></div>
+                <div class="w-px h-16 bg-gray-400 mx-auto mb-6"></div>
               </div>
-              <p class="text-white text-lg mb-8 max-w-xs leading-relaxed font-medium">
+              <p class="text-[#6A6867] text-lg max-w-xs leading-relaxed">
                 VINCULAMOS EL MUNDO DE LA JOYERÍA CON LAS MONTAÑAS.
               </p>
-              <a 
-                href="#"
-                class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors"
-              >
-                Ver más
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-              </a>
             </div>
-            <!-- Overlay oscuro para mejor legibilidad -->
-            <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-          </div>
 
-          <!-- Card 2 - Solo ícono y texto -->
-          <div class="relative bg-gray-100 p-12 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-gray-200 transition-colors min-h-[500px]">
-            <div class="mb-8">
-              <div class="w-24 h-24 rounded-full border-2 border-gray-400 flex items-center justify-center mx-auto mb-6">
-                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
+            <!-- Card 3 -->
+            <div class="relative bg-[#1e3a3a] overflow-hidden group cursor-pointer">
+              <img src="/images/patrocinador2.png" alt="Mission LT 2.0" class="w-full h-auto" />
+              <div class="absolute bottom-8 right-8">
+                <a href="#" class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors">
+                  Ver más
+                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                  </svg>
+                </a>
               </div>
-              <div class="w-px h-16 bg-gray-400 mx-auto mb-6"></div>
             </div>
-            <p class="text-[#6A6867] text-lg max-w-xs leading-relaxed">
-              VINCULAMOS EL MUNDO DE LA JOYERÍA CON LAS MONTAÑAS.
-            </p>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="relative bg-[#1e3a3a] overflow-hidden group cursor-pointer">
-            <img 
-              src="/images/patrocinador2.png" 
-              alt="Mission LT 2.0"
-              class="w-full h-auto"
-            />
-            <div class="absolute bottom-8 right-8">
-              <a 
-                href="#"
-                class="inline-flex items-center text-white font-medium hover:text-[#F8C52D] transition-colors"
-              >
-                Ver más
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
     </section>
@@ -517,26 +403,50 @@
     <!-- Sponsor Logo Tiles - 3 large boxes -->
     <section class="sponsor-tiles bg-white">
       <div class="grid grid-cols-1 md:grid-cols-3">
-        <!-- Box 1: Captains / Exposure -->
-        <div class="sponsor-tile bg-[#1a1a2e] flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px]">
-          <img
-            src="/images/exposure.png"
-            alt="Exposure"
-            class="max-w-[55%] max-h-24 object-contain filter brightness-0 invert"
-          />
-        </div>
-        <!-- Box 2: ClimbWork -->
-        <div class="sponsor-tile bg-[#f0f0f0] flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px]">
-          <div class="text-center">
-            <div class="text-3xl lg:text-4xl font-bold text-gray-700 tracking-widest uppercase">ClimbWork</div>
+        <template v-if="sponsorTilesData">
+          <div
+            v-for="(item, idx) in sponsorTilesData"
+            :key="item.id"
+            class="sponsor-tile flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px]"
+            :class="idx === 0 ? 'bg-[#1a1a2e]' : idx === 1 ? 'bg-[#f0f0f0]' : 'bg-white border border-gray-100'"
+          >
+            <template v-if="'sponsor' in item">
+              <!-- Datos desde SponsorPlacement -->
+              <img
+                v-if="item.sponsor.logo?.url"
+                :src="item.sponsor.logo.url"
+                :alt="item.sponsor.logo.alt ?? item.sponsor.name"
+                :class="['max-w-[55%] max-h-24 object-contain', idx === 0 ? 'filter brightness-0 invert' : '']"
+              />
+              <div v-else class="text-center">
+                <div :class="['text-3xl lg:text-4xl font-bold tracking-widest uppercase', idx === 0 ? 'text-white' : idx === 1 ? 'text-gray-700' : 'text-gray-900']">{{ item.sponsor.name }}</div>
+              </div>
+            </template>
+            <template v-else>
+              <!-- Datos legacy desde Sponsor directo -->
+              <img
+                v-if="(item as any).logo"
+                :src="(item as any).logo.url"
+                :alt="(item as any).logo.alt ?? (item as any).name"
+                :class="['max-w-[55%] max-h-24 object-contain', idx === 0 ? 'filter brightness-0 invert' : '']"
+              />
+              <div v-else class="text-center">
+                <div :class="['text-3xl lg:text-4xl font-bold tracking-widest uppercase', idx === 0 ? 'text-white' : idx === 1 ? 'text-gray-700' : 'text-gray-900']">{{ (item as any).name }}</div>
+              </div>
+            </template>
           </div>
-        </div>
-        <!-- Box 3: Black Diamond -->
-        <div class="sponsor-tile bg-white flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px] border border-gray-100">
-          <div class="text-center">
-            <div class="text-3xl lg:text-4xl font-bold text-gray-900 tracking-widest uppercase">Black<br>Diamond</div>
+        </template>
+        <template v-else>
+          <div class="sponsor-tile bg-[#1a1a2e] flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px]">
+            <img src="/images/exposure.png" alt="Exposure" class="max-w-[55%] max-h-24 object-contain filter brightness-0 invert" />
           </div>
-        </div>
+          <div class="sponsor-tile bg-[#f0f0f0] flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px]">
+            <div class="text-center"><div class="text-3xl lg:text-4xl font-bold text-gray-700 tracking-widest uppercase">ClimbWork</div></div>
+          </div>
+          <div class="sponsor-tile bg-white flex items-center justify-center p-16 min-h-[400px] lg:min-h-[547px] border border-gray-100">
+            <div class="text-center"><div class="text-3xl lg:text-4xl font-bold text-gray-900 tracking-widest uppercase">Black<br>Diamond</div></div>
+          </div>
+        </template>
       </div>
     </section>
 
@@ -544,24 +454,28 @@
     <section class="sponsor-logos-row py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap items-center justify-center gap-10 lg:gap-16">
-          <img
-            src="/images/pico-norte-1.png"
-            alt="Pico Norte"
-            class="h-16 lg:h-20 object-contain"
-          />
-          <img
-            src="/images/source-pico-norte.png"
-            alt="Source"
-            class="h-8 lg:h-10 object-contain"
-          />
-          <img
-            src="/images/exposure.png"
-            alt="Exposure / Mad Rock"
-            class="h-7 lg:h-8 object-contain"
-          />
-          <span class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">Monkey Hands</span>
-          <span class="text-[#6A6867] font-medium text-base tracking-widest uppercase">Cumbre Cotidiana</span>
-          <span class="text-[#6A6867] font-bold text-xl tracking-widest uppercase">ALTRAC</span>
+          <template v-if="logoRowItems.length">
+            <template v-for="item in logoRowItems" :key="item.id">
+              <img
+                v-if="item.sponsor.logo?.url"
+                :src="item.sponsor.logo.url"
+                :alt="item.sponsor.logo.alt ?? item.sponsor.name"
+                class="h-16 lg:h-20 object-contain"
+              />
+              <span v-else class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">
+                {{ item.sponsor.name }}
+              </span>
+            </template>
+          </template>
+          <!-- Fallback hardcodeado -->
+          <template v-else>
+            <img src="/images/pico-norte-1.png" alt="Pico Norte" class="h-16 lg:h-20 object-contain" />
+            <img src="/images/source-pico-norte.png" alt="Source" class="h-8 lg:h-10 object-contain" />
+            <img src="/images/exposure.png" alt="Exposure / Mad Rock" class="h-7 lg:h-8 object-contain" />
+            <span class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">Monkey Hands</span>
+            <span class="text-[#6A6867] font-medium text-base tracking-widest uppercase">Cumbre Cotidiana</span>
+            <span class="text-[#6A6867] font-bold text-xl tracking-widest uppercase">ALTRAC</span>
+          </template>
         </div>
       </div>
     </section>
@@ -570,31 +484,31 @@
     <section class="map-section bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <h2 class="text-3xl lg:text-4xl font-normal text-[#6A6867]">
-          ¿Dónde hemos trabajado?
+          {{ mapaTitle }}
         </h2>
       </div>
       <div class="relative w-full overflow-hidden" style="height: 1300px;">
         <img
-          src="/images/screen-shot-20241119-at-64211-pm-1.png"
+          :src="mapaImage"
           alt="Mapa de trabajo - Nuevo León"
           class="w-full h-full object-cover"
         />
         <!-- Potrero Chico label - right side -->
-        <div class="absolute hidden lg:block" style="right: 10%; top: 30%;">
+        <div v-if="mapaLabel1" class="absolute hidden lg:block" style="right: 10%; top: 30%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
-            Potrero Chico, Hidalgo N.L., México
+            {{ mapaLabel1 }}
           </p>
         </div>
         <!-- La Huasteca label - left side -->
-        <div class="absolute hidden lg:block" style="left: 11%; top: 55%;">
+        <div v-if="mapaLabel2" class="absolute hidden lg:block" style="left: 11%; top: 55%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 leading-snug max-w-xs">
-            La Huasteca, Santa Catarina, N.L., México
+            {{ mapaLabel2 }}
           </p>
         </div>
         <!-- El Salto label - right bottom -->
-        <div class="absolute hidden lg:block" style="right: 10%; bottom: 16%;">
+        <div v-if="mapaLabel3" class="absolute hidden lg:block" style="right: 10%; bottom: 16%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
-            El Salto, Ciénega de Gonzalez, N.L., México
+            {{ mapaLabel3 }}
           </p>
         </div>
       </div>
@@ -603,7 +517,7 @@
     <!-- IMG_3366 - Climbing / App Section -->
     <section class="climbing-app-section relative overflow-hidden" style="height: 1313px;">
       <img
-        src="/images/img-33661.png"
+        :src="st('numeros.imagen', '/images/img-33661.png')"
         alt="Escalada en roca"
         class="w-full h-full object-cover"
       />
@@ -625,7 +539,7 @@
           <div class="inline-block">
             <div class="w-48 h-3 bg-[#F8C52D] mx-auto mb-4"></div>
             <h2 class="text-3xl lg:text-[35px] font-medium text-gray-900">
-              Escalada Libre en Números
+              {{ st('numeros.titulo', 'Escalada Libre en Números') }}
             </h2>
           </div>
         </div>
@@ -634,23 +548,23 @@
         <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-y sm:divide-y-0 divide-x-0 lg:divide-x divide-gray-200">
             <div class="p-6 lg:p-8 text-center">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">74</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.actividades', '74') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Actividades<br>realizadas</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">500</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.arboles', '500') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Árboles<br>sembrados</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t sm:border-t-0 sm:border-l lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">93</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.rutas', '93') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Rutas<br>rehabilitadas</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">1110</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.bolts', '1110') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Bolts<br>instalados</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200 sm:col-span-3 lg:col-span-1">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">15</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.senalizaciones', '15') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Señalamientos<br>instalados</div>
             </div>
           </div>
@@ -660,19 +574,19 @@
         <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)]">
           <div class="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
             <div class="p-6 lg:p-8 text-center">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">300</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.voluntarios', '300') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858]">Voluntarios</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">30</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.anos_util', '30') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Años de vida útil<br>de una vía</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">$3700</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.costo_reequipado', '$3700') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858] leading-snug">Costo por reequipado<br>de rutas</div>
             </div>
             <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">$400,000</div>
+              <div class="text-4xl lg:text-[50px] font-semibold text-[#6A6867] leading-none mb-3">{{ st('stat.monto_invertido', '$400,000') }}</div>
               <div class="text-sm lg:text-[18px] text-[#585858]">Monto total invertido</div>
             </div>
           </div>
@@ -851,53 +765,36 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="flex items-center justify-between mb-12">
-          <h2 class="text-2xl lg:text-[30px] font-medium text-[#6A6867]">Nuestro team</h2>
-          <a
-            href="#"
+          <h2 class="text-2xl lg:text-[30px] font-medium text-[#6A6867]">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? 'Nuestro team' }}</h2>
+          <NuxtLink
+            :to="teamLinkUrl"
             class="inline-flex items-center text-[#6A6867] font-medium hover:text-[#F8C52D] transition-colors text-sm lg:text-base"
           >
-            Ver todos
+            {{ (sec('mesa-directiva', nosotrosPage)?.settings?.link_label as string) ?? 'Ver todos' }}
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>
-          </a>
+          </NuxtLink>
         </div>
 
         <!-- Team cards -->
         <div class="grid md:grid-cols-2 gap-6">
-          <!-- Card 1: Carloz Ortiz -->
-          <div class="bg-[#f9f9f9] rounded-lg p-6 flex items-center gap-6">
+          <div
+            v-for="member in teamMembers"
+            :key="member.id"
+            class="bg-[#f9f9f9] rounded-lg p-6 flex items-center gap-6"
+          >
             <div class="flex-shrink-0 w-36 h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-gray-200">
               <img
-                src="/images/img-20200308-wa-00051.png"
-                alt="Carloz Ortiz"
+                :src="(member.settings?.photo as string) ?? '/images/img-20200308-wa-00051.png'"
+                :alt="member.title"
                 class="w-full h-full object-cover"
               />
             </div>
             <div class="flex-1">
-              <h3 class="text-xl lg:text-[22px] font-medium text-[#6A6867] mb-1">Carloz Ortiz</h3>
-              <p class="text-sm lg:text-base text-[#6A6867] font-medium mb-3">Presidente de la asociación.</p>
-              <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
-                Escalador desde los 13 años de edad. Abogado especialista en derecho internacional ambiental.
-              </p>
-            </div>
-          </div>
-
-          <!-- Card 2: Adrián Lozano -->
-          <div class="bg-[#f9f9f9] rounded-lg p-6 flex items-center gap-6">
-            <div class="flex-shrink-0 w-36 h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-gray-200">
-              <img
-                src="/images/slide1.png"
-                alt="Adrián Lozano"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl lg:text-[22px] font-medium text-[#6A6867] mb-1">Adrián Lozano</h3>
-              <p class="text-sm lg:text-base text-[#6A6867] font-medium mb-3">Vicepresidente de la asociación.</p>
-              <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
-                Hemos realizado brigadas de limpiezas en zonas pocos accesibles, eliminando la basura que afecta a nuestras sierras.
-              </p>
+              <h3 class="text-xl lg:text-[22px] font-medium text-[#6A6867] mb-1">{{ member.title }}</h3>
+              <p class="text-sm lg:text-base text-[#6A6867] font-medium mb-3">{{ (member.settings?.role as string) ?? '' }}</p>
+              <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">{{ member.body }}</p>
             </div>
           </div>
         </div>
@@ -911,9 +808,9 @@
           <!-- Newsletter Card -->
           <div class="bg-[#f5f5f0] rounded-xl p-8 flex flex-col justify-between min-h-[357px]">
             <div>
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[#6A6867] mb-4">NEWSLETTER</p>
+              <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[#6A6867] mb-4">{{ newsletterEtiqueta }}</p>
               <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] leading-snug mb-6">
-                Recibe noticias de Escalada Libre a tu correo
+                {{ newsletterTitulo }}
               </h3>
             </div>
             <div class="flex flex-col gap-3">
@@ -923,35 +820,62 @@
                 class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
               />
               <button class="self-end px-6 py-3 bg-[#F8C52D] text-gray-900 font-medium text-sm hover:bg-[#e0b525] transition-colors">
-                Suscribir
+                {{ newsletterBoton }}
               </button>
             </div>
           </div>
 
-          <!-- ASPECT PRO Product Card -->
-          <div class="relative rounded-xl overflow-hidden min-h-[357px]">
-            <img
-              src="/images/patrocinador1.png"
-              alt="Aspect Pro"
-              class="w-full h-full object-cover absolute inset-0"
-            />
-            <div class="absolute inset-0 bg-black/20"></div>
-            <div class="relative z-10 p-8 h-full flex flex-col justify-start">
-              <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">ASPECT PRO</p>
-              <p class="text-white/80 text-sm mt-1">Built to go big</p>
+          <!-- Sponsor Cards desde API -->
+          <template v-if="prefooterCards.length">
+            <div
+              v-for="card in prefooterCards"
+              :key="card.id"
+              class="relative rounded-xl overflow-hidden min-h-[357px]"
+            >
+              <!-- Con imagen de fondo -->
+              <template v-if="card.banner?.url">
+                <img :src="card.banner.url" :alt="card.title ?? card.sponsor.name" class="w-full h-full object-cover absolute inset-0" />
+                <div class="absolute inset-0 bg-black/20"></div>
+                <div class="relative z-10 p-8 h-full flex flex-col justify-start">
+                  <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">{{ card.title ?? card.sponsor.name }}</p>
+                  <p v-if="card.body" class="text-white/80 text-sm mt-1">{{ card.body }}</p>
+                </div>
+              </template>
+              <!-- Con logo sobre fondo oscuro -->
+              <template v-else>
+                <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
+                  <div class="text-center">
+                    <img
+                      v-if="card.sponsor.logo?.url"
+                      :src="card.sponsor.logo.url"
+                      :alt="card.sponsor.name"
+                      class="max-w-[70%] mx-auto filter brightness-0 invert"
+                    />
+                    <span v-else class="text-white text-2xl font-bold tracking-widest uppercase">{{ card.sponsor.name }}</span>
+                  </div>
+                </div>
+              </template>
             </div>
-          </div>
+          </template>
 
-          <!-- ClimbWork Brand Card -->
-          <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
-            <div class="text-center">
-              <img
-                src="/images/exposure.png"
-                alt="ClimbWork"
-                class="max-w-[70%] mx-auto filter brightness-0 invert"
-              />
+          <!-- Fallback hardcodeado -->
+          <template v-else>
+            <!-- ASPECT PRO Product Card -->
+            <div class="relative rounded-xl overflow-hidden min-h-[357px]">
+              <img src="/images/patrocinador1.png" alt="Aspect Pro" class="w-full h-full object-cover absolute inset-0" />
+              <div class="absolute inset-0 bg-black/20"></div>
+              <div class="relative z-10 p-8 h-full flex flex-col justify-start">
+                <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">ASPECT PRO</p>
+                <p class="text-white/80 text-sm mt-1">Built to go big</p>
+              </div>
             </div>
-          </div>
+            <!-- ClimbWork Brand Card -->
+            <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
+              <div class="text-center">
+                <img src="/images/exposure.png" alt="ClimbWork" class="max-w-[70%] mx-auto filter brightness-0 invert" />
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </section>
@@ -961,13 +885,13 @@
       <!-- Content -->
       <div class="flex flex-col items-center justify-center h-full py-24 px-4 text-center" style="min-height: 675px;">
         <h2 class="text-4xl lg:text-6xl font-bold text-[#1a1a1a] mb-8 tracking-wider">
-          ¡GRACIAS POR TU APOYO!
+          {{ graciasTitle }}
         </h2>
         <NuxtLink
-          to="/como-apoyar"
+          :to="graciasButtonUrl"
           class="px-10 py-4 bg-[#F8C52D] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#e0b525] transition-colors"
         >
-          Apoyar
+          {{ graciasButtonText }}
         </NuxtLink>
       </div>
     </section>
@@ -975,14 +899,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation as SwiperNavigation, Pagination as SwiperPagination, Autoplay as SwiperAutoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import type { BlogPost, Sponsor, SponsorPlacement, PageSection, Page, SettingsMap } from '~/types/api'
 
-// Home page
 useSeoMeta({
   title: 'Escalada Libre - Proteger, conservar y promover la escalada en México',
   description: 'Somos una comunidad dedicada a preservar los espacios naturales y fomentar la práctica responsable de la escalada en México.',
@@ -992,17 +916,173 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-const scrollToNextSection = () => {
-  const nextSection = document.querySelector('#mission')
-  if (nextSection) {
-    nextSection.scrollIntoView({ behavior: 'smooth' })
+const api = useApi()
+
+const [
+  { data: page },
+  { data: blogResp },
+  { data: sponsors },
+  { data: settings },
+  { data: nosotrosPage },
+  { data: otrosPlacements },
+  { data: homeTilesPlacements },
+  { data: logoRowPlacements },
+  { data: prefooterPlacements },
+] = await Promise.all([
+  useAsyncData('page-inicio', () => api.pages.getBySlug('inicio').catch(() => null)),
+  useAsyncData('blog-home', () => api.blog.getAll({ per_page: 3 }).catch(() => ({ data: [] }))),
+  useAsyncData('sponsors-home', () => api.sponsors.getAll().catch(() => [] as Sponsor[])),
+  useAsyncData('settings-home', () => api.settings.getAll().catch(() => ({} as SettingsMap))),
+  useAsyncData('page-nosotros', () => api.pages.getBySlug('nosotros').catch(() => null)),
+  useAsyncData('otros-patrocinadores', () => api.sponsorPlacements.getAll({ placement: 'otros_patrocinadores' }).catch(() => [] as SponsorPlacement[])),
+  useAsyncData('home-tiles', () => api.sponsorPlacements.getAll({ placement: 'home_tiles' }).catch(() => [] as SponsorPlacement[])),
+  useAsyncData('logo-row', () => api.sponsorPlacements.getAll({ placement: 'logo_row' }).catch(() => [] as SponsorPlacement[])),
+  useAsyncData('prefooter-cards', () => api.sponsorPlacements.getAll({ placement: 'prefooter_card' }).catch(() => [] as SponsorPlacement[])),
+])
+
+// CMS section helper
+const sec = (key: string, pg: Ref<Page | null> | null = page) =>
+  pg?.value?.sections?.find((s: PageSection) => s.settings?.key === key)
+
+// Hero
+const heroTitle = computed(() =>
+  sec('hero')?.heading ?? 'Proteger, conservar y promover la escalada en Costa Rica.')
+const heroLabel = computed(() =>
+  sec('hero')?.subheading ?? 'ESCALADA LIBRE')
+const heroImage = computed(() =>
+  (sec('hero')?.settings?.image as string) ?? '/images/huasteca-41.png')
+const heroLocation = computed(() =>
+  (sec('hero')?.settings?.location as string) ?? 'La Huasteca')
+
+// Intro text + parallax
+const introText = computed(() =>
+  sec('intro')?.body ?? 'Somos ciudadanos con interés en beneficiar las actividades recreativas de montaña.')
+const parallaxSkyImage = computed(() =>
+  (sec('intro')?.settings?.sky_image as string) ?? '/images/hg.png')
+const parallaxMountainImage = computed(() =>
+  (sec('intro')?.settings?.mountain_image as string) ?? '/images/potrero-1.png')
+const parallaxLocation = computed(() =>
+  (sec('intro')?.settings?.location as string) ?? 'El Potrero Chico, Hidalgo N.L. México')
+
+// Conservation
+const conservacionTitle = computed(() =>
+  sec('conservacion')?.heading ?? 'Contribuimos al cuidado de los Ecosistemas Terrestres;')
+const conservacionBody = computed(() =>
+  sec('conservacion')?.body ?? 'Una Vida Sana, el Desarrollo de Sociedades Pacificas, el Desarrollo de los Pueblos y el Desarrollo Sustentable mediante la elaboración de planes y programas para la protección y mantenimiento de las áreas donde es posible su práctica.')
+const conservacionImage = computed(() =>
+  (sec('conservacion')?.settings?.image as string) ?? '/images/n-1.png')
+const conservacionLocation = computed(() =>
+  (sec('conservacion')?.settings?.location as string) ?? 'El Salto, Coahuila de Zaragoza, Santiago N.L. México')
+
+// Featured sections 01/02/03
+const fallbackFeatured = [
+  { num: '01', tag: 'NOSOTROS', title: 'Protegemos las montañas y a la comunidad.', body: 'Somos un grupo de deportistas del Noreste de México con interés en beneficiar, de manera segura y sustentable, al fomento del montañismo y escalada en sus diferentes modalidades', image: '/images/img-20200308-wa-00051.png', link: '/nosotros' },
+  { num: '02', tag: 'ACTIVIDADES', title: 'Reforestación completa.', body: 'Llenamos de vida en zonas de Santiago, N.L. cubriendo áreas que lo necesitaban debido a daños ocasionados por incendios.', image: '/images/reforestacion-casualas-1.png', link: '/actividades' },
+  { num: '03', tag: 'HISTORIA', title: 'Sucesos en la pared de escalada "Las ánimas".', body: 'Debido a ciertas inspecciones que realizó el Instituto Nacional de Antropología e Historia, el Instituto decidió intervenir en la zona.', image: '/images/unrioenelrio-home-1.png', link: '/historia' },
+]
+
+const featuredSections = computed(() => {
+  const data = blogResp.value?.data
+  const posts = Array.isArray(data) ? data : []
+  // Priorizar los 3 posts con is_featured = true, luego los más recientes
+  const featured = posts.filter((p: BlogPost) => p.is_featured)
+  const pool = featured.length >= 3 ? featured : posts
+  if (pool.length >= 3) {
+    return pool.slice(0, 3).map((p: BlogPost, i: number) => ({
+      num: String(i + 1).padStart(2, '0'),
+      tag: (p.category ?? 'BLOG').toUpperCase(),
+      title: p.title,
+      body: p.excerpt ?? '',
+      image: p.featured_media?.url ?? '/images/n-1.png',
+      link: `/blog/${p.slug}`,
+    }))
   }
-}
+  return fallbackFeatured
+})
+
+// Sponsors — slider
+const sponsorsSliderData = computed(() => {
+  const sp = sponsors.value ?? []
+  if (sp.length) {
+    return sp.map((s: Sponsor) => ({
+      id: s.id,
+      name: s.name,
+      logo: s.logo?.url ?? '/images/exposure.png',
+      slideImage: s.slide_image?.url ?? '/images/slide1.png',
+      description: s.description ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
+      url: s.website_url ?? '#',
+    }))
+  }
+  return [
+    { id: -1, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -2, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -3, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+  ]
+})
+
+// Sponsors — top tiles (3 grandes)
+const sponsorTilesData = computed(() => {
+  const placements = homeTilesPlacements.value ?? []
+  if (placements.length) return placements
+  const sp = sponsors.value ?? []
+  return sp.length >= 3 ? sp.slice(0, 3) : null
+})
+
+// Sponsors — fila de logos pequeños
+const logoRowItems = computed(() => logoRowPlacements.value ?? [])
+
+// Prefooter cards (2 sponsor cards)
+const prefooterCards = computed(() => prefooterPlacements.value ?? [])
+
+// Sección gracias
+const graciasSection = computed(() => sec('gracias'))
+const graciasTitle = computed(() => graciasSection.value?.heading ?? '¡GRACIAS POR TU APOYO!')
+const graciasButtonText = computed(() => (graciasSection.value?.settings?.button_text as string) ?? 'Apoyar')
+const graciasButtonUrl = computed(() => (graciasSection.value?.settings?.button_url as string) ?? '/como-apoyar')
+
+// Newsletter settings
+const newsletterTitulo = computed(() => st('newsletter.titulo', 'Recibe noticias de Escalada Libre a tu correo'))
+const newsletterEtiqueta = computed(() => st('newsletter.etiqueta', 'NEWSLETTER'))
+const newsletterBoton = computed(() => st('newsletter.boton', 'Suscribir'))
+
+// Team section
+const teamLinkUrl = computed(() => st('equipo.link_url', '/nosotros'))
+
+// Mapa
+const mapaSection = computed(() => sec('mapa'))
+const mapaTitle = computed(() => mapaSection.value?.heading ?? '¿Dónde hemos trabajado?')
+const mapaImage = computed(() => (mapaSection.value?.settings?.image as string) ?? '/images/screen-shot-20241119-at-64211-pm-1.png')
+const mapaLabel1 = computed(() => (mapaSection.value?.settings?.label_1 as string) ?? 'Potrero Chico, Hidalgo N.L., México')
+const mapaLabel2 = computed(() => (mapaSection.value?.settings?.label_2 as string) ?? 'La Huasteca, Santa Catarina, N.L., México')
+const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as string) ?? 'El Salto, Ciénega de Gonzalez, N.L., México')
+
+// Stats helper: tries API settings, falls back to hardcoded
+const st = (key: string, fallback: string): string =>
+  (settings.value as SettingsMap)?.[key] ?? fallback
+
+// Team members from nosotros page
+type TeamMember = { id: number; title: string; body: string | null; settings: Record<string, unknown> | null }
+const fallbackTeam: TeamMember[] = [
+  { id: 1, title: 'Carloz Ortiz', body: 'Escalador desde los 13 años de edad. Abogado especialista en derecho internacional ambiental.', settings: { role: 'Presidente de la asociación.', photo: '/images/img-20200308-wa-00051.png' } },
+  { id: 2, title: 'Adrián Lozano', body: 'Hemos realizado brigadas de limpiezas en zonas pocos accesibles, eliminando la basura que afecta a nuestras sierras.', settings: { role: 'Vicepresidente de la asociación.', photo: '/images/slide1.png' } },
+]
+const teamMembers = computed<TeamMember[]>(() => {
+  const items = nosotrosPage.value?.sections
+    ?.find((s: PageSection) => s.settings?.key === 'mesa-directiva')?.items ?? []
+  return items.length ? items.slice(0, 2) : fallbackTeam
+})
 
 // Apoyo carousel counter
 const apoyarCurrent = ref(1)
 const onApoyarSlideChange = (swiper: any) => {
   apoyarCurrent.value = (swiper.realIndex % 4) + 1
+}
+
+const scrollToNextSection = () => {
+  const nextSection = document.querySelector('#mission')
+  if (nextSection) {
+    nextSection.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 </script>
 

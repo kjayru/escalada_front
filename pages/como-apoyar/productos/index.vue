@@ -60,14 +60,12 @@
 
             <!-- Botón COMPRAR -->
             <div class="px-1">
-              <a
-                :href="producto.url"
-                target="_blank"
-                rel="noopener noreferrer"
+              <NuxtLink
+                :to="`/como-apoyar/productos/${producto.slug}`"
                 class="inline-block w-[262px] py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm text-center tracking-widest hover:bg-[#e0b525] transition-colors"
               >
                 COMPRAR
-              </a>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -129,53 +127,45 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import type { Product } from '~/types/api'
+
 useSeoMeta({
   title: 'Productos - Escalada Libre',
   description: 'Adquiere productos de Escalada Libre México A.C. y apoya la escalada responsable en México.',
 })
 
-const productos = [
-  {
-    id: 1,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
-  {
-    id: 2,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
-  {
-    id: 3,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
-  {
-    id: 4,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
-  {
-    id: 5,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
-  {
-    id: 6,
-    nombre: 'Sticker Escalada Libre',
-    precio: '$35.00',
-    imagen: '/images/pico-norte-1.png',
-    url: '#',
-  },
+const api = useApi()
+const { data: response } = await useAsyncData('productos', () =>
+  api.products.getAll().catch(() => null)
+)
+
+const fallbackProductos = [
+  { id: 1, slug: 'sticker-escalada-libre-1', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
+  { id: 2, slug: 'sticker-escalada-libre-2', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
+  { id: 3, slug: 'sticker-escalada-libre-3', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
+  { id: 4, slug: 'sticker-escalada-libre-4', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
+  { id: 5, slug: 'sticker-escalada-libre-5', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
+  { id: 6, slug: 'sticker-escalada-libre-6', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
 ]
+
+const formatPrecio = (price: number | null, currency: string | null) => {
+  if (!price) return ''
+  const cur = currency ?? 'MXN'
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur }).format(price)
+}
+
+const productos = computed(() => {
+  const apiData = (response.value as any)?.data?.data ?? (response.value as any)?.data ?? []
+  if (apiData.length) {
+    return apiData.map((p: Product) => ({
+      id: p.id,
+      slug: p.slug,
+      nombre: p.name,
+      precio: formatPrecio(p.price, p.currency),
+      imagen: p.featured_media?.url ?? '/images/pico-norte-1.png',
+    }))
+  }
+  return fallbackProductos
+})
 </script>

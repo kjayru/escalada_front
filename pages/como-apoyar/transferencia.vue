@@ -13,16 +13,17 @@
             </h1>
 
             <p class="text-base text-[#6A6867] leading-relaxed mb-8">
-              Te compartimos los datos para tu aportación por medio de transferencia
+              {{ bankMethod?.body ?? 'Te compartimos los datos para tu aportación por medio de transferencia' }}
             </p>
 
             <!-- Bank details card -->
             <div class="space-y-3 mb-10">
-              <p class="text-base font-semibold text-[#6A6867] tracking-wide">BANCOMER</p>
+              <p class="text-base font-semibold text-[#6A6867] tracking-wide">{{ bankMethod?.settings?.bank ?? 'BANCOMER' }}</p>
               <div class="space-y-2 text-base text-[#6A6867]">
-                <p>No. de Cuenta &nbsp;<span class="font-medium">0120869686</span></p>
-                <p>Clabe: &nbsp;<span class="font-medium">012 580 00120869686 2</span></p>
-                <p>Nombre: &nbsp;<span class="font-medium">Escalada Libre México AC.</span></p>
+                <p>No. de Cuenta &nbsp;<span class="font-medium">{{ bankMethod?.settings?.account ?? '0120869686' }}</span></p>
+                <p v-if="bankMethod?.settings?.iban">IBAN: &nbsp;<span class="font-medium">{{ bankMethod.settings.iban }}</span></p>
+                <p v-else>Clabe: &nbsp;<span class="font-medium">012 580 00120869686 2</span></p>
+                <p>Nombre: &nbsp;<span class="font-medium">{{ bankMethod?.settings?.name ?? 'Escalada Libre México AC.' }}</span></p>
               </div>
             </div>
 
@@ -104,8 +105,20 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+const api = useApi()
+
+const { data: campaigns } = await useAsyncData('campaigns-transferencia',
+  () => api.supportCampaigns.getAll().catch(() => [])
+)
+
+const bankMethod = computed(() =>
+  campaigns.value?.[0]?.methods?.find((m: any) => m.type === 'bank_transfer')
+)
+
 useSeoMeta({
   title: 'Transferencia interbancaria - Escalada Libre',
-  description: 'Realiza tu donación a Escalada Libre México A.C. mediante transferencia interbancaria BANCOMER.',
+  description: 'Realiza tu donación a Escalada Libre Costa Rica mediante transferencia interbancaria.',
 })
 </script>

@@ -88,7 +88,9 @@
             <a
               v-for="doc in item.docs"
               :key="doc.name"
-              href="#"
+              :href="doc.url ?? '#'"
+              :target="doc.url ? '_blank' : undefined"
+              :rel="doc.url ? 'noopener noreferrer' : undefined"
               class="flex items-center justify-between py-4 border-t border-[#6A6867]/20 hover:opacity-80 transition-opacity"
               @click.stop
             >
@@ -159,12 +161,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import type { TransparencyDocument } from '~/types/api'
 
 useSeoMeta({
   title: 'Transparencia - Escalada Libre',
   description: 'En Escalada Libre México A.C. operamos con transparencia y rendición de cuentas. Conoce nuestros documentos, actas de asamblea y reportes.',
 })
+
+const api = useApi()
+const { data: docs } = await useAsyncData('transparency-docs', () =>
+  api.transparencyDocuments.getAll().catch(() => [] as TransparencyDocument[])
+)
 
 const tabs = [
   { id: 'asambleas', label: 'Asambleas' },
@@ -173,56 +181,52 @@ const tabs = [
 ]
 const tabActiva = ref('asambleas')
 
-const itemsAcordeon = [
-  {
-    id: 'acta',
-    label: 'Acta constitutiva',
-    docs: [{ name: 'Acta constitutiva' }],
-  },
-  {
-    id: '2019',
-    label: 'Asamblea 2019',
-    docs: [{ name: 'Asamblea 2019' }],
-  },
-  {
-    id: '2020',
-    label: 'Asamblea 2020',
-    docs: [
-      { name: 'Reglamento' },
-      { name: 'Asamblea general Ordinaria 2020' },
-      { name: 'Lista de asistencia asamblea ordinaria 2020' },
-      { name: 'Asamblea extraordinaria 2022' },
-    ],
-  },
-  {
-    id: '2021',
-    label: 'Asamblea 2021',
-    docs: [{ name: 'Asamblea 2021' }],
-  },
-  {
-    id: '2022',
-    label: 'Asamblea 2022',
-    docs: [{ name: 'Asamblea 2022' }],
-  },
-  {
-    id: '2023',
-    label: 'Asamblea 2023',
-    docs: [{ name: 'Asamblea 2023' }],
-  },
-  {
-    id: '2024',
-    label: 'Asamblea 2024',
-    docs: [{ name: 'Asamblea 2024' }],
-  },
-  {
-    id: '2025',
-    label: 'Asamblea 2025',
-    docs: [{ name: 'Asamblea 2025' }],
-  },
-]
-
 const itemExpandido = ref<string | null>('2020')
 const toggleItem = (id: string) => {
   itemExpandido.value = itemExpandido.value === id ? null : id
 }
+watch(tabActiva, () => { itemExpandido.value = null })
+
+type AcordeonItem = { id: string; label: string; docs: { name: string; url: string | null }[] }
+
+const tabYearLabel: Record<string, string> = {
+  asambleas: 'Asamblea',
+  reportes: 'Reporte',
+  estados: 'Ejercicio',
+}
+
+const fallbackItems: AcordeonItem[] = [
+  { id: 'acta', label: 'Acta constitutiva', docs: [{ name: 'Acta constitutiva', url: null }] },
+  { id: '2019', label: 'Asamblea 2019', docs: [{ name: 'Asamblea 2019', url: null }] },
+  {
+    id: '2020', label: 'Asamblea 2020', docs: [
+      { name: 'Reglamento', url: null },
+      { name: 'Asamblea general Ordinaria 2020', url: null },
+      { name: 'Lista de asistencia asamblea ordinaria 2020', url: null },
+      { name: 'Asamblea extraordinaria 2022', url: null },
+    ],
+  },
+  { id: '2021', label: 'Asamblea 2021', docs: [{ name: 'Asamblea 2021', url: null }] },
+  { id: '2022', label: 'Asamblea 2022', docs: [{ name: 'Asamblea 2022', url: null }] },
+  { id: '2023', label: 'Asamblea 2023', docs: [{ name: 'Asamblea 2023', url: null }] },
+  { id: '2024', label: 'Asamblea 2024', docs: [{ name: 'Asamblea 2024', url: null }] },
+  { id: '2025', label: 'Asamblea 2025', docs: [{ name: 'Asamblea 2025', url: null }] },
+]
+
+const itemsAcordeon = computed<AcordeonItem[]>(() => {
+  const filtrados = (docs.value ?? []).filter((d: TransparencyDocument) => d.type === tabActiva.value)
+  if (filtrados.length === 0 && tabActiva.value === 'asambleas') return fallbackItems
+  if (filtrados.length === 0) return []
+
+  const prefix = tabYearLabel[tabActiva.value] ?? ''
+  const grupos = new Map<string, AcordeonItem>()
+  for (const doc of filtrados) {
+    const key = doc.year ? String(doc.year) : `solo-${doc.id}`
+    const label = doc.year ? `${prefix} ${doc.year}` : doc.title
+    if (!grupos.has(key)) grupos.set(key, { id: key, label, docs: [] })
+    grupos.get(key)!.docs.push({ name: doc.title, url: doc.file?.url ?? null })
+  }
+
+  return [...grupos.values()].sort((a, b) => b.id.localeCompare(a.id))
+})
 </script>

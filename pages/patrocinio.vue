@@ -8,8 +8,8 @@
         <!-- Logo del patrocinador -->
         <div class="flex justify-center mb-10">
           <img
-            src="/images/exposure.png"
-            alt="ClimbWork"
+            :src="sponsorLogoSrc"
+            :alt="sponsor?.name ?? 'Patrocinador'"
             class="w-[246px] h-auto object-contain"
           />
         </div>
@@ -98,7 +98,9 @@
               <!-- Botón CTA -->
               <div>
                 <a
-                  href="#"
+                  :href="sponsorUrl"
+                  :target="sponsorUrl !== '#' ? '_blank' : undefined"
+                  :rel="sponsorUrl !== '#' ? 'noopener noreferrer' : undefined"
                   class="inline-block px-10 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm tracking-widest hover:bg-[#e0b525] transition-colors"
                 >
                   COMPRAR AQUÍ
@@ -261,12 +263,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 useSeoMeta({
   title: 'ClimbWork - Patrocinador - Escalada Libre',
   description: 'ClimbWork vincula el oficio de la joyería en plata con el mundo de las montañas. Patrocinador oficial de Escalada Libre México A.C.',
 })
+
+const api = useApi()
+const { data: sponsors } = await useAsyncData('sponsor-page-1', () =>
+  api.sponsors.getAll().catch(() => [])
+)
+const sponsor = computed(() => sponsors.value?.[0] ?? null)
+const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? '/images/exposure.png')
+const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
 
 const imagenActiva = ref(0)
 

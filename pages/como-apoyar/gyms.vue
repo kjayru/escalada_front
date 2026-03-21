@@ -11,8 +11,14 @@
             <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-8">
               Tu aportación es de mucha ayuda
             </h1>
-            <p class="text-base text-[#6A6867] leading-relaxed">
-              Puedes apoyar nuestra causa donando directamente en varios gimnasios de escalada. Encuentra el más cercano para ti y súmate al esfuerzo por una escalada responsable.
+            <p class="text-base text-[#6A6867] leading-relaxed mb-6">
+              {{ gymMethod?.body ?? 'Puedes apoyar nuestra causa donando directamente en varios gimnasios de escalada. Encuentra el más cercano para ti y súmate al esfuerzo por una escalada responsable.' }}
+            </p>
+            <p v-if="gymContactEmail" class="text-base text-[#6A6867]">
+              ¿Tu gym quiere sumarse?
+              <a :href="`mailto:${gymContactEmail}`" class="text-[#F8C52D] hover:underline font-medium">
+                {{ gymContactEmail }}
+              </a>
             </p>
           </div>
 
@@ -134,25 +140,41 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+const api = useApi()
+
+const { data: campaigns } = await useAsyncData('campaigns-gyms',
+  () => api.supportCampaigns.getAll().catch(() => [])
+)
+
+const gymMethod = computed(() =>
+  campaigns.value?.[0]?.methods?.find((m: any) => m.type === 'gym_partner')
+)
+
+const gymContactEmail = computed(() =>
+  gymMethod.value?.settings?.contact_email ?? null
+)
+
 useSeoMeta({
   title: 'Gyms - Escalada Libre',
-  description: 'Apoya a Escalada Libre México A.C. donando directamente en los gimnasios de escalada participantes.',
+  description: 'Apoya a Escalada Libre Costa Rica donando directamente en los gimnasios de escalada participantes.',
 })
 
 const gyms = [
   {
     id: 1,
-    name: 'Adamanta Gonzalitos',
-    address: 'Plaza Real, Av. Dr. José Eleuterio González 315, Jardines del Cerro, 64060 Monterrey, N.L.',
+    name: 'Escalada San José',
+    address: 'Av. Central, Barrio Escalante, San José, Costa Rica',
     url: '#',
     logoType: 'circle',
     logoBg: '#F8C52D',
-    logoLetter: 'A',
+    logoLetter: 'E',
   },
   {
     id: 2,
-    name: 'Mad Complex',
-    address: 'Oscar Wilde 224-b, San Jerónimo. C.P. 64630 Monterrey, N.L.',
+    name: 'Vertical CR',
+    address: 'Curridabat, San José, Costa Rica',
     url: '#',
     logoType: 'rect',
     logoBg: '',
@@ -160,17 +182,17 @@ const gyms = [
   },
   {
     id: 3,
-    name: 'Adamanta Gonzalitos',
-    address: 'Plaza Real, Av. Dr. José Eleuterio González 315, Jardines del Cerro, 64060 Monterrey, N.L.',
+    name: 'Boulder Lab Heredia',
+    address: 'Centro Comercial Paseo de las Flores, Heredia, Costa Rica',
     url: '#',
     logoType: 'circle',
-    logoBg: '#F8C52D',
-    logoLetter: 'A',
+    logoBg: '#1a1a2e',
+    logoLetter: 'B',
   },
   {
     id: 4,
-    name: 'Mad Complex',
-    address: 'Oscar Wilde 224-b, San Jerónimo. C.P. 64630 Monterrey, N.L.',
+    name: 'Rock & Wall Alajuela',
+    address: 'La Guácima, Alajuela, Costa Rica',
     url: '#',
     logoType: 'rect',
     logoBg: '',

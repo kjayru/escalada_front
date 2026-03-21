@@ -8,11 +8,14 @@
 
           <!-- Left: Form -->
           <div class="lg:w-[55%]">
-            <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-10">
+            <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-4">
               Tu aportación es de mucha ayuda
             </h1>
+            <p v-if="paypalMethod?.body" class="text-base text-[#6A6867] leading-relaxed mb-8">
+              {{ paypalMethod.body }}
+            </p>
 
-            <form @submit.prevent="handleDonate" class="space-y-0">
+            <form @submit.prevent="handleDonate" class="space-y-0 mt-6">
 
               <!-- Nombre -->
               <div class="mb-5">
@@ -150,11 +153,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+
+const api = useApi()
+
+const { data: campaigns } = await useAsyncData('campaigns-paypal',
+  () => api.supportCampaigns.getAll().catch(() => [])
+)
+
+const paypalMethod = computed(() =>
+  campaigns.value?.[0]?.methods?.find((m: any) => m.type === 'paypal')
+)
+
+const paypalLink = computed(() =>
+  paypalMethod.value?.settings?.paypal_link ?? 'https://www.paypal.com/donate'
+)
+
+const suggestedAmount = computed(() =>
+  paypalMethod.value?.settings?.suggested_amount ?? null
+)
 
 useSeoMeta({
   title: 'Donar por PayPal - Escalada Libre',
-  description: 'Realiza tu donación a Escalada Libre México A.C. de forma segura a través de PayPal.',
+  description: 'Realiza tu donación a Escalada Libre Costa Rica de forma segura a través de PayPal.',
 })
 
 const donationRef = ref('00001')
@@ -163,12 +184,12 @@ const form = reactive({
   nombre: '',
   apellido: '',
   correo: '',
-  cantidad: '',
+  cantidad: suggestedAmount.value ? String(suggestedAmount.value) : '',
 })
 
 const handleDonate = () => {
-  // Redirect to PayPal with the donation amount
-  const paypalUrl = `https://www.paypal.com/donate/?hosted_button_id=ESCALADALIBRE`
-  window.open(paypalUrl, '_blank')
+  const url = new URL(paypalLink.value)
+  if (form.cantidad) url.searchParams.set('amount', form.cantidad)
+  window.open(url.toString(), '_blank')
 }
 </script>

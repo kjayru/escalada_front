@@ -27,9 +27,12 @@
             </div>
 
             <!-- Título -->
-            <h2 class="text-xl lg:text-2xl font-normal text-[#6A6867] leading-tight mb-3">
+            <NuxtLink
+              :to="articulo.slug ? '/blog/' + articulo.slug : '#'"
+              class="text-xl lg:text-2xl font-normal text-[#6A6867] leading-tight mb-3 block hover:opacity-80 transition-opacity"
+            >
               {{ articulo.titulo }}
-            </h2>
+            </NuxtLink>
 
             <!-- Descripción -->
             <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
@@ -137,162 +140,62 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import type { BlogPost } from '~/types/api'
 
 useSeoMeta({
   title: 'Todos los artículos - Blog - Escalada Libre',
   description: 'Todos los artículos del blog de Escalada Libre México A.C. Noticias, eventos y actividades.',
 })
 
-const totalPaginas = 181
+const api = useApi()
 const paginaActual = ref(1)
+
+const { data: response, refresh } = await useAsyncData('blog-all', () =>
+  api.blog.getAll({ page: paginaActual.value, per_page: 18 }).catch(() => null)
+)
+watch(paginaActual, () => refresh())
+
+const totalPaginas = computed(() => response.value?.meta?.last_page ?? 1)
+
+const fallbackArticulos = [
+  { id: 1, slug: '', tagline: 'MESA DE TRABAJO', titulo: 'Nos reunimos con el gobierno de Nuevo León', descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León', imagen: '/images/n-1.png' },
+  { id: 2, slug: '', tagline: 'EVENTOS', titulo: 'Todo para escaladores', descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...', imagen: '/images/img-20200308-wa-00051.png' },
+  { id: 3, slug: '', tagline: 'EVENTOS', titulo: 'Exposición fotográfica', descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...', imagen: '/images/huasteca-41.png' },
+]
+
+const articulos = computed(() => {
+  const apiData = response.value?.data ?? []
+  if (apiData.length) {
+    return apiData.map((p: BlogPost) => ({
+      id: p.id,
+      slug: p.slug,
+      tagline: p.author?.name?.toUpperCase() ?? 'BLOG',
+      titulo: p.title,
+      descripcion: p.excerpt ?? '',
+      imagen: p.featured_media?.url ?? '/images/n-1.png',
+    }))
+  }
+  return fallbackArticulos
+})
 
 const paginasVisibles = computed(() => {
   const paginas: (number | string)[] = []
   const rango = 4
 
-  for (let i = 1; i <= Math.min(rango, totalPaginas); i++) {
+  for (let i = 1; i <= Math.min(rango, totalPaginas.value); i++) {
     paginas.push(i)
   }
 
-  if (totalPaginas > rango + 2) {
+  if (totalPaginas.value > rango + 2) {
     paginas.push('...')
-    paginas.push(totalPaginas)
-  } else if (totalPaginas > rango) {
-    for (let i = rango + 1; i <= totalPaginas; i++) {
+    paginas.push(totalPaginas.value)
+  } else if (totalPaginas.value > rango) {
+    for (let i = rango + 1; i <= totalPaginas.value; i++) {
       paginas.push(i)
     }
   }
 
   return paginas
 })
-
-const articulos = [
-  {
-    id: 1,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 2,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 3,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-  {
-    id: 4,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 5,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 6,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-  {
-    id: 7,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 8,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 9,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-  {
-    id: 10,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 11,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 12,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-  {
-    id: 13,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 14,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 15,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-  {
-    id: 16,
-    tagline: 'MESA DE TRABAJO',
-    titulo: 'Nos reunimos con el gobierno de Nuevo León',
-    descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León',
-    imagen: '/images/n-1.png',
-  },
-  {
-    id: 17,
-    tagline: 'EVENTOS',
-    titulo: 'Todo para escaladores',
-    descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...',
-    imagen: '/images/img-20200308-wa-00051.png',
-  },
-  {
-    id: 18,
-    tagline: 'EVENTOS',
-    titulo: 'Exposición fotográfica',
-    descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...',
-    imagen: '/images/huasteca-41.png',
-  },
-]
 </script>
