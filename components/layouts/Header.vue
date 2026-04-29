@@ -1,14 +1,30 @@
 <template>
-  <header class="site-header fixed top-0 left-0 right-0 z-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex items-center justify-between py-4 lg:py-6">
-        <!-- Logo -->
-        <NuxtLink to="/" class="logo flex items-center gap-3 group">
+  <header class="site-header fixed top-0 left-0 right-0 z-40">
+    <div class="container mx-auto px-5">
+      <nav class="flex items-center justify-between py-3 lg:py-6">
+
+        <!-- Desktop: Logo izquierda -->
+        <NuxtLink to="/" class="logo hidden lg:flex items-center gap-3 group">
           <img src="/images/logoescalada.svg" alt="Escalada Libre A.C." class="h-12 w-auto" />
-         
         </NuxtLink>
-        
-        <!-- Desktop Navigation -->
+
+        <!-- Mobile: Botón hamburguesa (izquierda) -->
+        <button
+          @click="mobileMenuOpen = true"
+          class="lg:hidden flex items-center justify-center w-10 h-10 text-gray-800"
+          aria-label="Abrir menú"
+        >
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Mobile: Logo (centro) -->
+        <NuxtLink to="/" class="mobile-logo lg:hidden flex items-center gap-2">
+          <img src="/images/logoescalada.svg" alt="Escalada Libre A.C." class="h-10 w-auto" />
+        </NuxtLink>
+
+        <!-- Desktop: Navegación -->
         <ul class="nav-menu hidden lg:flex items-center gap-8">
           <li v-for="item in mainMenuItems" :key="item.id">
             <a
@@ -21,67 +37,92 @@
             <NuxtLink v-else :to="item.url" class="nav-link">{{ item.label }}</NuxtLink>
           </li>
           <li>
-            <NuxtLink 
-              to="/como-apoyar" 
-              class="inline-flex items-center px-6 py-2 bg-[#F5C400] text-gray-900 font-semibold rounded-full hover:bg-yellow-500 transition-colors"
+            <NuxtLink
+              to="/como-apoyar"
+              class="btn-donar inline-flex items-center px-6 py-2 rounded-full font-semibold"
             >
               Donar
             </NuxtLink>
           </li>
         </ul>
 
-        <!-- Mobile Menu Button -->
-        <button 
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          class="lg:hidden p-2 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 rounded"
-          :aria-label="mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
+        <!-- Mobile: Botón Donar (derecha) -->
+        <NuxtLink
+          to="/como-apoyar"
+          class="btn-donar lg:hidden inline-flex items-center px-5 py-2 rounded-full font-semibold text-sm"
         >
-          <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-          <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </nav>
+          Donar
+        </NuxtLink>
 
-      <!-- Mobile Navigation -->
-      <Transition name="mobile-menu">
-        <div v-if="mobileMenuOpen" class="lg:hidden pb-4 border-t border-gray-200 mt-4">
-          <ul class="space-y-2 pt-4">
-            <li v-for="item in mainMenuItems" :key="item.id">
-              <a
-                v-if="isExternalUrl(item.url)"
-                :href="item.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >{{ item.label }}</a>
-              <NuxtLink
-                v-else
-                :to="item.url"
-                class="mobile-nav-link"
-                @click="mobileMenuOpen = false"
-              >{{ item.label }}</NuxtLink>
-            </li>
-            <li class="pt-2">
-              <NuxtLink 
-                to="/como-apoyar" 
-                class="block w-full px-4 py-3 bg-[#F5C400] text-gray-900 font-semibold rounded-full hover:bg-yellow-500 transition-colors text-center"
-                @click="mobileMenuOpen = false"
-              >
-                Donar
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
-      </Transition>
+      </nav>
     </div>
   </header>
-  
+
   <!-- Header Spacer -->
-  <div class="h-20 lg:h-24"></div>
+  <div class="h-16 lg:h-24"></div>
+
+  <!-- Mobile Menu Overlay (full-screen) -->
+  <Transition name="menu-overlay">
+    <div
+      v-if="mobileMenuOpen"
+      class="mobile-overlay fixed inset-0 z-50 bg-white flex flex-col"
+    >
+      <!-- Botón cerrar (X) arriba izquierda -->
+      <button
+        @click="mobileMenuOpen = false"
+        class="close-btn absolute top-5 left-5 flex items-center justify-center w-10 h-10 text-gray-800"
+        aria-label="Cerrar menú"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Logo centrado -->
+      <div class="flex justify-center items-center pt-14 pb-6">
+        <NuxtLink to="/" @click="mobileMenuOpen = false" class="flex items-center gap-3">
+          <img src="/images/logoescalada.svg" alt="Escalada Libre A.C." class="h-14 w-auto" />
+        </NuxtLink>
+      </div>
+
+      <!-- Items de navegación con separadores -->
+      <nav class="flex-1 overflow-y-auto px-6">
+        <ul>
+          <li
+            v-for="item in mainMenuItems"
+            :key="item.id"
+            class="border-b border-gray-200"
+          >
+            <a
+              v-if="isExternalUrl(item.url)"
+              :href="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="menu-item-link"
+              @click="mobileMenuOpen = false"
+            >{{ item.label }}</a>
+            <NuxtLink
+              v-else
+              :to="item.url"
+              class="menu-item-link"
+              @click="mobileMenuOpen = false"
+            >{{ item.label }}</NuxtLink>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botón Donar abajo -->
+      <div class="px-6 py-8">
+        <NuxtLink
+          to="/como-apoyar"
+          class="btn-donar block w-full py-4 rounded-full font-semibold text-center text-base"
+          @click="mobileMenuOpen = false"
+        >
+          Donar
+        </NuxtLink>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -120,36 +161,86 @@ const isExternalUrl = (url: string) => url.startsWith('http')
   transition: all 0.3s ease;
 }
 
+/* ── Desktop nav links ── */
 .nav-link {
-  @apply text-gray-700 hover:text-gray-900 transition-colors font-medium;
+  position: relative;
+  color: #6A6867;
+  font-family: 'Readex Pro', sans-serif;
+  font-weight: 600;
   font-size: 15px;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: #F8C52D;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease;
+}
+
+.nav-link:hover,
 .nav-link.router-link-active {
-  @apply text-gray-900 font-semibold;
+  color: #3a3837;
 }
 
-.mobile-nav-link {
-  @apply block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium;
+.nav-link:hover::after,
+.nav-link.router-link-active::after {
+  transform: scaleX(1);
 }
 
-.mobile-nav-link.router-link-active {
-  @apply bg-gray-100 text-gray-900 font-semibold;
+/* ── Botón Donar (compartido header + overlay) ── */
+.btn-donar {
+  background-color: #F5C400;
+  color: #1a1a1a;
+  border: 2px solid #F5C400;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Mobile menu transition */
-.mobile-menu-enter-active,
-.mobile-menu-leave-active {
-  transition: all 0.3s ease;
+.btn-donar:hover {
+  background-color: #1a1a1a;
+  color: #F5C400;
 }
 
-.mobile-menu-enter-from {
+/* ── Overlay items ── */
+.menu-item-link {
+  display: block;
+  padding: 18px 4px;
+  text-align: center;
+  color: #2c2b2a;
+  font-family: 'Readex Pro', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.menu-item-link:hover,
+.menu-item-link.router-link-active {
+  color: #F5C400;
+}
+
+/* ── Transición overlay ── */
+.menu-overlay-enter-active,
+.menu-overlay-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.menu-overlay-enter-from {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateX(-20px);
 }
 
-.mobile-menu-leave-to {
+.menu-overlay-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateX(-20px);
 }
 </style>

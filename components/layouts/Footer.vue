@@ -9,7 +9,7 @@
         <hr class="border-t border-[#6A6867]/30" />
 
         <!-- Grid de navegación -->
-        <div class="grid grid-cols-2 md:grid-cols-4 py-8 gap-y-3">
+        <div class="grid grid-cols-2 md:grid-cols-4 py-8 gap-y-3 px-6 lg:px-12">
 
           <div v-for="(col, i) in footerColumns" :key="i" class="flex flex-col gap-2">
             <template v-for="item in col" :key="item.id">
@@ -31,7 +31,8 @@
       <img
         src="/images/back_footer.png"
         alt="Sierra Madre Occidental"
-        class="w-full h-full object-cover object-top"
+        class="w-full h-full object-cover"
+        style="object-position: 0px -149px;"
       />
     </div>
 

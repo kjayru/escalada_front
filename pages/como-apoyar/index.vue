@@ -4,7 +4,7 @@
     <!-- Hero Banner -->
     <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
       <img
-        src="/images/n-1.png"
+        :src="heroBannerImage ?? '/images/n-1.png'"
         alt="Cómo apoyar - Escalada Libre"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
@@ -12,14 +12,14 @@
     </section>
 
     <!-- Intro: ¿Por qué donar? -->
-    <section class="py-20 lg:py-28 bg-white">
+    <section class="py-20 lg:py-28 bg-white" :style="introExtraStyle">
       <div class="max-w-[860px] mx-auto px-8 lg:px-12">
-        <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-8">
-          {{ mainCampaign?.name ?? '¿Por qué donar? Porque creemos en la montaña y en su comunidad' }}
+        <h1 class="text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; line-height: 40px;">
+          {{ introHeading }}
         </h1>
-        <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed">
-          {{ mainCampaign?.description ?? 'Las donaciones hacen posible que la escalada en Costa Rica siga creciendo de forma segura, responsable y con respeto al entorno. Cada aporte, grande o pequeño, es una forma de cuidar lo que amamos.' }}
-        </p>
+        <p v-if="introSubheading" class="text-[#6A6867] mb-6" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; line-height: 40px;">{{ introSubheading }}</p>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 400; font-style: normal;" v-html="introBody"></div>
       </div>
     </section>
 
@@ -29,149 +29,57 @@
 
         <!-- Section header -->
         <div class="text-center mb-12 lg:mb-16">
-          <h2 class="text-3xl lg:text-[40px] font-normal text-[#6A6867]">
-            Cómo nos puedes apoyar
+          <h2 style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; color: #000000;">
+            {{ intro2Heading }}
           </h2>
-          <p class="text-base lg:text-lg text-[#6A6867] mt-3">
-            {{ campaignSubtitle }}
-          </p>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-if="intro2Body" class="text-[#6A6867] mt-3" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 400;" v-html="intro2Body"></div>
+          <p v-else class="text-base lg:text-lg text-[#6A6867] mt-3">{{ campaignSubtitle }}</p>
         </div>
 
-        <!-- Method rows -->
+        <!-- Method rows — dinámicos desde CMS (type=split) -->
         <div class="max-w-[1400px] mx-auto border-t border-gray-200">
 
-          <!-- Row 1: PayPal -->
-          <div class="flex items-stretch border-b border-gray-200">
+          <div
+            v-for="block in splitBlocks"
+            :key="block.id"
+            class="flex items-stretch"
+            style="margin-bottom: 5rem;"
+          >
+            <!-- Label vertical izquierdo -->
             <div class="w-10 lg:w-14 flex items-center justify-center flex-shrink-0">
               <span
                 class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
                 style="writing-mode: vertical-rl; transform: rotate(180deg);"
-              >Paypal</span>
+              >{{ block.subheading }}</span>
             </div>
-            <div class="flex flex-col lg:flex-row flex-1">
-              <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
-                <img
-                  :src="paypalMethod?.image ?? '/images/patrocinador1.png'"
-                  :alt="paypalMethod?.title ?? 'Donar por PayPal'"
-                  class="w-full h-full object-cover"
-                  style="min-height: 400px;"
-                />
-              </div>
-              <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ paypalMethod?.title ?? 'Por paypal' }}</h3>
-                <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  {{ paypalMethod?.body ?? 'Desde nuestro sitio web, puedes realizar tu donación por medio de Paypal.' }}
-                </p>
-                <div>
-                  <NuxtLink
-                    to="/como-apoyar/paypal"
-                    class="inline-block px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider"
-                  >
-                    DONAR AHORA
-                  </NuxtLink>
-                </div>
-              </div>
+            <!-- Imagen con fondo de color -->
+            <div
+              class="lg:w-1/2 flex items-center justify-center p-8"
+              :style="{ background: block.background ?? '#f6f6f6', minHeight: '400px' }"
+            >
+              <img
+                v-if="block.image"
+                :src="block.image"
+                :alt="block.title"
+                class="max-w-full max-h-full object-contain"
+                style="max-height: 380px;"
+              />
+              <div v-else class="w-full bg-gray-200" style="height: 380px;"></div>
             </div>
-          </div>
-
-          <!-- Row 2: Transferencia -->
-          <div class="flex items-stretch border-b border-gray-200">
-            <div class="w-10 lg:w-14 flex items-center justify-center flex-shrink-0">
-              <span
-                class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
-                style="writing-mode: vertical-rl; transform: rotate(180deg);"
-              >Transferencia</span>
-            </div>
-            <div class="flex flex-col lg:flex-row flex-1">
-              <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
-                <img
-                  :src="bankMethod?.image ?? '/images/patrocinador2.png'"
-                  :alt="bankMethod?.title ?? 'Transferencia interbancaria'"
-                  class="w-full h-full object-cover"
-                  style="min-height: 400px;"
-                />
-              </div>
-              <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ bankMethod?.title ?? 'Transferencia interbancaria' }}</h3>
-                <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  {{ bankMethod?.body ?? 'Puedes realizar transferencia con los datos que te compartimos.' }}
-                </p>
-                <div>
-                  <NuxtLink
-                    to="/como-apoyar/transferencia"
-                    class="inline-block px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider"
-                  >
-                    TRANSFERIR AHORA
-                  </NuxtLink>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 3: Gyms -->
-          <div class="flex items-stretch border-b border-gray-200">
-            <div class="w-10 lg:w-14 flex items-center justify-center flex-shrink-0">
-              <span
-                class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
-                style="writing-mode: vertical-rl; transform: rotate(180deg);"
-              >Gyms</span>
-            </div>
-            <div class="flex flex-col lg:flex-row flex-1">
-              <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
-                <img
-                  :src="gymMethod?.image ?? '/images/img-20200308-wa-00051.png'"
-                  :alt="gymMethod?.title ?? 'Donar en gyms'"
-                  class="w-full h-full object-cover"
-                  style="min-height: 400px;"
-                />
-              </div>
-              <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ gymMethod?.title ?? 'Gyms' }}</h3>
-                <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  {{ gymMethod?.body ?? 'Puedes acudir a cualquiera de los gimnasios que nos apoyan.' }}
-                </p>
-                <div>
-                  <NuxtLink
-                    to="/como-apoyar/gyms"
-                    class="px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider inline-block"
-                  >
-                    VER LISTADO DE GYMS
-                  </NuxtLink>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 4: Productos -->
-          <div class="flex items-stretch border-b border-gray-200">
-            <div class="w-10 lg:w-14 flex items-center justify-center flex-shrink-0">
-              <span
-                class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
-                style="writing-mode: vertical-rl; transform: rotate(180deg);"
-              >Productos</span>
-            </div>
-            <div class="flex flex-col lg:flex-row flex-1">
-              <div class="lg:w-1/2 overflow-hidden bg-[#f5f5f0]" style="min-height: 400px;">
-                <img
-                  :src="productMethod?.image ?? '/images/pico-norte-1.png'"
-                  :alt="productMethod?.title ?? 'Comprar productos Escalada Libre'"
-                  class="w-full h-full object-cover"
-                  style="min-height: 400px;"
-                />
-              </div>
-              <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-                <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ productMethod?.title ?? 'Comprando nuestros productos' }}</h3>
-                <p class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]">
-                  {{ productMethod?.body ?? 'También nos puedes apoyar comprando productos de Escalada Libre.' }}
-                </p>
-                <div>
-                  <NuxtLink
-                    to="/como-apoyar/productos"
-                    class="inline-block px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider"
-                  >
-                    VER PRODUCTOS
-                  </NuxtLink>
-                </div>
+            <!-- Texto + botón -->
+            <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
+              <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ block.title }}</h3>
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]" v-html="block.body"></div>
+              <div v-if="block.boton">
+                <NuxtLink
+                  :to="block.boton_url ?? '#'"
+                  class="inline-block px-8 py-3 text-gray-900 font-semibold text-sm hover:opacity-90 transition-opacity tracking-wider"
+                  style="background: #F8C52D; border-radius: 25px;"
+                >
+                  {{ block.boton.toUpperCase() }}
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -181,33 +89,38 @@
     </section>
 
     <!-- ¿Quieres realizar un proyecto? -->
-    <section class="bg-white">
-      <div class="flex flex-col lg:flex-row" style="min-height: 789px;">
-        <div class="lg:w-1/2 overflow-hidden" style="min-height: 500px;">
-          <img
-            src="/images/huasteca-41.png"
-            alt="Realizar un proyecto con Escalada Libre"
-            class="w-full h-full object-cover"
-            style="min-height: 500px;"
-          />
-        </div>
-        <div class="lg:w-1/2 flex flex-col justify-center px-12 lg:px-24 py-16 bg-white">
-          <h2 class="text-2xl lg:text-[38px] font-normal text-[#6A6867] leading-tight mb-8">
-            ¿Quieres realizar un proyecto?
-          </h2>
-          <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-4 max-w-[500px]">
-            ¿Tienes una iniciativa en mente con la cuál quieres apoyar el trabajo de Escalada Libre?
-          </p>
-          <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-10 max-w-[500px]">
-            ¡Ponte en contacto con nosotros y echamos la maquinaria a andar!
-          </p>
-          <div>
-            <NuxtLink
-              to="/contacto"
-              class="inline-block px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider"
-            >
-              CONTÁCTANOS
-            </NuxtLink>
+    <section class="bg-white py-12 lg:py-20">
+      <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-stretch gap-0" style="min-height: 620px;">
+          <!-- Imagen con esquina inferior-izquierda redondeada -->
+          <div class="lg:w-1/2 overflow-hidden" style="border-radius: 0 0 0 40px; min-height: 500px;">
+            <img
+              src="/images/huasteca-41.png"
+              alt="Realizar un proyecto con Escalada Libre"
+              class="w-full h-full object-cover"
+              style="min-height: 500px;"
+            />
+          </div>
+          <!-- Texto + botón outlined -->
+          <div class="lg:w-1/2 flex flex-col justify-center px-12 lg:px-20 py-16 bg-white">
+            <h2 class="text-2xl lg:text-[38px] font-semibold text-[#111111] leading-tight mb-8" style="font-family: 'Readex Pro', sans-serif;">
+              ¿Quieres realizar un proyecto?
+            </h2>
+            <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-4 max-w-[480px]">
+              ¿Tienes una iniciativa en mente con la cuál quieres apoyar el trabajo de Escalada Libre?
+            </p>
+            <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-10 max-w-[480px]">
+              ¡Ponte en contacto con nosotros y echamos la maquinaria a andar!
+            </p>
+            <div>
+              <NuxtLink
+                to="/contacto"
+                class="inline-block px-10 py-3 text-[#111111] font-semibold text-sm tracking-wider hover:bg-gray-50 transition-colors"
+                style="border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;"
+              >
+                CONTÁCTANOS
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </div>
@@ -243,55 +156,10 @@
     </section>
 
     <!-- Newsletter + Product Cards -->
-    <section class="prefooter-cards py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="bg-[#f5f5f0] rounded-xl p-8 flex flex-col justify-between min-h-[357px]">
-            <div>
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[#6A6867] mb-4">NEWSLETTER</p>
-              <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] leading-snug mb-6">
-                Recibe noticias de Escalada Libre a tu correo
-              </h3>
-            </div>
-            <div class="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Escribe tu correo"
-                class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
-              />
-              <button class="self-end px-6 py-3 bg-[#F8C52D] text-gray-900 font-medium text-sm hover:bg-[#e0b525] transition-colors">
-                Suscribir
-              </button>
-            </div>
-          </div>
-          <div class="relative rounded-xl overflow-hidden min-h-[357px]">
-            <img src="/images/patrocinador1.png" alt="Aspect Pro" class="w-full h-full object-cover absolute inset-0" />
-            <div class="absolute inset-0 bg-black/20"></div>
-            <div class="relative z-10 p-8">
-              <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">ASPECT PRO</p>
-              <p class="text-white/80 text-sm mt-1">Built to go big</p>
-            </div>
-          </div>
-          <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
-            <img src="/images/exposure.png" alt="ClimbWork" class="max-w-[70%] mx-auto filter brightness-0 invert" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <SectionsPrefooterNewsletterSection />
 
     <!-- Mountain Pre-Footer -->
-    <section class="mountain-prefooter" style="min-height: 675px;">
-      <div class="flex flex-col items-center justify-center py-24 px-4 text-center" style="min-height: 675px;">
-        <img src="/images/logoescalada.svg" alt="Escalada Libre" class="w-40 lg:w-52 mb-8" />
-        <h2 class="text-4xl lg:text-6xl font-bold text-[#1a1a1a] mb-8 tracking-wider">¡GRACIAS POR TU APOYO!</h2>
-        <NuxtLink
-          to="/como-apoyar"
-          class="px-10 py-4 bg-[#F8C52D] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#e0b525] transition-colors"
-        >
-          Apoyar
-        </NuxtLink>
-      </div>
-    </section>
+    <SectionsMountainPrefooter />
 
   </div>
 </template>
@@ -301,6 +169,10 @@ import { computed } from 'vue'
 import type { SupportMethod } from '~/types/api'
 
 const api = useApi()
+
+const { data: page } = await useAsyncData('page-como-apoyar', () =>
+  api.pages.getBySlug('como-apoyar').catch(() => null),
+)
 
 const { data: campaign } = await useAsyncData('support-campaign-como-apoyar',
   () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null)
@@ -317,6 +189,66 @@ const gymMethod     = computed(() => methodByType('gyms'))
 const productMethod = computed(() => methodByType('products'))
 
 const mainCampaign = computed(() => campaign.value)
+
+const heroSection = computed(() =>
+  page.value?.sections?.find(
+    s => s.type === 'hero' || s.settings?.key === 'hero',
+  ),
+)
+const heroBannerImage = computed(
+  () =>
+    (heroSection.value?.featured_media?.url as string | undefined) ??
+    (heroSection.value?.settings?.image as string | undefined) ??
+    null,
+)
+
+const introSection = computed(() =>
+  page.value?.sections?.find(s => s.type === 'text'),
+)
+
+const introHeading = computed(
+  () => introSection.value?.heading ?? mainCampaign.value?.name ?? '¿Por qué donar? Porque creemos en la montaña y en su comunidad',
+)
+const introSubheading = computed(
+  () => introSection.value?.subheading ?? null,
+)
+const introBody = computed(
+  () => introSection.value?.body ?? mainCampaign.value?.description ?? 'Las donaciones hacen posible que la escalada en México siga creciendo de forma segura, responsable y con respeto al entorno.',
+)
+
+const introExtraStyle = computed(() => {
+  const s = introSection.value?.settings
+  if (s?.key && s?.value) return { [s.key as string]: s.value }
+  return {}
+})
+
+const intro2Section = computed(() =>
+  page.value?.sections?.filter(s => s.type === 'text')?.[1],
+)
+const intro2Heading = computed(
+  () => intro2Section.value?.heading ?? 'Cómo nos puedes apoyar',
+)
+const intro2Body = computed(
+  () => intro2Section.value?.body ?? null,
+)
+
+const splitBlocks = computed(() =>
+  (page.value?.sections?.filter(s => s.type === 'split') ?? []).map(s => ({
+    id: s.id,
+    subheading: s.subheading ?? '',
+    title: s.heading ?? '',
+    body: s.body ?? '',
+    image:
+      s.featured_media?.url ??
+      (s.settings?.image as string | undefined) ??
+      null,
+    background:
+      (s.settings?.background as string | undefined) ??
+      (s.settings?.key === 'background' ? (s.settings?.value as string | undefined) ?? null : null),
+    boton: (s.settings?.boton as string | undefined) ?? null,
+    boton_url: (s.settings?.boton_url as string | undefined) ?? null,
+  })),
+)
 
 const campaignSubtitle = computed(() =>
   methods.value.length

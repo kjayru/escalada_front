@@ -4,15 +4,15 @@
     <!-- Hero Banner -->
     <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
       <img
-        src="/images/img-33661.png"
-        alt="Actividades - Escalada Libre"
+        :src="heroImage"
+        :alt="heroAlt"
         class="absolute inset-0 w-full h-full object-cover object-top"
       />
       <div class="absolute inset-0 bg-black/20"></div>
     </section>
 
     <!-- Intro + Photo Mosaic -->
-    <section class="mosaic-section bg-white">
+    <section class="mosaic-section bg-white pt-40">
       <div class="mosaic-grid">
 
         <!-- Left tall photo (pos 0) -->
@@ -26,37 +26,20 @@
 
         <!-- Center top: title + text -->
         <div class="mosaic-center-text flex flex-col items-center justify-center px-8 py-12 text-center">
-          <h1 class="text-3xl lg:text-[35px] font-medium text-[#6A6867] mb-4">{{ introTitle }}</h1>
+          <h1 class="text-3xl lg:text-[35px] font-medium text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif;">{{ introTitle }}</h1>
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed max-w-xs mb-8" v-html="introDesc"></p>
+          <div class="text-base lg:text-lg font-normal text-[#6A6867] leading-relaxed max-w-xs mb-8" style="font-family: 'Readex Pro', sans-serif;" v-html="introDesc"></div>
           <a
             href="#cronologia"
-            class="inline-block px-8 py-3 border border-[#6A6867] text-[#6A6867] font-medium hover:bg-[#6A6867] hover:text-white transition-colors text-sm"
+            class="inline-flex items-center justify-center min-w-[21.5rem] px-10 py-3 border border-[#6A6867] rounded-full text-[#6A6867] font-bold hover:bg-[#6A6867] hover:text-white transition-colors text-sm"
+            style="font-family: 'Readex Pro', sans-serif;"
           >
             Ver actividades
           </a>
         </div>
 
-        <!-- Top-right photo (pos 1) -->
+        <!-- Top-right photo (04) -->
         <div class="mosaic-top-right">
-          <img
-            :src="mosaicImg(1)"
-            :alt="mosaicAlt(1)"
-            class="w-full h-full object-cover"
-          />
-        </div>
-
-        <!-- Center-left photo (pos 2) -->
-        <div class="mosaic-center-left">
-          <img
-            :src="mosaicImg(2)"
-            :alt="mosaicAlt(2)"
-            class="w-full h-full object-cover"
-          />
-        </div>
-
-        <!-- Center-right photo (pos 3) -->
-        <div class="mosaic-center-right">
           <img
             :src="mosaicImg(3)"
             :alt="mosaicAlt(3)"
@@ -64,8 +47,26 @@
           />
         </div>
 
-        <!-- Far-right tall photo (pos 4) -->
-        <div class="mosaic-right-tall">
+        <!-- Second row left photo (02) -->
+        <div class="mosaic-center-left">
+          <img
+            :src="mosaicImg(1)"
+            :alt="mosaicAlt(1)"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Second row center photo (03) -->
+        <div class="mosaic-center-right">
+          <img
+            :src="mosaicImg(2)"
+            :alt="mosaicAlt(2)"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Second row right photo (05) -->
+        <div class="mosaic-second-row-right">
           <img
             :src="mosaicImg(4)"
             :alt="mosaicAlt(4)"
@@ -73,7 +74,7 @@
           />
         </div>
 
-        <!-- Bottom-left photo (pos 5) -->
+        <!-- Third row left photo (06) -->
         <div class="mosaic-bottom-left">
           <img
             :src="mosaicImg(5)"
@@ -82,7 +83,7 @@
           />
         </div>
 
-        <!-- Bottom-center photo (pos 6) -->
+        <!-- Third row center photo (07) -->
         <div class="mosaic-bottom-center">
           <img
             :src="mosaicImg(6)"
@@ -91,7 +92,7 @@
           />
         </div>
 
-        <!-- Bottom-center-right photo (pos 7) -->
+        <!-- Third row center-right photo (08) -->
         <div class="mosaic-bottom-center-right">
           <img
             :src="mosaicImg(7)"
@@ -100,11 +101,38 @@
           />
         </div>
 
-        <!-- Bottom-right fill photo (pos 8) -->
-        <div class="mosaic-bottom-right-fill">
+        <!-- Right tall photo (09) -->
+        <div class="mosaic-right-tall">
           <img
             :src="mosaicImg(8)"
             :alt="mosaicAlt(8)"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Bottom far-left photo (10) -->
+        <div class="mosaic-bottom-far-left">
+          <img
+            :src="mosaicImg(9)"
+            :alt="mosaicAlt(9)"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Bottom fill photo (11) -->
+        <div class="mosaic-bottom-fill">
+          <img
+            :src="mosaicImg(10)"
+            :alt="mosaicAlt(10)"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Bottom center-right photo (12) -->
+        <div class="mosaic-mid-bottom-fill">
+          <img
+            :src="mosaicImg(11)"
+            :alt="mosaicAlt(11)"
             class="w-full h-full object-cover"
           />
         </div>
@@ -115,7 +143,7 @@
     <!-- Cronología de Actividades -->
     <section id="cronologia" class="cronologia-section py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] mb-12">
+        <h2 class="text-[20px] font-normal text-[#6A6867] mb-12" style="font-family: 'Readex Pro', sans-serif;">
           Cronología de actividades
         </h2>
 
@@ -130,46 +158,52 @@
             <button
               @click="toggleYear(year.year)"
               class="w-full flex items-center justify-between py-5 text-left transition-colors"
-              :class="openYear === year.year ? 'bg-[#F8C52D]' : 'bg-white hover:bg-gray-50'"
+              :class="openYear === year.year ? 'bg-white' : 'bg-white hover:bg-gray-50'"
             >
               <span
-                class="text-2xl lg:text-[30px] font-normal ml-4 lg:ml-20"
-                :class="openYear === year.year ? 'text-gray-900' : 'text-[#6A6867]'"
+                class="text-2xl lg:text-[30px] font-medium ml-4 lg:ml-20"
+                :class="openYear === year.year ? 'text-[#F8C52D]' : 'text-[#000000]'"
+                style="font-family: 'Readex Pro', sans-serif;"
               >
                 {{ year.year }}
               </span>
-              <svg
-                class="w-5 h-5 mr-4 lg:mr-8 transition-transform duration-300 flex-shrink-0"
-                :class="[
-                  openYear === year.year ? 'rotate-45 text-gray-900' : 'text-[#6A6867]'
-                ]"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
+              <img
+                :src="openYear === year.year ? '/images/minus-orange.png' : '/images/plus.svg'"
+                :alt="openYear === year.year ? 'Contraer año' : 'Expandir año'"
+                class="w-[1.7rem] h-[1.7rem] mr-4 lg:mr-8 flex-shrink-0"
+              />
             </button>
 
             <!-- Activities list -->
             <div v-show="openYear === year.year" class="bg-white">
-              <ul class="divide-y divide-gray-100">
+              <ul class="max-w-4xl mx-auto divide-y divide-gray-100">
                 <li
                   v-for="activity in year.activities"
                   :key="activity.id"
-                  class="flex items-center justify-between px-4 lg:px-20 py-4 hover:bg-gray-50 transition-colors"
+                  class="grid grid-cols-[minmax(0,1fr)_2rem] items-center gap-6 px-4 lg:px-6 py-4 hover:bg-gray-50 transition-colors"
                 >
-                  <span class="text-base lg:text-lg text-[#6A6867]">{{ activity.name }}</span>
+                  <span class="text-base lg:text-lg text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif;">{{ activity.name }}</span>
                   <a
                     v-if="activity.file"
                     :href="activity.file.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex-shrink-0 ml-4 w-8 h-8 flex items-center justify-center text-[#6A6867] hover:text-[#F8C52D] transition-colors"
+                    class="group flex-shrink-0 w-8 h-8 flex items-center justify-center"
                     :aria-label="`Descargar ${activity.name}`"
                     download
                   >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
+                    <img
+                      src="/images/Download.svg"
+                      alt=""
+                      aria-hidden="true"
+                      class="block w-5 h-5 group-hover:hidden"
+                    />
+                    <img
+                      src="/images/Download-open.svg"
+                      alt=""
+                      aria-hidden="true"
+                      class="hidden w-5 h-5 group-hover:block"
+                    />
                   </a>
                 </li>
               </ul>
@@ -181,77 +215,16 @@
     </section>
 
     <!-- Newsletter + Product Cards -->
-    <section class="prefooter-cards py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- Newsletter Card -->
-          <div class="bg-[#f5f5f0] rounded-xl p-8 flex flex-col justify-between min-h-[357px]">
-            <div>
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[#6A6867] mb-4">NEWSLETTER</p>
-              <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] leading-snug mb-6">
-                Recibe noticias de Escalada Libre a tu correo
-              </h3>
-            </div>
-            <div class="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Escribe tu correo"
-                class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
-              />
-              <button class="self-end px-6 py-3 bg-[#F8C52D] text-gray-900 font-medium text-sm hover:bg-[#e0b525] transition-colors">
-                Suscribir
-              </button>
-            </div>
-          </div>
-          <!-- ASPECT PRO Card -->
-          <div class="relative rounded-xl overflow-hidden min-h-[357px]">
-            <img
-              src="/images/patrocinador1.png"
-              alt="Aspect Pro"
-              class="w-full h-full object-cover absolute inset-0"
-            />
-            <div class="absolute inset-0 bg-black/20"></div>
-            <div class="relative z-10 p-8">
-              <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">ASPECT PRO</p>
-              <p class="text-white/80 text-sm mt-1">Built to go big</p>
-            </div>
-          </div>
-          <!-- ClimbWork Card -->
-          <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
-            <img
-              src="/images/exposure.png"
-              alt="ClimbWork"
-              class="max-w-[70%] mx-auto filter brightness-0 invert"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+    <SectionsPrefooterNewsletterSection />
 
     <!-- Mountain Pre-Footer -->
-    <section class="mountain-prefooter" style="min-height: 675px;">
-      <div class="flex flex-col items-center justify-center py-24 px-4 text-center" style="min-height: 675px;">
-        <img
-          src="/images/logoescalada.svg"
-          alt="Escalada Libre"
-          class="w-40 lg:w-52 mb-8"
-        />
-        <h2 class="text-4xl lg:text-6xl font-bold text-[#1a1a1a] mb-8 tracking-wider">
-          ¡GRACIAS POR TU APOYO!
-        </h2>
-        <NuxtLink
-          to="/como-apoyar"
-          class="px-10 py-4 bg-[#F8C52D] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#e0b525] transition-colors"
-        >
-          Apoyar
-        </NuxtLink>
-      </div>
-    </section>
+    <SectionsMountainPrefooter />
 
   </div>
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
 const api = useApi()
 
 const { data: page } = await useAsyncData('page-actividades', () =>
@@ -269,11 +242,38 @@ useSeoMeta({
     'Listado de actividades enfocadas en el cuidado, la seguridad y el disfrute responsable de las áreas de montaña.',
 })
 
+const sec = (key: string) =>
+  page.value?.sections?.find(s => s.settings?.key === key)
+
+const apiImg = (path: string | null | undefined): string => {
+  if (!path) return '/images/img-33661.png'
+  if (path.startsWith('http')) return path
+  if (path.startsWith('/images/')) return path
+  return `${config.public.apiBase}${path}`
+}
+
+const heroImage = computed(
+  () => sec('hero')?.featured_media?.url ?? apiImg(sec('hero')?.settings?.image as string | undefined),
+)
+
+const heroAlt = computed(
+  () => sec('hero')?.featured_media?.alt ?? (sec('hero')?.settings?.alt as string) ?? 'Actividades - Escalada Libre',
+)
+
 // Galería dinámica del mosaico
 const gallerySection = computed(() =>
   page.value?.sections?.find(s => s.type === 'gallery'),
 )
-const galleryImages = computed(() => gallerySection.value?.media ?? [])
+const galleryOrderValue = (fileName: string | null | undefined, fallbackIndex: number) => {
+  const match = fileName?.match(/^(\d+)/)
+  return match ? Number(match[1]) : fallbackIndex
+}
+
+const galleryImages = computed(() =>
+  [...(gallerySection.value?.media ?? [])].sort((left, right) =>
+    galleryOrderValue(left.file_name, 9999) - galleryOrderValue(right.file_name, 9999),
+  ),
+)
 
 const MOSAIC_FALLBACKS = [
   '/images/n-1.png',
@@ -285,6 +285,9 @@ const MOSAIC_FALLBACKS = [
   '/images/patrocinador1.png',
   '/images/patrocinador2.png',
   '/images/unrioenelrio-home-1.png',
+  '/images/source-pico-norte.png',
+  '/images/screen-shot-20241119-at-64211-pm-1.png',
+  '/images/img-33661.png',
 ]
 
 const mosaicImg = (i: number) =>
@@ -338,8 +341,10 @@ const toggleYear = (year: string) => {
 /* ── Mosaic photo grid ── */
 .mosaic-grid {
   display: grid;
+  width: min(100% - 4rem, 1680px);
+  margin: 0 auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 419px 419px 419px;
+  grid-template-rows: 419px 419px 419px 419px;
 }
 
 .mosaic-left-tall {
@@ -372,9 +377,15 @@ const toggleYear = (year: string) => {
   overflow: hidden;
 }
 
+.mosaic-second-row-right {
+  grid-column: 4;
+  grid-row: 2;
+  overflow: hidden;
+}
+
 .mosaic-right-tall {
   grid-column: 4;
-  grid-row: 2 / 4;
+  grid-row: 3 / 5;
   overflow: hidden;
 }
 
@@ -396,14 +407,29 @@ const toggleYear = (year: string) => {
   overflow: hidden;
 }
 
-.mosaic-bottom-right-fill {
-  display: none; /* used only if we need extra */
+.mosaic-mid-bottom-fill {
+  grid-column: 3;
+  grid-row: 4;
+  overflow: hidden;
+}
+
+.mosaic-bottom-far-left {
+  grid-column: 1;
+  grid-row: 4;
+  overflow: hidden;
+}
+
+.mosaic-bottom-fill {
+  grid-column: 2;
+  grid-row: 4;
+  overflow: hidden;
 }
 
 /* Responsive: on smaller screens collapse to simple flow */
 @media (max-width: 1023px) {
   .mosaic-grid {
     display: grid;
+    width: min(100% - 2rem, 1680px);
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
   }
@@ -411,10 +437,14 @@ const toggleYear = (year: string) => {
   .mosaic-left-tall,
   .mosaic-center-left,
   .mosaic-center-right,
+  .mosaic-second-row-right,
   .mosaic-top-right,
   .mosaic-bottom-left,
   .mosaic-bottom-center,
-  .mosaic-bottom-center-right {
+  .mosaic-bottom-center-right,
+  .mosaic-mid-bottom-fill,
+  .mosaic-bottom-far-left,
+  .mosaic-bottom-fill {
     grid-column: auto;
     grid-row: auto;
     height: 300px;
@@ -434,6 +464,7 @@ const toggleYear = (year: string) => {
 
 @media (max-width: 639px) {
   .mosaic-grid {
+    width: min(100% - 2rem, 1680px);
     grid-template-columns: 1fr;
   }
 
@@ -444,10 +475,14 @@ const toggleYear = (year: string) => {
   .mosaic-left-tall,
   .mosaic-center-left,
   .mosaic-center-right,
+  .mosaic-second-row-right,
   .mosaic-top-right,
   .mosaic-bottom-left,
   .mosaic-bottom-center,
   .mosaic-bottom-center-right,
+  .mosaic-mid-bottom-fill,
+  .mosaic-bottom-far-left,
+  .mosaic-bottom-fill,
   .mosaic-right-tall {
     height: 260px;
   }

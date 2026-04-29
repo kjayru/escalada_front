@@ -102,7 +102,7 @@
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
                 </a>
-                <a href="#" aria-label="Instagram" class="text-[#6A6867] hover:text-gray-900 transition-colors">
+                <a href="https://www.instagram.com/escaladalibreac/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-[#6A6867] hover:text-gray-900 transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2" />
                     <circle cx="12" cy="12" r="4" stroke-width="2" />
@@ -193,90 +193,45 @@
     </section>
 
     <!-- Newsletter + Product Cards -->
-    <section class="prefooter-cards py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="bg-[#f5f5f0] rounded-xl p-8 flex flex-col justify-between min-h-[357px]">
-            <div>
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[#6A6867] mb-4">NEWSLETTER</p>
-              <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] leading-snug mb-6">
-                Recibe noticias de Escalada Libre a tu correo
-              </h3>
-            </div>
-            <div class="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Escribe tu correo"
-                class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
-              />
-              <button class="self-end px-6 py-3 bg-[#F8C52D] text-gray-900 font-medium text-sm hover:bg-[#e0b525] transition-colors">
-                Suscribir
-              </button>
-            </div>
-          </div>
-          <div class="relative rounded-xl overflow-hidden min-h-[357px]">
-            <img src="/images/patrocinador1.png" alt="Aspect Pro" class="w-full h-full object-cover absolute inset-0" />
-            <div class="absolute inset-0 bg-black/20"></div>
-            <div class="relative z-10 p-8">
-              <p class="text-white font-bold text-xl lg:text-2xl tracking-wider">ASPECT PRO</p>
-              <p class="text-white/80 text-sm mt-1">Built to go big</p>
-            </div>
-          </div>
-          <div class="bg-[#1a1a2e] rounded-xl p-8 flex items-center justify-center min-h-[357px]">
-            <img src="/images/exposure.png" alt="ClimbWork" class="max-w-[70%] mx-auto filter brightness-0 invert" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <SectionsPrefooterNewsletterSection />
 
     <!-- Mountain Pre-Footer -->
-    <section class="mountain-prefooter" style="min-height: 675px;">
-      <div class="flex flex-col items-center justify-center py-24 px-4 text-center" style="min-height: 675px;">
-        <img src="/images/logoescalada.svg" alt="Escalada Libre" class="w-40 lg:w-52 mb-8" />
-        <h2 class="text-4xl lg:text-6xl font-bold text-[#1a1a1a] mb-8 tracking-wider">¡GRACIAS POR TU APOYO!</h2>
-        <NuxtLink
-          to="/como-apoyar"
-          class="px-10 py-4 bg-[#F8C52D] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#e0b525] transition-colors"
-        >
-          Apoyar
-        </NuxtLink>
-      </div>
-    </section>
+    <SectionsMountainPrefooter />
 
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+    import { ref, computed } from 'vue'
 
-useSeoMeta({
-  title: 'Aspect Pro - Exposure - Patrocinador - Escalada Libre',
-  description: 'El Aspect Pro de Exposure, diseñado para misiones a tope, grandes días en el valle y altos picos alpinos. Patrocinador oficial de Escalada Libre México A.C.',
-})
+    useSeoMeta({
+      title: 'Aspect Pro - Exposure - Patrocinador - Escalada Libre',
+      description: 'El Aspect Pro de Exposure, diseñado para misiones a tope, grandes días en el valle y altos picos alpinos. Patrocinador oficial de Escalada Libre México A.C.',
+    })
 
-const api = useApi()
-const { data: sponsors } = await useAsyncData('sponsor-page-2', () =>
-  api.sponsors.getAll().catch(() => [])
-)
-const sponsor = computed(() => sponsors.value?.[0] ?? null)
-const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? '/images/exposure.png')
-const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
+    const api = useApi()
+    const { data: sponsors } = await useAsyncData('sponsor-page-2', () =>
+      api.sponsors.getAll().catch(() => [])
+    )
+    const sponsor = computed(() => sponsors.value?.[0] ?? null)
+    const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? '/images/exposure.png')
+    const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
 
-const imagenActiva = ref(0)
-const imagenActual = computed(() => imagenes[imagenActiva.value] ?? imagenes[0]!)
+    const imagenActiva = ref(0)
+    const imagenActual = computed(() => imagenes[imagenActiva.value] ?? imagenes[0]!)
 
-const imagenes = [
-  { src: '/images/patrocinador1.png', alt: 'Aspect Pro - vista frontal' },
-  { src: '/images/patrocinador2.png', alt: 'Aspect Pro - vista lateral' },
-  { src: '/images/pico-norte-1.png', alt: 'Aspect Pro - detalle suela' },
-  { src: '/images/hg.png', alt: 'Aspect Pro - detalle talón' },
-]
+    const imagenes = [
+      { src: '/images/patrocinador1.png', alt: 'Aspect Pro - vista frontal' },
+      { src: '/images/patrocinador2.png', alt: 'Aspect Pro - vista lateral' },
+      { src: '/images/pico-norte-1.png', alt: 'Aspect Pro - detalle suela' },
+      { src: '/images/hg.png', alt: 'Aspect Pro - detalle talón' },
+    ]
 
-const anterior = () => {
-  imagenActiva.value = imagenActiva.value === 0 ? imagenes.length - 1 : imagenActiva.value - 1
-}
+    const anterior = () => {
+      imagenActiva.value = imagenActiva.value === 0 ? imagenes.length - 1 : imagenActiva.value - 1
+    }
 
-const siguiente = () => {
-  imagenActiva.value = imagenActiva.value === imagenes.length - 1 ? 0 : imagenActiva.value + 1
-}
+    const siguiente = () => {
+      imagenActiva.value = imagenActiva.value === imagenes.length - 1 ? 0 : imagenActiva.value + 1
+    }
 </script>

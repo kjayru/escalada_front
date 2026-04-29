@@ -48,7 +48,9 @@ export interface BlogPost {
   slug: string
   category: string
   excerpt: string | null
-  body: string
+  body: string | null
+  content_mode: 'classic' | 'blocks'
+  sections?: PageSection[]
   published_at: string
   is_featured: boolean
   author: { name: string }
@@ -229,6 +231,8 @@ export interface Member {
   id: number
   name: string
   role: string | null
+  bio: string | null
+  featured_home: boolean
   photo: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
   sort_order: number
 }
