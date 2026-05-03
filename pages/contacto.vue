@@ -1,12 +1,13 @@
 <template>
   <div class="contacto-page">
 
-    <!-- Hero Banner B&W -->
+    <!-- Hero Banner -->
     <section class="relative overflow-hidden" style="min-height: 1080px;">
       <img
-        src="/images/n-1.png"
-        alt="Contacto - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover grayscale"
+        :src="heroBannerUrl ?? '/images/n-1.png'"
+        :alt="heroBannerAlt"
+        class="absolute inset-0 w-full h-full object-cover"
+        :class="{ grayscale: !heroBannerUrl }"
       />
       <div class="absolute inset-0 bg-black/10"></div>
       <div class="relative z-10" style="min-height: 1080px;"></div>
@@ -18,12 +19,17 @@
 
         <!-- Título -->
         <h1 class="text-[35px] font-medium text-[#6A6867] leading-tight mb-6">
-          ¡Contáctanos!
+          {{ contactSection?.heading ?? '¡Contáctanos!' }}
         </h1>
 
         <!-- Descripción -->
-        <p class="text-xl text-[#6A6867] leading-relaxed mb-12">
-          En Escalada Libre México A.C. queremos escucharte. Si tienes dudas, propuestas, deseas colaborar, quieres adquirir algún producto o simplemente quieres saber más sobre nuestro trabajo, no dudes en escribirnos.
+        <div
+          v-if="contactSection?.body"
+          class="text-xl text-[#6A6867] leading-relaxed mb-12 prose max-w-none"
+          v-html="contactSection.body"
+        />
+        <p v-else class="text-xl text-[#6A6867] leading-relaxed mb-12">
+          En Escalada Libre México A.C. queremos escucharte.
         </p>
 
         <!-- Mensaje de éxito -->
@@ -125,7 +131,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import type { Page } from '~/types/api'
 
 useSeoMeta({
   title: 'Contacto - Escalada Libre',
@@ -133,6 +140,15 @@ useSeoMeta({
 })
 
 const api = useApi()
+
+const { data: pageData } = await useAsyncData('contacto-page', () =>
+  api.pages.getBySlug('contacto').catch(() => null as Page | null)
+)
+
+const heroSection = computed(() => pageData.value?.sections?.find(s => s.type === 'hero' && s.featured_media) ?? null)
+const heroBannerUrl = computed(() => heroSection.value?.featured_media?.url ?? null)
+const heroBannerAlt = computed(() => heroSection.value?.featured_media?.alt ?? 'Contacto - Escalada Libre')
+const contactSection = computed(() => pageData.value?.sections?.find(s => s.heading && s.body && s.body !== '<p></p>') ?? null)
 
 const form = ref({
   nombre: '',

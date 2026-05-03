@@ -437,14 +437,14 @@
     <!-- IMG_3366 - Climbing / App Section -->
     <section class="climbing-app-section relative overflow-hidden" style="height: clamp(400px, 100vw, 1313px);">
       <img
-        :src="st('numeros.imagen', '/images/img-33661.png')"
+        :src="numerosBackgroundImage"
         alt="Escalada en roca"
         class="w-full h-full object-cover"
       />
       <!-- Logo overlay - right side -->
       <div class="absolute top-1/2 -translate-y-1/2 right-12 lg:right-24 flex flex-col items-center gap-6">
         <img
-          src="/images/logo2.png"
+          :src="numerosLogoImage"
           alt="Escalada Libre"
           class="w-40 lg:w-56"
         />
@@ -693,7 +693,9 @@ const heroTitle = computed(() =>
 const heroLabel = computed(() =>
   sec('hero')?.subheading ?? 'ESCALADA LIBRE')
 const heroImage = computed(() =>
-  (sec('hero')?.settings?.image as string) ?? '/images/huasteca4-1920px.jpg')
+  sec('hero')?.featured_media?.url
+  ?? (sec('hero')?.settings?.image as string)
+  ?? '/images/huasteca4-1920px.jpg')
 const heroLocation = computed(() =>
   (sec('hero')?.settings?.location as string) ?? 'La Huasteca')
 const heroLocationHtml = computed(() => {
@@ -716,7 +718,9 @@ const introText = computed(() =>
 const parallaxSkyImage = computed(() =>
   (sec('intro')?.settings?.sky_image as string) ?? '/images/hg.png')
 const parallaxMountainImage = computed(() =>
-  (sec('intro')?.settings?.mountain_image as string) ?? '/images/potrero-1.png')
+  sec('intro')?.featured_media?.url
+  ?? (sec('intro')?.settings?.mountain_image as string)
+  ?? '/images/potrero-1.png')
 const parallaxLocation = computed(() =>
   (sec('intro')?.settings?.location as string) ?? 'El Potrero Chico, Hidalgo N.L. México')
 
@@ -726,7 +730,9 @@ const conservacionTitle = computed(() =>
 const conservacionBody = computed(() =>
   sec('conservacion')?.body ?? 'Una Vida Sana, el Desarrollo de Sociedades Pacificas, el Desarrollo de los Pueblos y el Desarrollo Sustentable mediante la elaboración de planes y programas para la protección y mantenimiento de las áreas donde es posible su práctica.')
 const conservacionImage = computed(() =>
-  (sec('conservacion')?.settings?.image as string) ?? '/images/n-1.png')
+  sec('conservacion')?.featured_media?.url
+  ?? (sec('conservacion')?.settings?.image as string)
+  ?? '/images/n-1.png')
 const conservacionLocation = computed(() =>
   (sec('conservacion')?.settings?.location as string) ?? 'El Salto, Coahuila de Zaragoza, Santiago N.L. México')
 const conservacionLocationHtml = computed(() => {
@@ -810,10 +816,25 @@ const teamLinkUrl = computed(() => st('equipo.link_url', '/nosotros'))
 // Mapa
 const mapaSection = computed(() => sec('mapa'))
 const mapaTitle = computed(() => mapaSection.value?.heading ?? '¿Dónde hemos trabajado?')
-const mapaImage = computed(() => (mapaSection.value?.settings?.image as string) ?? '/images/home-mapa-completo.jpg')
+const mapaImage = computed(() =>
+  mapaSection.value?.featured_media?.url
+  ?? (mapaSection.value?.settings?.imagen as string)
+  ?? (mapaSection.value?.settings?.image as string)
+  ?? '/images/home-mapa-completo.jpg')
 const mapaLabel1 = computed(() => (mapaSection.value?.settings?.label_1 as string) ?? 'Potrero Chico, Hidalgo N.L., México')
 const mapaLabel2 = computed(() => (mapaSection.value?.settings?.label_2 as string) ?? 'La Huasteca, Santa Catarina, N.L., México')
 const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as string) ?? 'El Salto, Ciénega de Gonzalez, N.L., México')
+
+// Numeros section (climbing-app section)
+const numerosSection = computed(() => sec('numeros'))
+const numerosBackgroundImage = computed(() =>
+  numerosSection.value?.featured_media?.url
+  ?? st('numeros.imagen', '/images/img-33661.png')
+)
+const numerosLogoImage = computed(() =>
+  (numerosSection.value?.media?.[0] as { url?: string } | undefined)?.url
+  ?? '/images/logo2.png'
+)
 
 // Count-up animation for stats section
 const numerosStarted = ref(false)

@@ -1,38 +1,48 @@
 <template>
   <div class="transparencia-page">
 
-    <!-- Hero Banner B&W -->
+    <!-- Hero Banner -->
     <section class="relative overflow-hidden" style="min-height: 1080px;">
       <img
-        src="/images/potrero-1.png"
-        alt="Transparencia - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover grayscale"
+        :src="heroBannerUrl ?? '/images/potrero-1.png'"
+        :alt="heroBannerAlt"
+        class="absolute inset-0 w-full h-full object-cover"
+        :class="{ grayscale: !heroBannerUrl }"
       />
       <div class="absolute inset-0 bg-black/10"></div>
       <div class="relative z-10" style="min-height: 1080px;"></div>
     </section>
 
-    <!-- Intro: tarjeta amarilla + foto -->
-    <section class="bg-white pb-16 lg:pb-20">
+    <!-- Intro: tarjeta amarilla sobrelapada + foto -->
+    <section v-if="textSection" class="bg-white pt-20 lg:pt-28 pb-16 lg:pb-24">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row items-start">
+        <!-- Contenedor relativo: la foto ocupa la derecha, la tarjeta se traslapa -->
+        <div class="relative flex justify-end">
 
-          <!-- Izquierda: tarjeta amarilla (empieza más abajo que la foto) -->
-          <div class="lg:w-[40%] bg-[#ffe7a0] p-10 lg:p-12 lg:mt-24 flex flex-col justify-start" style="min-height: 651px;">
-            <h2 class="text-3xl lg:text-[42px] font-light text-[#6A6867] leading-tight mb-8">
-              Transparencia
-            </h2>
-            <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
-              En Escalada Libre México A.C. operamos como una asociación civil sin fines de lucro, y todos nuestros ingresos se destinan íntegramente a cumplir con nuestro propósito: conservar, proteger y promover las zonas de escalada en México. Creemos en la transparencia y en el uso responsable de los recursos, por eso trabajamos con apertura para que cada donativo contribuya a una escalada más segura, sustentable y accesible para todos.
-            </p>
+          <!-- Foto (derecha, 65% del ancho) -->
+          <div class="w-full lg:w-[65%] overflow-hidden" style="height: 700px;">
+            <img
+              :src="textSection.featured_media?.url ?? '/images/pico-norte-1.png'"
+              :alt="textSection.featured_media?.alt ?? textSection.heading ?? 'Transparencia'"
+              class="w-full h-full object-cover"
+            />
           </div>
 
-          <!-- Derecha: foto -->
-          <div class="lg:w-[60%] overflow-hidden" style="height: 866px;">
-            <img
-              src="/images/pico-norte-1.png"
-              alt="Escalada en roca"
-              class="w-full h-full object-cover"
+          <!-- Tarjeta amarilla (posicionada encima, anclada a la izquierda) -->
+          <div
+            class="absolute left-0 top-12 lg:top-16 z-10 bg-[#ffe7a0] p-10 lg:p-12 flex flex-col justify-start"
+            style="width: 42%; max-width: 500px; min-height: 580px;"
+          >
+            <h2
+              class="mb-8 leading-tight"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500;"
+            >
+              {{ textSection.heading }}
+            </h2>
+            <div
+              class="leading-relaxed prose max-w-none"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 300;"
+              v-html="textSection.body"
             />
           </div>
 
@@ -48,8 +58,9 @@
             v-for="tab in tabs"
             :key="tab.id"
             @click="tabActiva = tab.id"
-            class="flex-1 h-[53px] rounded-full text-base font-normal text-[#6A6867] transition-all"
+            class="flex-1 h-[53px] rounded-full transition-all text-center"
             :class="tabActiva === tab.id ? 'bg-white border-2 border-[#6a6867]' : ''"
+            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 400;"
           >
             {{ tab.label }}
           </button>
@@ -68,8 +79,10 @@
           @click="toggleItem(item.id)"
         >
           <!-- Header del item -->
-          <div class="flex items-center justify-between px-10" style="min-height: 119px;">
-            <span class="text-lg lg:text-xl text-[#6A6867] font-normal">{{ item.label }}</span>
+          <div class="flex items-center justify-between px-14" style="min-height: 119px;">
+            <span
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 700;"
+            >{{ item.label }}</span>
             <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
               <svg
                 class="w-5 h-5 text-[#6A6867] transition-transform duration-200"
@@ -84,21 +97,20 @@
           </div>
 
           <!-- Contenido expandido -->
-          <div v-if="itemExpandido === item.id" class="px-10 pb-8">
+          <div v-if="itemExpandido === item.id" class="px-20 pb-14">
             <a
               v-for="doc in item.docs"
               :key="doc.name"
               :href="doc.url ?? '#'"
               :target="doc.url ? '_blank' : undefined"
               :rel="doc.url ? 'noopener noreferrer' : undefined"
-              class="flex items-center justify-between py-4 border-t border-[#6A6867]/20 hover:opacity-80 transition-opacity"
+              class="group flex items-center justify-between py-6 border-t border-[#6A6867]/20 transition-opacity"
               @click.stop
             >
-              <span class="text-base text-[#6A6867]">{{ doc.name }}</span>
-              <div class="w-8 h-8 flex items-center justify-center flex-shrink-0 text-[#6A6867]">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
+              <span style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 400;">{{ doc.name }}</span>
+              <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                <img src="/images/Download.svg" alt="descargar" class="w-6 h-6 block group-hover:hidden" />
+                <img src="/images/Download-open.svg" alt="descargar" class="w-6 h-6 hidden group-hover:block" />
               </div>
             </a>
           </div>
@@ -117,7 +129,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import type { TransparencyDocument } from '~/types/api'
+import type { Page, TransparencyDocument } from '~/types/api'
 
 useSeoMeta({
   title: 'Transparencia - Escalada Libre',
@@ -125,9 +137,20 @@ useSeoMeta({
 })
 
 const api = useApi()
-const { data: docs } = await useAsyncData('transparency-docs', () =>
-  api.transparencyDocuments.getAll().catch(() => [] as TransparencyDocument[])
-)
+
+const [{ data: pageData }, { data: docs }] = await Promise.all([
+  useAsyncData('transparencia-page', () =>
+    api.pages.getBySlug('transparencia').catch(() => null as Page | null)
+  ),
+  useAsyncData('transparency-docs', () =>
+    api.transparencyDocuments.getAll().catch(() => [] as TransparencyDocument[])
+  ),
+])
+
+const heroSection = computed(() => pageData.value?.sections?.find(s => s.type === 'hero') ?? null)
+const heroBannerUrl = computed(() => heroSection.value?.featured_media?.url ?? null)
+const heroBannerAlt = computed(() => heroSection.value?.featured_media?.alt ?? 'Transparencia - Escalada Libre')
+const textSection = computed(() => pageData.value?.sections?.find(s => s.type === 'text') ?? null)
 
 const tabs = [
   { id: 'asambleas', label: 'Asambleas' },

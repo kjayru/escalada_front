@@ -34,7 +34,7 @@
               rel="noopener noreferrer"
               class="nav-link"
             >{{ item.label }}</a>
-            <NuxtLink v-else :to="item.url" class="nav-link">{{ item.label }}</NuxtLink>
+            <NuxtLink v-else :to="item.url" class="nav-link" :class="{ 'router-link-active': isParentActive(item.url) }">{{ item.label }}</NuxtLink>
           </li>
           <li>
             <NuxtLink
@@ -105,6 +105,7 @@
               v-else
               :to="item.url"
               class="menu-item-link"
+              :class="{ 'router-link-active': isParentActive(item.url) }"
               @click="mobileMenuOpen = false"
             >{{ item.label }}</NuxtLink>
           </li>
@@ -153,6 +154,13 @@ const mainMenuItems = computed<MenuItem[]>(() =>
 )
 
 const isExternalUrl = (url: string) => url.startsWith('http')
+
+// Marca el item como activo si la ruta actual empieza por la URL del item
+// (excluyendo '/' para evitar que Inicio siempre esté activo)
+const isParentActive = (url: string) => {
+  if (url === '/') return false
+  return route.path.startsWith(url)
+}
 </script>
 
 <style scoped>

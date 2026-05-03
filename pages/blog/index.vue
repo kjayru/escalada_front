@@ -1,36 +1,41 @@
 <template>
   <div class="blog-page">
 
-    <!-- Post destacado (Hero) -->
-    <section class="bg-white pt-16 pb-12 lg:pt-20 lg:pb-16">
-      <div class="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
+    <!-- Post destacado (último post) -->
+    <section v-if="featured" class="bg-white">
+      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
+        <!-- Contenedor con altura fija -->
+        <div class="relative mb-16" style="height: 500px;">
 
-          <!-- Izquierda: texto -->
-          <div class="lg:w-[45%]">
-            <!-- Tagline -->
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
-              <span class="uppercase tracking-[0.2em] text-sm text-[#6A6867] font-medium">{{ featured?.tagline ?? 'BLOG' }}</span>
-            </div>
-            <NuxtLink
-              :to="featured?.slug ? '/blog/' + featured.slug : '/blog'"
-              class="text-3xl lg:text-[42px] font-normal text-[#6A6867] leading-tight mb-6 max-w-[509px] block hover:opacity-80 transition-opacity"
-            >
-              {{ featured?.titulo ?? 'Nos reunimos con el gobierno de Nuevo León' }}
-            </NuxtLink>
-            <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed max-w-[412px]">
-              {{ featured?.descripcion ?? 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León' }}
-            </p>
-          </div>
-
-          <!-- Derecha: imagen -->
-          <div class="lg:w-[55%] overflow-hidden" style="height: 504px;">
+          <!-- Imagen: desde 30% izquierdo hasta el borde derecho, altura completa -->
+          <div class="absolute top-0 bottom-0 right-0 overflow-hidden" style="left: 30%;">
             <img
-              :src="featured?.imagen ?? '/images/n-1.png'"
-              :alt="featured?.titulo ?? 'Escalada Libre'"
+              :src="featured.imagen"
+              :alt="featured.titulo"
               class="w-full h-full object-cover"
             />
+          </div>
+
+          <!-- Card: solo el título tiene fondo blanco, tagline y descripción sin fondo -->
+          <div class="absolute left-0 right-auto z-10 flex flex-col justify-center px-0" style="width: 52%; top: 0; bottom: 0;">
+            <!-- Tagline: sin fondo -->
+            <div class="flex items-center gap-4 mb-4 px-10 lg:px-14">
+              <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
+              <span class="uppercase tracking-[0.2em] text-sm text-[#6A6867] font-medium">{{ featured.tagline }}</span>
+            </div>
+            <!-- Título: con fondo blanco -->
+            <div class="bg-white px-10 lg:px-14 pt-8 pb-6">
+              <NuxtLink
+                :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
+                class="text-3xl lg:text-[38px] font-normal text-[#6A6867] leading-tight max-w-[400px] block hover:opacity-80 transition-opacity"
+              >
+                {{ featured.titulo }}
+              </NuxtLink>
+            </div>
+            <!-- Descripción: sin fondo -->
+            <p class="text-base text-[#6A6867] leading-relaxed max-w-[360px] px-10 lg:px-14 pt-4">
+              {{ featured.descripcion }}
+            </p>
           </div>
 
         </div>
@@ -39,11 +44,11 @@
 
     <!-- Primera serie de 4 posts -->
     <section class="bg-white pb-4">
-      <div class="max-w-[1480px] mx-auto">
+      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div
           v-for="(post, index) in postsSerieUno"
           :key="`s1-${post.id}`"
-          class="flex flex-col border-t border-gray-200"
+          class="flex flex-col mb-16"
           :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'"
         >
           <!-- Imagen -->
@@ -81,179 +86,125 @@
       </div>
     </section>
 
-    <!-- Banner Exposure -->
-    <section class="relative overflow-hidden" style="min-height: 1080px;">
-      <img
-        src="/images/potrero-1.png"
-        alt="Escalada en montaña"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-black/50"></div>
-      <div
-        class="relative z-10 flex flex-col lg:flex-row items-center justify-between px-12 lg:px-24 py-24"
-        style="min-height: 1080px;"
+    <!-- Partners Slider -->
+    <section class="partners-slider relative" style="height: calc(100vh - 90px);">
+      <Swiper
+        :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
+        :slides-per-view="1"
+        :space-between="0"
+        :navigation="{
+          prevEl: '.blog-swiper-button-prev',
+          nextEl: '.blog-swiper-button-next',
+        }"
+        :pagination="{
+          el: '.blog-swiper-pagination',
+          clickable: true,
+        }"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: false,
+        }"
+        :loop="true"
+        class="h-full w-full"
       >
-        <!-- Izquierda: logo + texto + link -->
-        <div class="lg:w-[45%] flex flex-col justify-center">
-          <img
-            src="/images/exposure.png"
-            alt="Exposure"
-            class="mb-10 filter brightness-0 invert"
-            style="max-width: 467px; max-height: 127px; object-fit: contain;"
-          />
-          <p class="text-white/90 text-base lg:text-lg leading-relaxed mb-8 max-w-[427px]">
-            Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.
-          </p>
-          <a
-            href="#"
-            class="inline-flex items-center gap-2 text-white text-base font-medium hover:text-[#F8C52D] transition-colors"
-          >
-            Equipment
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
+        <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
+          <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+              <div class="max-w-xl">
+                <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.description }}</p>
+                <a
+                  :href="sponsor.url"
+                  :target="sponsor.url !== '#' ? '_blank' : undefined"
+                  :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
+                  class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                >
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+
+        <!-- Navigation Arrows -->
+        <div class="blog-swiper-button-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </div>
+        <div class="blog-swiper-button-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
         </div>
 
-        <!-- Derecha: MISSION LT 2.0 -->
-        <div class="lg:w-[45%] flex flex-col items-center lg:items-end justify-center pt-16 lg:pt-0">
-          <p class="text-white text-4xl lg:text-[56px] font-bold tracking-wider mb-6 text-center lg:text-right">
-            MISSION LT 2.0
-          </p>
-          <a
-            href="#"
-            class="inline-flex items-center gap-2 text-white text-base font-medium hover:text-[#F8C52D] transition-colors"
-          >
-            Equipment
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-        </div>
-      </div>
+        <!-- Pagination Dots -->
+        <div class="blog-swiper-pagination absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2"></div>
+      </Swiper>
     </section>
 
     <!-- Otros patrocinadores -->
-    <section class="bg-white py-16 lg:py-20">
-      <div class="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl lg:text-3xl font-normal text-[#6A6867] mb-8">
+    <section class="otros-patrocinadores py-16 lg:py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl lg:text-4xl text-[#6A6867] mb-12" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
           Otros patrocinadores
         </h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" style="min-height: 529px;">
-
-          <template v-if="patrocinador0">
-
-            <!-- Tarjeta izquierda: split imagen + panel gris -->
-            <NuxtLink
-              :to="`/patrocinador/${patrocinador0.slug}`"
-              class="flex overflow-hidden group"
-              style="min-height: 529px;"
+        <div class="grid md:grid-cols-2 gap-6">
+          <template v-if="otrosPlacements?.length">
+            <div
+              v-for="item in otrosPlacements.slice(0, 2)"
+              :key="item.id"
+              class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px]"
+              :style="item.banner?.url ? `background-image: url('${item.banner.url}')` : 'background-color: #1e3a3a'"
             >
-              <!-- Foto izquierda (logo o slide_image o fallback) -->
-              <div class="w-[55%] overflow-hidden flex-shrink-0">
-                <img
-                  :src="patrocinador0.slide_image?.url || patrocinador0.logo?.url || '/images/patrocinador1.png'"
-                  :alt="patrocinador0.name"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  style="min-height: 529px;"
-                />
-              </div>
-              <!-- Panel info gris derecha -->
-              <div class="w-[45%] bg-[#e8e8e2] flex flex-col items-center justify-center px-8 py-12 text-center gap-6">
-                <!-- Logo del sponsor (si tiene) o ícono montaña -->
-                <img
-                  v-if="patrocinador0.logo?.url"
-                  :src="patrocinador0.logo.url"
-                  :alt="patrocinador0.name"
-                  class="h-16 w-auto object-contain"
-                />
-                <svg v-else class="w-20 h-20 text-[#6A6867]" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 80 80">
-                  <circle cx="40" cy="40" r="36" stroke-width="1.5" />
-                  <polyline points="16,58 34,30 46,46 55,36 64,58" stroke-width="1.5" stroke-linejoin="round" />
-                  <circle cx="52" cy="26" r="5" stroke-width="1.5" />
-                </svg>
-                <!-- Línea vertical -->
-                <div class="w-px h-10 bg-[#6A6867]/40"></div>
-                <!-- Tagline o nombre -->
-                <p class="text-sm font-medium text-[#6A6867] tracking-widest uppercase leading-relaxed">
-                  {{ patrocinador0.tagline || patrocinador0.name }}
-                </p>
-                <!-- Ver más -->
-                <span class="inline-flex items-center gap-2 text-sm font-semibold text-[#6A6867] mt-2 group-hover:text-gray-900 transition-colors">
-                  Ver más
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
-              </div>
-            </NuxtLink>
-
-            <!-- Tarjeta derecha: foto con texto superpuesto -->
-            <NuxtLink
-              v-if="patrocinador1"
-              :to="`/patrocinador/${patrocinador1.slug}`"
-              class="relative overflow-hidden group"
-              style="min-height: 529px;"
-            >
-              <img
-                :src="patrocinador1.slide_image?.url || patrocinador1.logo?.url || '/images/patrocinador2.png'"
-                :alt="patrocinador1.name"
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
               <div class="absolute inset-0 bg-black/30"></div>
-              <div class="relative z-10 h-full flex flex-col justify-end p-10">
-                <p class="text-white font-bold text-3xl lg:text-[42px] tracking-wider mb-4">
-                  {{ patrocinador1.tagline || patrocinador1.name }}
-                </p>
-                <span class="inline-flex items-center gap-2 text-white text-sm font-semibold group-hover:text-[#F8C52D] transition-colors">
+              <div class="absolute bottom-8 right-8 z-10">
+                <a
+                  :href="item.link_url ?? '#'"
+                  :target="item.link_url && item.link_url !== '#' ? '_blank' : undefined"
+                  :rel="item.link_url && item.link_url !== '#' ? 'noopener noreferrer' : undefined"
+                  class="inline-flex items-center gap-3 text-white group/link"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                >
                   Ver más
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+                </a>
               </div>
-            </NuxtLink>
-
+            </div>
           </template>
-
-          <!-- Fallback si no hay sponsors cargados -->
           <template v-else>
-            <NuxtLink to="/patrocinio" class="flex overflow-hidden group" style="min-height: 529px;">
-              <div class="w-[55%] overflow-hidden flex-shrink-0">
-                <img src="/images/patrocinador1.png" alt="Patrocinador" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="min-height: 529px;" />
-              </div>
-              <div class="w-[45%] bg-[#e8e8e2] flex flex-col items-center justify-center px-8 py-12 text-center gap-6">
-                <svg class="w-20 h-20 text-[#6A6867]" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 80 80">
-                  <circle cx="40" cy="40" r="36" stroke-width="1.5" />
-                  <polyline points="16,58 34,30 46,46 55,36 64,58" stroke-width="1.5" stroke-linejoin="round" />
-                  <circle cx="52" cy="26" r="5" stroke-width="1.5" />
-                </svg>
-                <div class="w-px h-10 bg-[#6A6867]/40"></div>
-                <p class="text-sm font-medium text-[#6A6867] tracking-widest uppercase leading-relaxed">CONOCE NUESTROS<br />PATROCINADORES</p>
-                <span class="inline-flex items-center gap-2 text-sm font-semibold text-[#6A6867] mt-2">Ver más <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
-              </div>
-            </NuxtLink>
-            <NuxtLink to="/patrocinio-2" class="relative overflow-hidden group" style="min-height: 529px;">
-              <img src="/images/patrocinador2.png" alt="Patrocinador" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="relative overflow-hidden cursor-pointer bg-cover bg-center min-h-[500px]" style="background-image: url('/images/patrocinador1.png');">
               <div class="absolute inset-0 bg-black/30"></div>
-              <div class="relative z-10 h-full flex flex-col justify-end p-10">
-                <p class="text-white font-bold text-3xl lg:text-[42px] tracking-wider mb-4">SÉ PARTE<br />DEL CAMBIO</p>
-                <span class="inline-flex items-center gap-2 text-white text-sm font-semibold group-hover:text-[#F8C52D] transition-colors">Ver más <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
+              <div class="absolute bottom-8 right-8 z-10">
+                <a href="#" class="inline-flex items-center gap-3 text-white" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+                </a>
               </div>
-            </NuxtLink>
+            </div>
+            <div class="relative overflow-hidden cursor-pointer bg-cover bg-center min-h-[500px]" style="background-image: url('/images/patrocinador2.png');">
+              <div class="absolute inset-0 bg-black/30"></div>
+              <div class="absolute bottom-8 right-8 z-10">
+                <a href="#" class="inline-flex items-center gap-3 text-white" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+                </a>
+              </div>
+            </div>
           </template>
-
         </div>
       </div>
     </section>
 
-    <!-- Segunda serie de 4 posts -->
+    <!-- Segunda serie y posts adicionales -->
     <section class="bg-white pb-4">
-      <div class="max-w-[1480px] mx-auto">
+      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div
-          v-for="(post, index) in postsSeriesDos"
+          v-for="(post, index) in postsAfterSerieOne"
           :key="`s2-${post.id}`"
-          class="flex flex-col border-t border-gray-200"
+          class="flex flex-col mb-16"
           :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'"
         >
           <!-- Imagen -->
@@ -286,13 +237,14 @@
     </section>
 
     <!-- Paginación -->
-    <section class="bg-white py-16 flex justify-center">
-      <NuxtLink
-        to="/blog/all"
-        class="w-[380px] h-[50px] flex items-center justify-center bg-[#F8C52D] text-gray-900 font-semibold text-sm tracking-widest hover:bg-[#e0b525] transition-colors"
+    <section v-if="hasMore" class="bg-white py-16 flex justify-center">
+      <button
+        @click="loadMore"
+        :disabled="isLoadingMore"
+        class="px-20 h-[52px] flex items-center justify-center bg-white border border-[#9E9E9E] rounded-full text-[#9E9E9E] font-semibold text-sm tracking-widest hover:border-gray-500 hover:text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        VER MÁS ENTRADAS
-      </NuxtLink>
+        {{ isLoadingMore ? 'CARGANDO...' : 'MÁS ARTÍCULOS' }}
+      </button>
     </section>
 
     <!-- Newsletter + Product Cards -->
@@ -305,8 +257,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { BlogPost, Sponsor } from '~/types/api'
+import { ref, computed } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation as SwiperNavigation, Pagination as SwiperPagination, Autoplay as SwiperAutoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import type { BlogPost, Sponsor, SponsorPlacement } from '~/types/api'
 
 useSeoMeta({
   title: 'Blog - Escalada Libre',
@@ -314,26 +271,35 @@ useSeoMeta({
 })
 
 const api = useApi()
-const [{ data: response }, { data: sponsorsData }] = await Promise.all([
+const [{ data: response }, { data: otrosPlacements }, { data: sponsors }] = await Promise.all([
   useAsyncData('blog-index', () =>
-    api.blog.getAll({ per_page: 9 }).catch(() => ({ data: [] }))
+    api.blog.getAll({ per_page: 9 }).catch(() => ({ data: [], meta: { current_page: 1, last_page: 1, per_page: 9, total: 0 } }))
+  ),
+  useAsyncData('blog-otros-patrocinadores', () =>
+    api.sponsorPlacements.getAll({ placement: 'otros_patrocinadores' }).catch(() => [] as SponsorPlacement[])
   ),
   useAsyncData('blog-sponsors', () =>
     api.sponsors.getAll().catch(() => [] as Sponsor[])
   ),
 ])
 
-const otrosPatrocinadores = computed<Sponsor[]>(() => {
-  const all = Array.isArray(sponsorsData.value) ? sponsorsData.value : []
-  return all.filter((s: Sponsor) => s.status === 'active').slice(0, 2)
-})
-
-const patrocinador0 = computed(() => otrosPatrocinadores.value[0])
-const patrocinador1 = computed(() => otrosPatrocinadores.value[1])
-
-const posts = computed(() => {
-  const data = response.value?.data
-  return Array.isArray(data) ? data : []
+const sponsorsSliderData = computed(() => {
+  const sp = sponsors.value ?? []
+  if (sp.length) {
+    return sp.map((s: Sponsor) => ({
+      id: s.id,
+      name: s.name,
+      logo: s.logo?.url ?? '/images/exposure.png',
+      slideImage: s.slide_image?.url ?? '/images/slide1.png',
+      description: s.description ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
+      url: s.website_url ?? '#',
+    }))
+  }
+  return [
+    { id: -1, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -2, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -3, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+  ]
 })
 
 const toPost = (p: BlogPost) => ({
@@ -352,15 +318,51 @@ const fallbackPosts = [
   { id: 4, slug: '', tagline: 'EVENTOS', titulo: 'Exposición fotográfica', descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...', imagen: '/images/huasteca-41.png' },
 ]
 
-const featured = computed(() => posts.value[0] ? toPost(posts.value[0]) : null)
+// Paginación reactiva
+const allPosts = ref<BlogPost[]>(response.value?.data ?? [])
+const totalPosts = ref(response.value?.meta?.total ?? 0)
+const nextApiPage = ref(2)
+const visibleCount = ref(9)
+const isLoadingMore = ref(false)
+
+const visiblePostsSlice = computed(() =>
+  allPosts.value.slice(0, visibleCount.value).map(toPost)
+)
+
+const hasMore = computed(() =>
+  totalPosts.value > 0 && visibleCount.value < totalPosts.value
+)
+
+async function loadMore() {
+  if (isLoadingMore.value || !hasMore.value) return
+  isLoadingMore.value = true
+  try {
+    const newCount = visibleCount.value + 4
+    if (newCount <= allPosts.value.length) {
+      visibleCount.value = newCount
+    } else {
+      const result = await api.blog.getAll({ per_page: 9, page: nextApiPage.value })
+      allPosts.value = [...allPosts.value, ...result.data]
+      if (result.meta) totalPosts.value = result.meta.total
+      nextApiPage.value++
+      visibleCount.value = Math.min(newCount, allPosts.value.length)
+    }
+  } catch {
+    // silent fail
+  } finally {
+    isLoadingMore.value = false
+  }
+}
+
+const featured = computed(() => visiblePostsSlice.value[0] ?? null)
 
 const postsSerieUno = computed(() => {
-  const apiPosts = posts.value.slice(1, 5)
-  return apiPosts.length ? apiPosts.map(toPost) : fallbackPosts
+  const sl = visiblePostsSlice.value.slice(1, 5)
+  return sl.length ? sl : fallbackPosts
 })
 
-const postsSeriesDos = computed(() => {
-  const apiPosts = posts.value.slice(5, 9)
-  return apiPosts.length ? apiPosts.map(toPost) : fallbackPosts
+const postsAfterSerieOne = computed(() => {
+  const sl = visiblePostsSlice.value.slice(5)
+  return sl.length ? sl : fallbackPosts
 })
 </script>

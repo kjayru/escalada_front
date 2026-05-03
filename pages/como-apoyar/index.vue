@@ -55,15 +55,17 @@
             </div>
             <!-- Imagen con fondo de color -->
             <div
-              class="lg:w-1/2 flex items-center justify-center p-8"
-              :style="{ background: block.background ?? '#f6f6f6', minHeight: '400px' }"
+              :class="block.title?.toLowerCase().includes('proyecto') ? 'lg:w-1/2 overflow-hidden' : 'lg:w-1/2 flex items-center justify-center p-8'"
+              :style="block.title?.toLowerCase().includes('proyecto')
+                ? { minHeight: '580px', borderRadius: '0 0 0 40px' }
+                : { background: block.background ?? '#f6f6f6', minHeight: '400px' }"
             >
               <img
                 v-if="block.image"
                 :src="block.image"
                 :alt="block.title"
-                class="max-w-full max-h-full object-contain"
-                style="max-height: 380px;"
+                :class="block.title?.toLowerCase().includes('proyecto') ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
+                :style="block.title?.toLowerCase().includes('proyecto') ? 'min-height: 580px;' : 'max-height: 380px;'"
               />
               <div v-else class="w-full bg-gray-200" style="height: 380px;"></div>
             </div>
@@ -75,8 +77,13 @@
               <div v-if="block.boton">
                 <NuxtLink
                   :to="block.boton_url ?? '#'"
-                  class="inline-block px-8 py-3 text-gray-900 font-semibold text-sm hover:opacity-90 transition-opacity tracking-wider"
-                  style="background: #F8C52D; border-radius: 25px;"
+                  class="inline-block px-8 py-3 font-semibold text-sm transition-colors tracking-wider"
+                  :class="block.title?.toLowerCase().includes('proyecto')
+                    ? 'text-[#111111] hover:bg-gray-50'
+                    : 'text-gray-900 hover:opacity-90'"
+                  :style="block.title?.toLowerCase().includes('proyecto')
+                    ? 'border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;'
+                    : 'background: #F8C52D; border-radius: 25px;'"
                 >
                   {{ block.boton.toUpperCase() }}
                 </NuxtLink>
@@ -88,46 +95,48 @@
       </div>
     </section>
 
-    <!-- ¿Quieres realizar un proyecto? -->
-    <section class="bg-white py-12 lg:py-20">
-      <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row items-stretch gap-0" style="min-height: 620px;">
-          <!-- Imagen con esquina inferior-izquierda redondeada -->
-          <div class="lg:w-1/2 overflow-hidden" style="border-radius: 0 0 0 40px; min-height: 500px;">
-            <img
-              src="/images/huasteca-41.png"
-              alt="Realizar un proyecto con Escalada Libre"
-              class="w-full h-full object-cover"
-              style="min-height: 500px;"
-            />
-          </div>
-          <!-- Texto + botón outlined -->
-          <div class="lg:w-1/2 flex flex-col justify-center px-12 lg:px-20 py-16 bg-white">
-            <h2 class="text-2xl lg:text-[38px] font-semibold text-[#111111] leading-tight mb-8" style="font-family: 'Readex Pro', sans-serif;">
-              ¿Quieres realizar un proyecto?
-            </h2>
-            <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-4 max-w-[480px]">
-              ¿Tienes una iniciativa en mente con la cuál quieres apoyar el trabajo de Escalada Libre?
-            </p>
-            <p class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-10 max-w-[480px]">
-              ¡Ponte en contacto con nosotros y echamos la maquinaria a andar!
-            </p>
-            <div>
-              <NuxtLink
-                to="/contacto"
-                class="inline-block px-10 py-3 text-[#111111] font-semibold text-sm tracking-wider hover:bg-gray-50 transition-colors"
-                style="border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;"
-              >
-                CONTÁCTANOS
-              </NuxtLink>
-            </div>
-          </div>
+    <!-- Únete al equipo -->
+    <section v-if="joinSection" class="relative overflow-hidden" style="min-height: 759px;">
+      <img
+        :src="joinSection.image ?? '/images/slide1.png'"
+        :alt="joinSection.heading ?? 'Únete al equipo Escalada Libre'"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0" :style="{ background: joinSection.overlay ?? 'rgba(0,0,0,0.5)' }"></div>
+      <div
+        class="relative z-10 flex flex-col justify-center px-12 lg:px-24 py-24"
+        style="min-height: 759px;"
+      >
+        <h2 class="text-3xl lg:text-[48px] font-medium text-white leading-tight mb-6 max-w-[460px]">
+          {{ joinSection.heading ?? 'Únete al equipo' }}
+        </h2>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div v-if="joinSection.body" class="text-base lg:text-lg text-white/90 leading-relaxed mb-10 max-w-[400px]" v-html="joinSection.body"></div>
+        <p v-else class="text-base lg:text-lg text-white/90 leading-relaxed mb-10 max-w-[400px]">
+          Súmate al equipo Escalada Libre y forma parte del cambio que queremos ver en nuestras montañas.
+        </p>
+        <div v-if="joinSection.boton">
+          <NuxtLink
+            :to="joinSection.boton_url ?? '/contacto'"
+            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
+            style="border: 1.5px solid #ffffff; border-radius: 25px;"
+          >
+            {{ joinSection.boton.toUpperCase() }}
+          </NuxtLink>
+        </div>
+        <div v-else>
+          <NuxtLink
+            to="/contacto"
+            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
+            style="border: 1.5px solid #ffffff; border-radius: 25px;"
+          >
+            ÚNETE A NUESTRO EQUIPO
+          </NuxtLink>
         </div>
       </div>
     </section>
-
-    <!-- Únete al equipo -->
-    <section class="relative overflow-hidden" style="min-height: 759px;">
+    <!-- Únete al equipo (fallback hardcoded si no hay sección en CMS) -->
+    <section v-else class="relative overflow-hidden" style="min-height: 759px;">
       <img
         src="/images/slide1.png"
         alt="Únete al equipo Escalada Libre"
@@ -147,9 +156,10 @@
         <div>
           <NuxtLink
             to="/contacto"
-            class="inline-block px-8 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm hover:bg-[#e0b525] transition-colors tracking-wider"
+            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
+            style="border: 1.5px solid #ffffff; border-radius: 25px;"
           >
-            UNIRSE
+            ÚNETE A NUESTRO EQUIPO
           </NuxtLink>
         </div>
       </div>
@@ -255,6 +265,19 @@ const campaignSubtitle = computed(() =>
     ? `${methods.value.length} maneras de apoyarnos`
     : 'Existen cuatro maneras en las que puedes apoyarnos:'
 )
+
+const joinSection = computed(() => {
+  const s = page.value?.sections?.find(sec => sec.type === 'join')
+  if (!s) return null
+  return {
+    heading: s.heading ?? null,
+    body: s.body ?? null,
+    image: (s.featured_media?.url as string | undefined) ?? (s.settings?.image as string | undefined) ?? null,
+    overlay: (s.settings?.overlay as string | undefined) ?? null,
+    boton: (s.settings?.boton as string | undefined) ?? null,
+    boton_url: (s.settings?.boton_url as string | undefined) ?? null,
+  }
+})
 
 useSeoMeta({
   title: 'Cómo apoyar - Escalada Libre',

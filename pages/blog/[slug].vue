@@ -21,14 +21,14 @@
         <div class="max-w-[650px] mx-auto px-4 sm:px-6 text-center">
 
           <!-- Badge de fecha -->
-          <div class="inline-block border border-gray-300 px-6 py-2.5 mb-8">
-            <span class="text-sm font-medium text-[#6A6867] tracking-[0.15em] uppercase">
+          <div class="inline-block border border-[#F8C52D] px-6 py-2.5 mb-8">
+            <span class="text-sm font-medium text-[#F8C52D] tracking-[0.15em] uppercase">
               {{ formatDate(post.published_at) }}
             </span>
           </div>
 
           <!-- Título -->
-          <h1 class="text-3xl lg:text-[46px] font-normal text-[#6A6867] leading-tight mb-10">
+          <h1 class="text-[#6A6867] mb-10" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; line-height: 2.875rem;">
             {{ post.title }}
           </h1>
 
@@ -42,7 +42,7 @@
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en Facebook"
-              class="text-[#6A6867] hover:text-gray-900 transition-colors"
+              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -53,7 +53,7 @@
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en Twitter"
-              class="text-[#6A6867] hover:text-gray-900 transition-colors"
+              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
@@ -62,7 +62,7 @@
             <a
               :href="`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(pageUrl)}`"
               aria-label="Compartir por correo"
-              class="text-[#6A6867] hover:text-gray-900 transition-colors"
+              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -90,7 +90,7 @@
       <section class="bg-white py-16 lg:py-20">
         <div class="max-w-[690px] mx-auto px-4 sm:px-6">
           <!-- Extracto destacado -->
-          <p v-if="post.excerpt" class="text-base lg:text-lg font-normal text-[#6A6867] leading-relaxed mb-10 text-center">
+          <p v-if="post.excerpt" class="text-base lg:text-[22px] font-normal text-[#6A6867] leading-relaxed mb-10">
             {{ post.excerpt }}
           </p>
 
@@ -105,7 +105,7 @@
 
             <!-- Bloque tipo: text / default -->
             <div v-if="section.type === 'text' || section.type === 'split'" class="max-w-[690px] mx-auto px-4 sm:px-6">
-              <h2 v-if="section.heading" class="text-2xl font-semibold text-[#1a1a1a] mb-3">{{ section.heading }}</h2>
+              <h2 v-if="section.heading" class="text-[#6A6867] mb-3" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; line-height: 2.875rem;">{{ section.heading }}</h2>
               <p v-if="section.subheading" class="text-[#6A6867] mb-4 italic">{{ section.subheading }}</p>
               <!-- eslint-disable-next-line vue/no-v-html -->
               <div v-if="section.body" class="article-body text-[#6A6867]" v-html="section.body"></div>
@@ -187,9 +187,9 @@
       <section v-if="recentPosts.length" class="bg-white pb-16 lg:pb-20">
         <div class="max-w-[1114px] mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div class="border-t border-gray-200 pt-10 mb-10">
-            <h2 class="text-2xl lg:text-[38px] font-bold text-[#1a1a1a] text-center tracking-widest">
-              LO MÁS RECIENTE
+          <div class="border-t border-gray-300 pt-10 mb-10">
+            <h2 class="text-sm lg:text-base font-semibold text-[#6A6867] text-center tracking-[0.35em] uppercase">
+              Lo más reciente
             </h2>
           </div>
 
@@ -200,15 +200,12 @@
               :to="`/blog/${reciente.slug}`"
               class="flex flex-col group"
             >
-              <!-- Tagline sobre la imagen -->
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
-                <span class="uppercase tracking-[0.2em] text-xs text-[#F8C52D] font-semibold">
-                  {{ reciente.category?.toUpperCase() ?? 'BLOG' }}
-                </span>
-              </div>
+              <!-- Categoría -->
+              <span class="uppercase tracking-[0.2em] text-xs text-[#F8C52D] font-semibold mb-3 block">
+                {{ reciente.category?.toUpperCase() ?? 'BLOG' }}
+              </span>
               <!-- Imagen -->
-              <div class="overflow-hidden mb-5" style="height: 212px;">
+              <div class="overflow-hidden mb-4" style="height: 212px;">
                 <img
                   v-if="reciente.featured_media"
                   :src="reciente.featured_media.url"
@@ -217,8 +214,8 @@
                 />
                 <div v-else class="w-full h-full bg-gray-100"></div>
               </div>
-              <!-- Título en negrita -->
-              <h3 class="text-base lg:text-lg font-bold text-[#1a1a1a] leading-snug mb-3 group-hover:text-gray-600 transition-colors">
+              <!-- Título -->
+              <h3 class="text-base font-semibold text-[#6A6867] leading-snug mb-2 group-hover:opacity-75 transition-opacity">
                 {{ reciente.title }}
               </h3>
               <p v-if="reciente.excerpt" class="text-sm text-[#6A6867] leading-relaxed">
@@ -227,49 +224,6 @@
             </NuxtLink>
           </div>
 
-        </div>
-      </section>
-
-      <!-- Banner Exposure -->
-      <section class="relative overflow-hidden" style="min-height: 1080px;">
-        <img
-          src="/images/potrero-1.png"
-          alt="Escalada en montaña"
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-black/50"></div>
-        <div
-          class="relative z-10 flex flex-col lg:flex-row items-center justify-between px-12 lg:px-24 py-24"
-          style="min-height: 1080px;"
-        >
-          <div class="lg:w-[45%] flex flex-col justify-center">
-            <img
-              src="/images/exposure.png"
-              alt="Exposure"
-              class="mb-10 filter brightness-0 invert"
-              style="max-width: 467px; max-height: 127px; object-fit: contain;"
-            />
-            <p class="text-white/90 text-base lg:text-lg leading-relaxed mb-8 max-w-[427px]">
-              Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.
-            </p>
-            <a href="#" class="inline-flex items-center gap-2 text-white text-base font-medium hover:text-[#F8C52D] transition-colors">
-              Equipment
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-          </div>
-          <div class="lg:w-[45%] flex flex-col items-center lg:items-end justify-center pt-16 lg:pt-0">
-            <p class="text-white text-4xl lg:text-[56px] font-bold tracking-wider mb-6 text-center lg:text-right">
-              MISSION LT 2.0
-            </p>
-            <a href="#" class="inline-flex items-center gap-2 text-white text-base font-medium hover:text-[#F8C52D] transition-colors">
-              Equipment
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-          </div>
         </div>
       </section>
 
@@ -343,8 +297,11 @@ watchEffect(() => {
 <style scoped>
 /* Estilos para el cuerpo del artículo */
 .article-body :deep(p) {
-  font-size: 1rem;
-  line-height: 1.75;
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 2.1875rem;
   margin-bottom: 1.5rem;
   color: #6A6867;
 }

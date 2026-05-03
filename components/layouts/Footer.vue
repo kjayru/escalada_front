@@ -14,7 +14,7 @@
           <div v-for="(col, i) in footerColumns" :key="i" class="flex flex-col gap-2">
             <template v-for="item in col" :key="item.id">
               <a v-if="isExternal(item.url)" :href="item.url" target="_blank" rel="noopener noreferrer" class="footer-nav-link">{{ item.label }}</a>
-              <NuxtLink v-else :to="item.url" class="footer-nav-link">{{ item.label }}</NuxtLink>
+              <NuxtLink v-else :to="item.url" class="footer-nav-link" :class="{ 'router-link-active': isParentActive(item.url) }">{{ item.label }}</NuxtLink>
             </template>
           </div>
 
@@ -76,6 +76,12 @@ const footerColumns = computed(() => {
 })
 
 const isExternal = (url: string) => url.startsWith('http')
+
+const route = useRoute()
+const isParentActive = (url: string) => {
+  if (url === '/') return false
+  return route.path.startsWith(url)
+}
 </script>
 
 <style scoped>
