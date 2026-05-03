@@ -3,22 +3,37 @@
 
     <!-- Sección Intro -->
     <section class="bg-white pt-16 pb-12 lg:pt-24 lg:pb-16">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-16 max-w-[1400px] mx-auto">
+      <div class="mx-auto px-8 lg:px-20">
+        <div class="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-16 max-w-[1250px] mx-auto">
 
           <!-- Izquierda: texto -->
           <div class="lg:w-[55%]">
-            <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-8">
-              Tu aportación es de mucha ayuda
+            <h1
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
+              class="leading-tight mb-8"
+            >
+              {{ productsMethod?.title ?? 'Tu aportación es de mucha ayuda' }}
             </h1>
-            <p class="text-base text-[#6A6867] leading-relaxed max-w-[420px]">
-              Adquiere nuestros productos y apoya la escalada responsable en México. Tu compra se convierte en un donativo que impulsa nuestras acciones en la montaña.
+            <p
+              v-if="productsMethod?.body"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+              class="leading-relaxed max-w-[420px]"
+            >
+              {{ productsMethod.body }}
             </p>
           </div>
 
-          <!-- Derecha: imagen decorativa (bolt de escalada) -->
+          <!-- Derecha: imagen decorativa -->
           <div class="lg:w-[40%] flex justify-center lg:justify-end">
             <img
+              v-if="productsMethod?.image"
+              :src="productsMethod.image"
+              alt="Material de escalada"
+              class="object-contain"
+              style="max-width: 195px; max-height: 570px;"
+            />
+            <img
+              v-else
               src="/images/hg.png"
               alt="Material de escalada"
               class="object-contain"
@@ -31,16 +46,16 @@
     </section>
 
     <!-- Grilla de Productos -->
-    <section class="bg-white pb-20 lg:pb-28">
-      <div class="max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-16">
+    <section class="bg-white pb-20 lg:pb-28" style="padding-top: 10rem;">
+      <div class="mx-auto px-8 lg:px-20" style="max-width: 1007.28px;">
+        <div class="grid grid-cols-1 sm:grid-cols-2" style="gap: 93px;">
           <div
             v-for="producto in productos"
             :key="producto.id"
             class="product-card flex flex-col"
           >
             <!-- Imagen del producto -->
-            <div class="overflow-hidden mb-4" style="height: 430px;">
+            <div class="overflow-hidden mb-4" style="max-width: 457px; max-height: 430px; height: 430px;">
               <img
                 :src="producto.imagen"
                 :alt="producto.nombre"
@@ -50,10 +65,16 @@
 
             <!-- Nombre y precio -->
             <div class="flex items-start justify-between mb-4 px-1">
-              <span class="text-base text-[#6A6867] font-normal leading-tight max-w-[240px]">
+              <span
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+                class="leading-tight"
+              >
                 {{ producto.nombre }}
               </span>
-              <span class="text-base font-semibold text-[#6A6867] flex-shrink-0 ml-4">
+              <span
+                style="color: #6A6867; text-align: right; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
+                class="flex-shrink-0 ml-4"
+              >
                 {{ producto.precio }}
               </span>
             </div>
@@ -62,7 +83,8 @@
             <div class="px-1">
               <NuxtLink
                 :to="`/como-apoyar/productos/${producto.slug}`"
-                class="inline-block w-[262px] py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm text-center tracking-widest hover:bg-[#e0b525] transition-colors"
+                style="display: inline-block; width: 262px; padding-top: 12px; padding-bottom: 12px; background: #F8C52D; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-align: center; text-decoration: none; border-radius: 6.25rem;"
+                class="hover:opacity-90 transition-opacity"
               >
                 COMPRAR
               </NuxtLink>
@@ -91,36 +113,38 @@ useSeoMeta({
 })
 
 const api = useApi()
+
+const { data: campaign } = await useAsyncData(
+  'support-campaign-como-apoyar-productos',
+  () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null)
+)
+
 const { data: response } = await useAsyncData('productos', () =>
   api.products.getAll().catch(() => null)
 )
 
-const fallbackProductos = [
-  { id: 1, slug: 'sticker-escalada-libre-1', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-  { id: 2, slug: 'sticker-escalada-libre-2', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-  { id: 3, slug: 'sticker-escalada-libre-3', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-  { id: 4, slug: 'sticker-escalada-libre-4', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-  { id: 5, slug: 'sticker-escalada-libre-5', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-  { id: 6, slug: 'sticker-escalada-libre-6', nombre: 'Sticker Escalada Libre', precio: '$35.00', imagen: '/images/pico-norte-1.png' },
-]
+const productsMethod = computed(() =>
+  campaign.value?.methods?.find((m: any) => m.type === 'products')
+)
 
 const formatPrecio = (price: number | null, currency: string | null) => {
   if (!price) return ''
-  const cur = currency ?? 'MXN'
-  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur }).format(price)
+  const cur = currency?.trim() ?? 'MXN'
+  try {
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur, currencyDisplay: 'symbol' }).format(price)
+  } catch {
+    return `$${price.toFixed(2)}`
+  }
 }
 
 const productos = computed(() => {
   const apiData = (response.value as any)?.data?.data ?? (response.value as any)?.data ?? []
-  if (apiData.length) {
-    return apiData.map((p: Product) => ({
-      id: p.id,
-      slug: p.slug,
-      nombre: p.name,
-      precio: formatPrecio(p.price, p.currency),
-      imagen: p.featured_media?.url ?? '/images/pico-norte-1.png',
-    }))
-  }
-  return fallbackProductos
+  return apiData.map((p: Product) => ({
+    id: p.id,
+    slug: p.slug,
+    nombre: p.name,
+    precio: formatPrecio(p.price, p.currency),
+    imagen: p.featured_media?.url ?? '/images/pico-norte-1.png',
+  }))
 })
 </script>

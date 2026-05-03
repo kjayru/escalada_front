@@ -43,11 +43,10 @@
           <div
             v-for="block in splitBlocks"
             :key="block.id"
-            class="flex items-stretch"
-            style="margin-bottom: 5rem;"
+            class="flex flex-col md:flex-row items-stretch mb-12 md:mb-20"
           >
-            <!-- Label vertical izquierdo -->
-            <div class="w-10 lg:w-14 flex items-center justify-center flex-shrink-0">
+            <!-- Label vertical izquierdo — solo desktop -->
+            <div class="hidden md:flex w-10 lg:w-14 items-center justify-center flex-shrink-0">
               <span
                 class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
                 style="writing-mode: vertical-rl; transform: rotate(180deg);"
@@ -55,23 +54,23 @@
             </div>
             <!-- Imagen con fondo de color -->
             <div
-              :class="block.title?.toLowerCase().includes('proyecto') ? 'lg:w-1/2 overflow-hidden' : 'lg:w-1/2 flex items-center justify-center p-8'"
+              :class="block.title?.toLowerCase().includes('proyecto') ? 'w-full md:w-1/2 overflow-hidden' : 'w-full md:w-1/2 flex items-center justify-center p-8'"
               :style="block.title?.toLowerCase().includes('proyecto')
-                ? { minHeight: '580px', borderRadius: '0 0 0 40px' }
-                : { background: block.background ?? '#f6f6f6', minHeight: '400px' }"
+                ? { minHeight: '280px', borderRadius: '0 0 0 40px' }
+                : { background: block.background ?? '#f6f6f6', minHeight: '240px' }"
             >
               <img
                 v-if="block.image"
                 :src="block.image"
                 :alt="block.title"
                 :class="block.title?.toLowerCase().includes('proyecto') ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
-                :style="block.title?.toLowerCase().includes('proyecto') ? 'min-height: 580px;' : 'max-height: 380px;'"
+                :style="block.title?.toLowerCase().includes('proyecto') ? 'min-height: 280px;' : 'max-height: 220px;'"
               />
-              <div v-else class="w-full bg-gray-200" style="height: 380px;"></div>
+              <div v-else class="w-full bg-gray-200" style="height: 240px;"></div>
             </div>
             <!-- Texto + botón -->
-            <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-12 bg-white">
-              <h3 class="text-xl lg:text-2xl font-medium text-[#6A6867] mb-4">{{ block.title }}</h3>
+            <div class="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-8 md:py-12 bg-white">
+              <h3 class="text-2xl md:text-2xl font-medium text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif;">{{ block.title }}</h3>
               <!-- eslint-disable-next-line vue/no-v-html -->
               <div class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]" v-html="block.body"></div>
               <div v-if="block.boton">
@@ -96,7 +95,7 @@
     </section>
 
     <!-- Únete al equipo -->
-    <section v-if="joinSection" class="relative overflow-hidden" style="min-height: 759px;">
+    <section v-if="joinSection" class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
       <img
         :src="joinSection.image ?? '/images/slide1.png'"
         :alt="joinSection.heading ?? 'Únete al equipo Escalada Libre'"
@@ -104,8 +103,7 @@
       />
       <div class="absolute inset-0" :style="{ background: joinSection.overlay ?? 'rgba(0,0,0,0.5)' }"></div>
       <div
-        class="relative z-10 flex flex-col justify-center px-12 lg:px-24 py-24"
-        style="min-height: 759px;"
+        class="relative z-10 flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 min-h-[420px] md:min-h-[759px]"
       >
         <h2 class="text-3xl lg:text-[48px] font-medium text-white leading-tight mb-6 max-w-[460px]">
           {{ joinSection.heading ?? 'Únete al equipo' }}
@@ -136,7 +134,7 @@
       </div>
     </section>
     <!-- Únete al equipo (fallback hardcoded si no hay sección en CMS) -->
-    <section v-else class="relative overflow-hidden" style="min-height: 759px;">
+    <section v-else class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
       <img
         src="/images/slide1.png"
         alt="Únete al equipo Escalada Libre"
@@ -144,8 +142,7 @@
       />
       <div class="absolute inset-0 bg-black/50"></div>
       <div
-        class="relative z-10 flex flex-col justify-center px-12 lg:px-24 py-24"
-        style="min-height: 759px;"
+        class="relative z-10 flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 min-h-[420px] md:min-h-[759px]"
       >
         <h2 class="text-3xl lg:text-[48px] font-medium text-white leading-tight mb-6 max-w-[460px]">
           Únete al equipo

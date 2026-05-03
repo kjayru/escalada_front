@@ -44,7 +44,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Inter:wght@400;500;600&family=Poppins:wght@600&family=Readex+Pro:wght@300;400;500;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Inter:wght@400;500;600&family=Overpass:wght@700&family=Poppins:wght@600&family=Readex+Pro:wght@300;400;500;600;700&display=swap'
         }
       ]
     }

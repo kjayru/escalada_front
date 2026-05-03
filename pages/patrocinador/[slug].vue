@@ -20,10 +20,16 @@
       <section class="bg-white pt-16 pb-10 lg:pt-20 lg:pb-12 text-center">
         <div class="max-w-[600px] mx-auto px-4 sm:px-6">
 
-          <!-- Logo (si existe) o ícono genérico -->
+          <!-- Logo de sección (section_logo > logo > ícono genérico) -->
           <div class="flex justify-center mb-8">
             <img
-              v-if="sponsor.logo?.url"
+              v-if="sponsor.section_logo?.url"
+              :src="sponsor.section_logo.url"
+              :alt="sponsor.name"
+              class="h-[94px] w-auto object-contain"
+            />
+            <img
+              v-else-if="sponsor.logo?.url"
               :src="sponsor.logo.url"
               :alt="sponsor.name"
               class="h-[94px] w-auto object-contain"
@@ -129,7 +135,8 @@
             <div class="lg:w-[55%] flex flex-col justify-between">
               <p
                 v-if="sponsor.description"
-                class="text-base lg:text-lg text-[#6A6867] leading-relaxed mb-10 whitespace-pre-line"
+                class="mb-10 whitespace-pre-line leading-relaxed"
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
               >
                 {{ sponsor.description }}
               </p>
@@ -223,10 +230,16 @@
 
                 <!-- Fallback genérico si no hay representante -->
                 <template v-else>
-                  <h3 class="text-2xl lg:text-[28px] font-normal text-[#6A6867] leading-tight mb-4">
+                  <h3
+                    class="mb-4 leading-tight"
+                    style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
+                  >
                     ¿TE GUSTÓ ESTE<br />PRODUCTO?
                   </h3>
-                  <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
+                  <p
+                    class="leading-relaxed"
+                    style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
+                  >
                     Contáctanos para conocer más sobre este patrocinador y sus productos.
                   </p>
                 </template>
@@ -236,6 +249,59 @@
 
           </div>
         </div>
+      </section>
+
+      <!-- ── Slider de Patrocinadores ───────────────────────────── -->
+      <section v-if="sponsorsSlider.length" class="partners-slider relative" style="height: calc(100vh - 90px);">
+        <Swiper
+          :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
+          :slides-per-view="1"
+          :space-between="0"
+          :navigation="{
+            prevEl: '.sp-slider-prev',
+            nextEl: '.sp-slider-next',
+          }"
+          :pagination="{
+            el: '.sp-slider-dots',
+            clickable: true,
+          }"
+          :autoplay="{
+            delay: 5000,
+            disableOnInteraction: false,
+          }"
+          :loop="true"
+          class="h-full w-full"
+        >
+          <SwiperSlide v-for="sp in sponsorsSlider" :key="sp.id">
+            <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sp.slideImage}')`">
+              <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+                <div class="max-w-xl">
+                  <img :src="sp.logo" :alt="sp.name" class="w-64 mb-8" />
+                  <p class="text-white text-lg mb-8 leading-relaxed">{{ sp.description }}</p>
+                  <NuxtLink
+                    :to="`/patrocinador/${sp.slug}`"
+                    class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                    style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                  >
+                    Ver más
+                    <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          <!-- Flechas -->
+          <div class="sp-slider-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </div>
+          <div class="sp-slider-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+
+          <!-- Paginación -->
+          <div class="sp-slider-dots absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2"></div>
+        </Swiper>
       </section>
 
       <!-- ── Mountain Pre-Footer ──────────────────────────────────── -->
@@ -248,6 +314,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation as SwiperNavigation, Pagination as SwiperPagination, Autoplay as SwiperAutoplay } from 'swiper/modules'
+import 'swiper/css'
 import type { Sponsor } from '~/types/api'
 
 const route = useRoute()
@@ -260,6 +329,23 @@ const { data: sponsor, pending, error } = await useAsyncData<Sponsor>(
   () => api.sponsors.getBySlug(slug.value),
   { watch: [slug] }
 )
+
+const { data: allSponsors } = await useAsyncData<Sponsor[]>(
+  'sponsors-landing-slider',
+  () => api.sponsors.getAll().catch(() => [] as Sponsor[])
+)
+
+const sponsorsSlider = computed(() => {
+  const list = allSponsors.value ?? []
+  return list.map((s: Sponsor) => ({
+    id: s.id,
+    slug: s.slug,
+    name: s.name,
+    logo: s.circle_logo?.url ?? s.logo?.url ?? '/images/exposure.png',
+    slideImage: s.slide_image?.url ?? '/images/slide1.png',
+    description: s.tagline ?? s.description ?? '',
+  }))
+})
 
 // Galería: combina las imágenes del array gallery del API
 const gallery = computed(() => sponsor.value?.gallery ?? [])

@@ -2,6 +2,7 @@ import { useRuntimeConfig } from 'nuxt/app'
 import type {
   Activity,
   BlogPost,
+  Gym,
   MemberGroup,
   Page,
   Product,
@@ -104,6 +105,11 @@ export const useApi = () => {
     memberGroups: {
       getAll: () =>
         apiFetch<{ data: MemberGroup[] }>('/api/v1/member-groups'),
+    },
+
+    gyms: {
+      getAll: () =>
+        apiFetch<Gym[]>('/api/v1/gyms'),
     },
   }
 }

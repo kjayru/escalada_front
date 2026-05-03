@@ -27,12 +27,11 @@
     </div>
 
     <!-- Imagen de fondo montaña -->
-    <div class="w-full overflow-hidden" style="height: 450px;">
+    <div class="w-full overflow-hidden h-[180px] sm:h-[300px] lg:h-[450px]">
       <img
         src="/images/back_footer.png"
         alt="Sierra Madre Occidental"
         class="w-full h-full object-cover"
-        style="object-position: 0px -149px;"
       />
     </div>
 

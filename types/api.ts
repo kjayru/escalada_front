@@ -141,6 +141,16 @@ export interface Setting {
 
 export type SettingsMap = Record<string, string>
 
+export interface Gym {
+  id: number
+  name: string
+  address: string | null
+  website_url: string | null
+  logo: string | null
+  sort_order: number
+  is_active: boolean
+}
+
 export interface SupportMethod {
   id: number
   type: string

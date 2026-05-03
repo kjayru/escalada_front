@@ -2,7 +2,7 @@
   <div class="transparencia-page">
 
     <!-- Hero Banner -->
-    <section class="relative overflow-hidden" style="min-height: 1080px;">
+    <section class="relative overflow-hidden min-h-[360px] lg:min-h-[1080px]">
       <img
         :src="heroBannerUrl ?? '/images/potrero-1.png'"
         :alt="heroBannerAlt"
@@ -10,27 +10,48 @@
         :class="{ grayscale: !heroBannerUrl }"
       />
       <div class="absolute inset-0 bg-black/10"></div>
-      <div class="relative z-10" style="min-height: 1080px;"></div>
+      <div class="relative z-10 min-h-[360px] lg:min-h-[1080px]"></div>
     </section>
 
-    <!-- Intro: tarjeta amarilla sobrelapada + foto -->
-    <section v-if="textSection" class="bg-white pt-20 lg:pt-28 pb-16 lg:pb-24">
+    <!-- Intro: mobile = texto arriba + foto abajo | desktop = tarjeta sobrelapada -->
+    <section v-if="textSection" class="bg-white pt-8 lg:pt-28 pb-8 lg:pb-24">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Contenedor relativo: la foto ocupa la derecha, la tarjeta se traslapa -->
-        <div class="relative flex justify-end">
 
-          <!-- Foto (derecha, 65% del ancho) -->
-          <div class="w-full lg:w-[65%] overflow-hidden" style="height: 700px;">
+        <!-- Mobile: apilado vertical -->
+        <div class="flex flex-col lg:hidden">
+          <div class="bg-[#ffe7a0] p-8 flex flex-col justify-start">
+            <h2
+              class="mb-6 leading-tight"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.75rem; font-weight: 500;"
+            >
+              {{ textSection.heading }}
+            </h2>
+            <div
+              class="leading-relaxed prose max-w-none"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1rem; font-weight: 300;"
+              v-html="textSection.body"
+            />
+          </div>
+          <div class="w-full overflow-hidden" style="height: 300px;">
             <img
               :src="textSection.featured_media?.url ?? '/images/pico-norte-1.png'"
               :alt="textSection.featured_media?.alt ?? textSection.heading ?? 'Transparencia'"
               class="w-full h-full object-cover"
             />
           </div>
+        </div>
 
-          <!-- Tarjeta amarilla (posicionada encima, anclada a la izquierda) -->
+        <!-- Desktop: tarjeta sobrelapada -->
+        <div class="hidden lg:block relative flex justify-end">
+          <div class="w-full lg:w-[65%] overflow-hidden ml-auto" style="height: 700px;">
+            <img
+              :src="textSection.featured_media?.url ?? '/images/pico-norte-1.png'"
+              :alt="textSection.featured_media?.alt ?? textSection.heading ?? 'Transparencia'"
+              class="w-full h-full object-cover"
+            />
+          </div>
           <div
-            class="absolute left-0 top-12 lg:top-16 z-10 bg-[#ffe7a0] p-10 lg:p-12 flex flex-col justify-start"
+            class="absolute left-0 top-16 z-10 bg-[#ffe7a0] p-12 flex flex-col justify-start"
             style="width: 42%; max-width: 500px; min-height: 580px;"
           >
             <h2
@@ -45,8 +66,8 @@
               v-html="textSection.body"
             />
           </div>
-
         </div>
+
       </div>
     </section>
 
@@ -79,7 +100,7 @@
           @click="toggleItem(item.id)"
         >
           <!-- Header del item -->
-          <div class="flex items-center justify-between px-14" style="min-height: 119px;">
+          <div class="flex items-center justify-between px-5 md:px-14 min-h-[72px] md:min-h-[119px]">
             <span
               style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 700;"
             >{{ item.label }}</span>
@@ -97,7 +118,7 @@
           </div>
 
           <!-- Contenido expandido -->
-          <div v-if="itemExpandido === item.id" class="px-20 pb-14">
+          <div v-if="itemExpandido === item.id" class="px-5 md:px-20 pb-8 md:pb-14">
             <a
               v-for="doc in item.docs"
               :key="doc.name"

@@ -16,14 +16,14 @@
 
     <template v-else>
     <section class="bg-white pt-12 pb-16 lg:pt-20 lg:pb-24">
-      <div class="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1150px;">
 
         <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
           <!-- Galería izquierda -->
-          <div class="lg:w-[52%]">
+          <div style="width: 680px; max-width: 100%; flex-shrink: 0;">
             <!-- Imagen principal con flechas y zoom -->
-            <div class="relative overflow-hidden mb-3 bg-gray-50" style="aspect-ratio: 3/3.2;">
+            <div class="relative bg-gray-50" style="aspect-ratio: 3/3.2; overflow: hidden;">
               <img
                 :src="imagenActiva"
                 :alt="producto?.name"
@@ -31,23 +31,27 @@
               />
               <!-- Flecha izquierda -->
               <button
-                v-if="galeria.length > 1"
-                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:shadow-lg transition-shadow z-10"
+                class="absolute top-1/2 -translate-y-1/2 flex items-center justify-center z-10 transition-colors"
+                style="left: 0.75rem; width:2.5rem; height:2.5rem; flex-shrink:0; border-radius:0.75rem; background:#D9D9D9;"
+                onmouseover="this.style.background='#F8C52D'"
+                onmouseout="this.style.background='#D9D9D9'"
                 @click="anteriorImagen"
                 aria-label="Imagen anterior"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <!-- Flecha derecha -->
               <button
-                v-if="galeria.length > 1"
-                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:shadow-lg transition-shadow z-10"
+                class="absolute top-1/2 -translate-y-1/2 flex items-center justify-center z-10 transition-colors"
+                style="right: 0.75rem; width:2.5rem; height:2.5rem; flex-shrink:0; border-radius:0.75rem; background:#D9D9D9;"
+                onmouseover="this.style.background='#F8C52D'"
+                onmouseout="this.style.background='#D9D9D9'"
                 @click="siguienteImagen"
                 aria-label="Imagen siguiente"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -63,12 +67,12 @@
               </button>
             </div>
 
-            <!-- Miniaturas -->
-            <div class="flex gap-2">
+            <!-- Thumbnails -->
+            <div class="flex gap-2 mt-2">
               <button
                 v-for="(img, i) in galeria.slice(0, 4)"
                 :key="i"
-                class="w-16 h-16 shrink-0 overflow-hidden border-2 transition-colors"
+                class="w-[6.25rem] h-[6.25rem] shrink-0 overflow-hidden border-2 transition-colors"
                 :class="indiceActivo === i ? 'border-[#F8C52D]' : 'border-transparent hover:border-gray-200'"
                 @click="indiceActivo = i"
               >
@@ -77,7 +81,7 @@
               <!-- Contador si hay más de 4 -->
               <button
                 v-if="galeria.length > 4"
-                class="w-16 h-16 shrink-0 bg-gray-900 flex items-center justify-center text-white text-sm font-semibold hover:bg-gray-700 transition-colors"
+                class="w-[6.25rem] h-[6.25rem] shrink-0 bg-gray-900 flex items-center justify-center text-white text-sm font-semibold hover:bg-gray-700 transition-colors"
                 @click="indiceActivo = 4"
               >
                 +{{ galeria.length - 4 }}
@@ -86,45 +90,70 @@
           </div>
 
           <!-- Info derecha -->
-          <div class="lg:w-[48%] flex flex-col pt-1">
+          <div class="flex-1 flex flex-col pt-1">
 
             <!-- Título -->
-            <h1 class="text-[28px] lg:text-[32px] font-normal text-[#3a3a3a] leading-snug mb-4">
+            <h1
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
+              class="leading-snug mb-4"
+            >
               {{ producto?.name }}
             </h1>
 
             <!-- Descripción corta -->
-            <p v-if="producto?.summary" class="text-sm text-[#6A6867] leading-relaxed mb-6">
+            <p
+              v-if="producto?.summary"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
+              class="leading-relaxed mb-6"
+            >
               {{ producto?.summary }}
             </p>
 
             <!-- Precio con subrayado amarillo -->
             <div class="mb-6">
-              <span class="text-[28px] font-bold text-[#3a3a3a] inline-block border-b-4 border-[#F8C52D] pb-0.5 leading-tight">
+              <span
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.5rem; font-style: normal; font-weight: 600;"
+                class="inline-block border-b-4 border-[#F8C52D] pb-0.5 leading-tight"
+              >
                 {{ precioFormateado }}
               </span>
             </div>
 
             <!-- Cantidad -->
             <div class="mb-4">
-              <p class="text-xs text-[#6A6867] mb-2 tracking-wide uppercase">Cantidad</p>
-              <div class="flex items-center gap-4">
+              <p
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 300; text-transform: uppercase;"
+                class="mb-2"
+              >Cantidad</p>
+              <!-- Pill container: todo dentro del fondo #FFF2CC -->
+              <div
+                class="inline-flex items-center"
+                style="background: #FFF2CC; border-radius: 9999px; padding: 0;"
+              >
+                <!-- Botón menos -->
                 <button
-                  class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 hover:text-gray-700 transition-colors"
+                  class="flex items-center justify-center rounded-full flex-shrink-0 transition-opacity hover:opacity-80"
+                  style="width: 3rem; height: 3rem; background: #F8D96B; color: #6A6867;"
                   @click="cantidad = Math.max(1, cantidad - 1)"
                   aria-label="Reducir cantidad"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
                   </svg>
                 </button>
-                <span class="text-base text-[#3a3a3a] min-w-[20px] text-center select-none">{{ cantidad }}</span>
+                <!-- Número -->
+                <span
+                  class="select-none text-center"
+                  style="color: #6A6867; font-family: 'Overpass', sans-serif; font-size: 1.25rem; font-weight: 700; min-width: 3.5rem;"
+                >{{ cantidad }}</span>
+                <!-- Botón más -->
                 <button
-                  class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 hover:text-gray-700 transition-colors"
+                  class="flex items-center justify-center rounded-full flex-shrink-0 transition-opacity hover:opacity-80"
+                  style="width: 3rem; height: 3rem; background: #D4A829; color: #fff;"
                   @click="cantidad++"
                   aria-label="Aumentar cantidad"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
                 </button>
@@ -132,14 +161,18 @@
             </div>
 
             <!-- Nota compra en línea -->
-            <p class="text-xs text-[#6A6867] mb-5 leading-relaxed">
+            <p
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 300;"
+              class="mb-5 leading-relaxed"
+            >
               Estamos trabajando para que realices tu compra en línea
             </p>
 
             <!-- CTA contacto -->
             <NuxtLink
               to="/contacto"
-              class="block w-full py-4 bg-[#F8C52D] text-gray-900 font-semibold text-sm text-center tracking-[0.15em] hover:bg-[#e0b525] transition-colors"
+              style="display: flex; align-items: center; justify-content: center; border-radius: 6.25rem; background: #F8C52D; height: 2.8125rem; color: #6A6867; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-decoration: none;"
+              class="w-full hover:opacity-90 transition-opacity"
             >
               CONTÁCTANOS PARA ADQUIRIRLO
             </NuxtLink>

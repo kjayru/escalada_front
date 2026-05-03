@@ -3,16 +3,16 @@
 
     <!-- Transfer Info Section -->
     <section class="bg-white pt-16 pb-32 lg:pt-24 lg:pb-40">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-20 max-w-[1400px] mx-auto">
+      <div class="mx-auto px-8 lg:px-20">
+        <div class="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-20 max-w-[1250px] mx-auto">
 
           <!-- Left: Bank details -->
           <div class="lg:w-[45%]">
-            <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-8">
+            <h1 class="leading-tight mb-8" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
               Tu aportación es de mucha ayuda
             </h1>
 
-            <p class="text-base text-[#6A6867] leading-relaxed mb-8">
+            <p class="mb-8" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
               {{ bankMethod?.body ?? 'Te compartimos los datos para tu aportación por medio de transferencia' }}
             </p>
 
@@ -21,8 +21,8 @@
               <p class="text-base font-semibold text-[#6A6867] tracking-wide">{{ bankMethod?.settings?.bank ?? 'BANCOMER' }}</p>
               <div class="space-y-2 text-base text-[#6A6867]">
                 <p>No. de Cuenta &nbsp;<span class="font-medium">{{ bankMethod?.settings?.account ?? '0120869686' }}</span></p>
+                <p v-if="bankMethod?.settings?.clabe">Clabe: &nbsp;<span class="font-medium">{{ bankMethod.settings.clabe }}</span></p>
                 <p v-if="bankMethod?.settings?.iban">IBAN: &nbsp;<span class="font-medium">{{ bankMethod.settings.iban }}</span></p>
-                <p v-else>Clabe: &nbsp;<span class="font-medium">012 580 00120869686 2</span></p>
                 <p>Nombre: &nbsp;<span class="font-medium">{{ bankMethod?.settings?.name ?? 'Escalada Libre México AC.' }}</span></p>
               </div>
             </div>
@@ -39,6 +39,14 @@
           <!-- Right: Decorative image -->
           <div class="lg:w-[50%] flex items-start justify-center lg:justify-end pt-0 lg:pt-4">
             <img
+              v-if="bankMethod?.image"
+              :src="bankMethod.image"
+              alt="Instalación de rutas de escalada"
+              class="w-full max-w-[494px] object-contain"
+              style="max-height: 900px;"
+            />
+            <img
+              v-else
               src="/images/potrero-1.png"
               alt="Instalación de rutas de escalada"
               class="w-full max-w-[494px] object-contain"
@@ -64,12 +72,13 @@ import { computed } from 'vue'
 
 const api = useApi()
 
-const { data: campaigns } = await useAsyncData('campaigns-transferencia',
-  () => api.supportCampaigns.getAll().catch(() => [])
+const { data: campaign } = await useAsyncData(
+  'support-campaign-como-apoyar-transferencia',
+  () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null),
 )
 
 const bankMethod = computed(() =>
-  campaigns.value?.[0]?.methods?.find((m: any) => m.type === 'bank_transfer')
+  campaign.value?.methods?.find((m: any) => m.type === 'transfer')
 )
 
 useSeoMeta({

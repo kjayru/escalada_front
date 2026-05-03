@@ -8,67 +8,69 @@
 
           <!-- Left: Form -->
           <div class="lg:w-[55%]">
-            <h1 class="text-3xl lg:text-[40px] font-normal text-[#6A6867] leading-tight mb-4">
+            <h1 class="leading-tight mb-10" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; color: #6A6867;">
               Tu aportación es de mucha ayuda
             </h1>
-            <p v-if="paypalMethod?.body" class="text-base text-[#6A6867] leading-relaxed mb-8">
-              {{ paypalMethod.body }}
-            </p>
 
-            <form @submit.prevent="handleDonate" class="space-y-0 mt-6">
+            <form @submit.prevent="handleDonate" class="mt-6">
 
               <!-- Nombre -->
               <div class="mb-5">
-                <label class="block text-base text-[#6A6867] mb-2 font-normal">Nombre*</label>
+                <label class="block mb-2" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">Nombre*</label>
                 <input
                   v-model="form.nombre"
                   type="text"
                   required
-                  class="w-full h-[66px] px-4 border border-gray-300 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D] transition-colors"
+                  class="w-full px-4 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-colors"
+                  style="height: 4.125rem; border-radius: 0.625rem; border: 1px solid #6A6867;"
                 />
               </div>
 
               <!-- Apellido -->
               <div class="mb-5">
-                <label class="block text-base text-[#6A6867] mb-2 font-normal">Apellido*</label>
+                <label class="block mb-2" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">Apellido*</label>
                 <input
                   v-model="form.apellido"
                   type="text"
                   required
-                  class="w-full h-[66px] px-4 border border-gray-300 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D] transition-colors"
+                  class="w-full px-4 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-colors"
+                  style="height: 4.125rem; border-radius: 0.625rem; border: 1px solid #6A6867;"
                 />
               </div>
 
               <!-- Correo electrónico -->
               <div class="mb-5">
-                <label class="block text-base text-[#6A6867] mb-2 font-normal">Correo electrónico*</label>
+                <label class="block mb-2" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">Correo electrónico*</label>
                 <input
                   v-model="form.correo"
                   type="email"
                   required
-                  class="w-full h-[66px] px-4 border border-gray-300 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D] transition-colors"
+                  class="w-full px-4 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-colors"
+                  style="height: 4.125rem; border-radius: 0.625rem; border: 1px solid #6A6867;"
                 />
               </div>
 
               <!-- Cantidad a donar -->
               <div class="mb-5">
-                <label class="block text-base text-[#6A6867] mb-2 font-normal">Cantidad a donar*</label>
+                <label class="block mb-2" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">Cantidad a donar*</label>
                 <input
                   v-model="form.cantidad"
                   type="number"
                   min="1"
                   required
-                  class="w-full h-[66px] px-4 border border-gray-300 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D] transition-colors"
+                  class="w-full px-4 bg-white text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-colors"
+                  style="height: 4.125rem; border-radius: 0.625rem; border: 1px solid #6A6867;"
                 />
               </div>
 
               <!-- Campos obligatorios note -->
-              <p class="text-sm text-[#6A6867] text-right mb-6">*Campos obligatorios</p>
+              <p class="text-right mb-6" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 500;">*Campos obligatorios</p>
 
               <!-- DONAR button -->
               <button
                 type="submit"
-                class="w-full h-[45px] bg-[#F8C52D] text-gray-900 font-semibold text-sm tracking-widest hover:bg-[#e0b525] transition-colors"
+                class="w-full hover:opacity-90 transition-opacity"
+                style="margin-top: 70px; height: 45px; border-radius: 6.25rem; background: #F8C52D; color: #6A6867; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
               >
                 DONAR
               </button>
@@ -87,6 +89,14 @@
           <!-- Right: Decorative image -->
           <div class="lg:w-[40%] flex items-start justify-center pt-0 lg:pt-4">
             <img
+              v-if="paypalMethod?.image"
+              :src="paypalMethod.image"
+              alt="Herramienta de escalada"
+              class="w-full max-w-[410px] object-contain"
+              style="max-height: 900px;"
+            />
+            <img
+              v-else
               src="/images/hg.png"
               alt="Herramienta de escalada"
               class="w-full max-w-[410px] object-contain"
@@ -112,12 +122,13 @@ import { ref, reactive, computed } from 'vue'
 
 const api = useApi()
 
-const { data: campaigns } = await useAsyncData('campaigns-paypal',
-  () => api.supportCampaigns.getAll().catch(() => [])
+const { data: campaign } = await useAsyncData(
+  'support-campaign-como-apoyar-paypal',
+  () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null),
 )
 
 const paypalMethod = computed(() =>
-  campaigns.value?.[0]?.methods?.find((m: any) => m.type === 'paypal')
+  campaign.value?.methods?.find((m: any) => m.type === 'paypal')
 )
 
 const paypalLink = computed(() =>

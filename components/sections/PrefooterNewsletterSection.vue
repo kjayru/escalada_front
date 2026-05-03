@@ -1,7 +1,7 @@
 <template>
-  <section class="prefooter-cards pt-16 lg:pt-24 pb-0 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid md:grid-cols-3 gap-6">
+  <section class="prefooter-cards lg:pt-24 pb-0 bg-white">
+    <div class="px-[0.40rem] md:px-0 max-w-[1280px] mx-auto">
+      <div class="grid md:grid-cols-3 gap-y-3 md:gap-y-0">
         <!-- Newsletter Card -->
         <div class="bg-[#F9D363] p-8 flex flex-col justify-between min-h-[357px]">
           <div>
@@ -17,7 +17,7 @@
               class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
               style="font-family: 'Readex Pro', sans-serif; font-weight: 400;"
             />
-            <button class="self-end px-6 py-3 bg-[#242424] text-white font-medium text-sm hover:bg-black transition-colors">
+            <button class="self-end px-6 py-3 bg-[#242424] text-white font-medium text-sm uppercase tracking-widest hover:bg-black transition-colors">
               {{ newsletterBoton }}
             </button>
           </div>
@@ -84,7 +84,7 @@ const st = (key: string, fallback: string): string =>
 
 const newsletterTitulo = computed(() => st('newsletter.titulo', 'Recibe noticias de Escalada Libre a tu correo'))
 const newsletterEtiqueta = computed(() => st('newsletter.etiqueta', 'NEWSLETTER'))
-const newsletterBoton = computed(() => st('newsletter.boton', 'Suscribir'))
+const newsletterBoton = computed(() => st('newsletter.boton', 'SUSCRIBIRME'))
 
 const prefooterCards = computed(() => prefooterPlacements.value ?? [])
 </script>
