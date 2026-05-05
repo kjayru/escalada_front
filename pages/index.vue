@@ -7,7 +7,7 @@
         <img 
           :src="heroImage"
           :alt="heroLocation"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-fill"
         />
       </div>
       
@@ -35,7 +35,7 @@
 
       <!-- Hero Content -->
       <div class="hero-content relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-xl lg:max-w-2xl ml-auto hero-text-block">
+        <div class="ml-auto hero-text-block" style="max-width: 50rem;">
           <!-- Small Title -->
           <div class="flex items-center gap-3 mb-6">
             <div class="w-12 h-px" style="background-color: #242424;"></div>
@@ -43,7 +43,7 @@
           </div>
           
           <!-- Main Title -->
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;">
+          <h1 class="font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400; font-size: 3.75rem;">
             {{ heroTitle }}
           </h1>
         </div>
@@ -995,9 +995,9 @@ onMounted(() => {
   height: 100dvh;
   min-height: 500px;
   margin-top: -80px;
-  padding-top: 80px;
+  padding-top: 160px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
   overflow: hidden;
@@ -1006,7 +1006,7 @@ onMounted(() => {
 @media (min-width: 1024px) {
   .hero {
     margin-top: -96px;
-    padding-top: 96px;
+    padding-top: 160px;
   }
 }
 
@@ -1014,7 +1014,6 @@ onMounted(() => {
   display: none;
 }
 
-.hero-text-block h1,
 .hero-text-block span {
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
 }
