@@ -41,13 +41,23 @@
           class="lg:w-1/2 flex items-center justify-center p-10 lg:p-14"
           :class="idx % 2 === 0 ? 'lg:order-1' : 'lg:order-2'"
         >
-          <img
-            v-if="block.image"
-            :src="block.image"
-            :alt="block.title"
-            class="w-full h-full object-cover"
-            style="max-height: 100%;"
-          />
+          <template v-if="block.image">
+            <!-- Imagen para móviles -->
+            <img
+              v-if="block.mobileImage"
+              :src="block.mobileImage"
+              :alt="block.title"
+              class="w-full h-full object-cover lg:hidden"
+              style="max-height: 100%;"
+            />
+            <!-- Imagen para desktop -->
+            <img
+              :src="block.image"
+              :alt="block.title"
+              class="w-full h-full object-cover hidden lg:block"
+              style="max-height: 100%;"
+            />
+          </template>
           <div v-else class="w-full bg-gray-200" style="height: 420px;"></div>
         </div>
         <!-- Texto -->
@@ -146,35 +156,45 @@ const timelineBlocks = computed(() => {
   ) ?? []
 
   if (sectionBlocks.length) {
-    return sectionBlocks.map(s => ({
-      id: s.id,
-      date: (s.settings?.fecha as string | undefined) ?? '',
-      title: s.heading ?? '',
-      body: s.body ?? '',
-      image:
-        s.featured_media?.url ??
+    return sectionBlocks.map(s => {
+      const desktopImage = s.featured_media?.url ??
         (s.settings?.image as string | undefined) ??
-        null,
-      icono: (s.settings?.icono as string | undefined) ?? null,
-      background:
-        (s.settings?.background as string | undefined) ??
-        (s.settings?.key === 'background' ? (s.settings?.value as string | undefined) ?? null : null),
-      extraStyle:
-        s.settings?.key2 && s.settings?.value2
-          ? { [s.settings.key2 as string]: s.settings.value2 }
-          : null,
-    }))
+        null
+      return {
+        id: s.id,
+        date: (s.settings?.fecha as string | undefined) ?? '',
+        title: s.heading ?? '',
+        body: s.body ?? '',
+        image: desktopImage,
+        mobileImage: s.mobile_image?.url ?? desktopImage,
+        icono: (s.settings?.icono as string | undefined) ?? null,
+        background:
+          (s.settings?.background as string | undefined) ??
+          (s.settings?.key === 'background' ? (s.settings?.value as string | undefined) ?? null : null),
+        extraStyle:
+          s.settings?.key2 && s.settings?.value2
+            ? { [s.settings.key2 as string]: s.settings.value2 }
+            : null,
+      }
+    })
   }
 
   // Fallback: Timeline API (modelo Timeline)
   if (timelineData.value?.length) {
-    return timelineData.value.map(t => ({
-      id: t.id,
-      date: t.date,
-      title: t.title,
-      body: t.body,
-      image: t.image?.url ?? null,
-    }))
+    return timelineData.value.map(t => {
+      const img = t.image?.url ?? null
+      return {
+        id: t.id,
+        date: t.date,
+        title: t.title,
+        body: t.body,
+        image: img,
+        mobileImage: img,
+        icono: null,
+        background: null,
+        extraStyle: null,
+      }
+    })
   }
 
   return []
