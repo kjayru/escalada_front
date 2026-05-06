@@ -3,10 +3,18 @@
 
     <!-- Hero Banner -->
     <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
+      <!-- Imagen para móviles -->
+      <img
+        v-if="heroBannerImageMobile"
+        :src="heroBannerImageMobile"
+        alt="Historia - Escalada Libre"
+        class="absolute inset-0 w-full h-full object-cover object-center lg:hidden"
+      />
+      <!-- Imagen para desktop -->
       <img
         :src="heroBannerImage ?? '/images/n-1.png'"
         alt="Historia - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover object-center"
+        class="absolute inset-0 w-full h-full object-cover object-center hidden lg:block"
       />
       <div class="absolute inset-0 bg-black/20"></div>
     </section>
@@ -115,6 +123,9 @@ const heroBannerImage = computed(
     (heroSection.value?.featured_media?.url as string | undefined) ??
     (heroSection.value?.settings?.image as string | undefined) ??
     null,
+)
+const heroBannerImageMobile = computed(
+  () => (heroSection.value?.mobile_image?.url as string | undefined) ?? heroBannerImage.value,
 )
 const introHeading = computed(
   () =>
