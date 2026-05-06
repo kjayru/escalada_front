@@ -3,7 +3,42 @@
 
     <!-- Post destacado (último post) -->
     <section v-if="featured" class="bg-white">
-      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
+      
+      <!-- Versión MÓVIL: diseño estándar (imagen → categoría → título → descripción) -->
+      <div class="block lg:hidden max-w-[1200px] mx-auto px-6 mb-16">
+        <div class="flex flex-col">
+          <!-- Imagen primero -->
+          <div class="overflow-hidden mb-5" style="height: 300px;">
+            <img
+              :src="featured.imagen"
+              :alt="featured.titulo"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Categoría/Tagline -->
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
+            <span class="uppercase tracking-[0.2em] text-sm text-[#6A6867] font-medium">{{ featured.tagline }}</span>
+          </div>
+
+          <!-- Título -->
+          <NuxtLink
+            :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
+            class="text-2xl font-normal text-[#6A6867] leading-tight mb-4 block hover:opacity-80 transition-opacity"
+          >
+            {{ featured.titulo }}
+          </NuxtLink>
+
+          <!-- Descripción -->
+          <p class="text-base text-[#6A6867] leading-relaxed">
+            {{ featured.descripcion }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Versión DESKTOP: diseño especial con overlay -->
+      <div class="hidden lg:block max-w-[1200px] mx-auto px-6 lg:px-12">
         <!-- Contenedor con altura fija -->
         <div class="relative mb-16" style="height: 500px;">
 
@@ -51,8 +86,8 @@
           class="flex flex-col mb-16"
           :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'"
         >
-          <!-- Imagen -->
-          <div class="lg:w-[55%] overflow-hidden" style="height: 453px;">
+          <!-- Imagen (primero en móvil) -->
+          <div class="lg:w-[55%] overflow-hidden order-1" style="height: 453px;">
             <img
               :src="post.imagen"
               :alt="post.titulo"
@@ -62,7 +97,7 @@
 
           <!-- Texto -->
           <div
-            class="lg:w-[45%] flex flex-col justify-center px-10 lg:px-16 py-12"
+            class="lg:w-[45%] flex flex-col justify-center px-10 lg:px-16 py-12 order-2"
           >
             <!-- Tagline -->
             <div

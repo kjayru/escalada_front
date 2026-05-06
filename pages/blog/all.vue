@@ -11,14 +11,8 @@
             :key="articulo.id"
             class="flex flex-col"
           >
-            <!-- Tagline (encima de la imagen) -->
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
-              <span class="uppercase tracking-[0.2em] text-xs text-[#6A6867] font-medium">{{ articulo.tagline }}</span>
-            </div>
-
-            <!-- Imagen -->
-            <div class="overflow-hidden mb-5" style="height: 264px;">
+            <!-- Imagen (primero en móvil) -->
+            <div class="overflow-hidden mb-5 order-1 lg:order-2" style="height: 264px;">
               <img
                 :src="articulo.imagen"
                 :alt="articulo.titulo"
@@ -26,16 +20,22 @@
               />
             </div>
 
+            <!-- Tagline/Categoría (después de imagen en móvil) -->
+            <div class="flex items-center gap-3 mb-4 order-2 lg:order-1">
+              <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
+              <span class="uppercase tracking-[0.2em] text-xs text-[#6A6867] font-medium">{{ articulo.tagline }}</span>
+            </div>
+
             <!-- Título -->
             <NuxtLink
               :to="articulo.slug ? '/blog/' + articulo.slug : '#'"
-              class="text-xl lg:text-2xl font-normal text-[#6A6867] leading-tight mb-3 block hover:opacity-80 transition-opacity"
+              class="text-xl lg:text-2xl font-normal text-[#6A6867] leading-tight mb-3 block hover:opacity-80 transition-opacity order-3"
             >
               {{ articulo.titulo }}
             </NuxtLink>
 
             <!-- Descripción -->
-            <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed">
+            <p class="text-sm lg:text-base text-[#6A6867] leading-relaxed order-4">
               {{ articulo.descripcion }}
             </p>
           </div>
