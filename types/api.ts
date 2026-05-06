@@ -29,6 +29,7 @@ export interface PageSection {
   sort_order: number
   settings: Record<string, unknown> | null
   featured_media: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
+  mobile_image: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
   items: SectionItem[]
   media: MediaItem[]
 }

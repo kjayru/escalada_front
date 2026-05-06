@@ -4,10 +4,17 @@
     <section id="hero" class="hero relative">
       <!-- Background Image -->
       <div class="hero-image absolute inset-0 z-0">
+        <!-- Imagen para móviles -->
+        <img 
+          :src="heroImageMobile"
+          :alt="heroLocation"
+          class="w-full h-full object-fill lg:hidden"
+        />
+        <!-- Imagen para desktop -->
         <img 
           :src="heroImage"
           :alt="heroLocation"
-          class="w-full h-full object-fill"
+          class="w-full h-full object-fill hidden lg:block"
         />
       </div>
       
@@ -43,16 +50,16 @@
           </div>
           
           <!-- Main Title -->
-          <h1 class="font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400; font-size: 3.75rem;">
+          <h1 class="hero-title font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;">
             {{ heroTitle }}
           </h1>
         </div>
       </div>
       
-      <!-- Scroll Down Button - Centered Bottom -->
+      <!-- Scroll Down Button - Left on mobile, centered on desktop -->
       <button 
         @click="scrollToNextSection"
-        class="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-row items-center gap-3 text-white hover:text-[#F5C400] transition-colors group"
+        class="absolute bottom-12 left-8 lg:left-1/2 lg:-translate-x-1/2 z-20 flex flex-row items-center gap-3 text-white hover:text-[#F5C400] transition-colors group"
       >
         <span class="text-sm tracking-wider" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">scroll down</span>
         <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +67,15 @@
         </svg>
       </button>
       
-      <!-- Location Tag - Fixed Bottom Left -->
+      <!-- Location Tag Mobile - Bottom Right (solo móviles) -->
+      <div class="absolute bottom-8 right-8 z-20 lg:hidden">
+        <div class="text-white text-sm tracking-wider px-1 py-1 text-right" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
+          {{ heroLocationMobile }}
+        </div>
+        <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
+      </div>
+      
+      <!-- Location Tag Desktop - Bottom Left (solo desktop) -->
       <div class="absolute bottom-8 left-8 z-20 hidden lg:block">
         <div class="text-white text-sm tracking-wider px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="heroLocationHtml">
         </div>
@@ -79,8 +94,24 @@
         </div>
       </div>
 
-      <!-- Mountain Image -->
-      <div class="w-full relative">
+      <!-- Mountain Image Mobile -->
+      <div v-if="parallaxMountainImageMobile" class="w-full relative lg:hidden">
+        <img 
+          :src="parallaxMountainImageMobile"
+          :alt="parallaxLocation"
+          class="w-full h-auto block"
+        />
+        <!-- Location Tag -->
+        <div class="absolute bottom-8 right-8">
+          <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
+            {{ parallaxLocation }}
+            <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mountain Image Desktop -->
+      <div class="w-full relative" :class="parallaxMountainImageMobile ? 'hidden lg:block' : ''">
         <img 
           :src="parallaxMountainImage"
           :alt="parallaxLocation"
@@ -110,8 +141,23 @@
         </div>
       </div>
 
-      <!-- Image -->
-      <div class="w-full relative">
+      <!-- Image Mobile -->
+      <div v-if="conservacionImageMobile" class="w-full relative lg:hidden">
+        <img 
+          :src="conservacionImageMobile"
+          :alt="conservacionLocation"
+          class="w-full h-auto block"
+        />
+        <!-- Location Tag -->
+        <div class="absolute bottom-8 left-8 z-20">
+          <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="conservacionLocationHtml">
+          </div>
+          <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
+        </div>
+      </div>
+
+      <!-- Image Desktop -->
+      <div class="w-full relative" :class="conservacionImageMobile ? 'hidden lg:block' : ''">
         <img 
           :src="conservacionImage"
           :alt="conservacionLocation"
@@ -135,7 +181,7 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <!-- Contenido de texto -->
-          <div :class="['relative overflow-hidden', idx % 2 !== 0 ? 'order-last' : '']">
+          <div :class="['relative overflow-hidden order-first', idx % 2 !== 0 ? 'lg:order-last' : '']">
             <!-- Número de fondo (decorativo) -->
             <div
               class="absolute top-0 left-0 leading-none select-none pointer-events-none"
@@ -174,7 +220,7 @@
             </div>
           </div>
           <!-- Imagen -->
-          <div :class="idx % 2 === 0 ? 'order-first lg:order-last' : ''">
+          <div :class="['order-last', idx % 2 === 0 ? 'lg:order-last' : 'lg:order-first']">
             <img :src="item.image" :alt="item.title" class="w-full h-auto" />
           </div>
         </div>
@@ -182,64 +228,67 @@
     </section>
 
     <!-- Partners Slider -->
-    <section class="partners-slider relative" style="height: calc(100vh - 90px);">
-      <Swiper
-        :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
-        :slides-per-view="1"
-        :space-between="0"
-        :navigation="{
-          prevEl: '.swiper-button-prev-custom',
-          nextEl: '.swiper-button-next-custom',
-        }"
-        :pagination="{
-          el: '.swiper-pagination-custom',
-          clickable: true,
-        }"
-        :autoplay="{
-          delay: 5000,
-          disableOnInteraction: false,
-        }"
-        :loop="true"
-        class="h-full w-full"
-      >
-        <!-- Slides dinámicos de patrocinadores -->
-        <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
-          <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-              <div class="max-w-xl">
-                <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
-                <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.description }}</p>
-                <a
-                  :href="sponsor.url"
-                  :target="sponsor.url !== '#' ? '_blank' : undefined"
-                  :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
-                  class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
-                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
-                >
-                  Ver más
-                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
-                </a>
+    <div class="bg-white pb-12">
+      <section class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
+        <Swiper
+          :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
+          :slides-per-view="1"
+          :space-between="0"
+          :navigation="{
+            prevEl: '.swiper-button-prev-custom',
+            nextEl: '.swiper-button-next-custom',
+          }"
+          :pagination="{
+            el: '.swiper-pagination-custom',
+            clickable: true,
+            type: 'bullets',
+          }"
+          :autoplay="{
+            delay: 5000,
+            disableOnInteraction: false,
+          }"
+          :loop="true"
+          class="h-full w-full"
+        >
+          <!-- Slides dinámicos de patrocinadores -->
+          <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
+            <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
+              <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
+                <div class="max-w-xl w-full lg:w-auto">
+                  <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                  <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+                  <a
+                    :href="sponsor.url"
+                    :target="sponsor.url !== '#' ? '_blank' : undefined"
+                    :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
+                    class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
+                    style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                  >
+                    Ver más
+                    <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                  </a>
+                </div>
               </div>
             </div>
+          </SwiperSlide>
+
+          <!-- Navigation Arrows - Hidden on mobile, visible on desktop -->
+          <div class="swiper-button-prev-custom absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
           </div>
-        </SwiperSlide>
-
-        <!-- Navigation Arrows -->
-        <div class="swiper-button-prev-custom absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </div>
-        <div class="swiper-button-next-custom absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </div>
-
-        <!-- Pagination Dots -->
-        <div class="swiper-pagination-custom absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2"></div>
-      </Swiper>
-    </section>
+          <div class="swiper-button-next-custom absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+        </Swiper>
+      </section>
+      
+      <!-- Pagination Dots - Outside slider -->
+      <div class="swiper-pagination-custom flex justify-center gap-2 pt-8"></div>
+    </div>
 
     <!-- Otros Patrocinadores Section -->
     <section class="otros-patrocinadores py-16 lg:py-20 bg-white">
@@ -400,10 +449,40 @@
       </div>
     </section>
 
-    <!-- ¿Dónde hemos trabajado? Map Section -->
-    <section class="map-section bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <h2 class="text-3xl lg:text-4xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+    <!-- ¿Dónde hemos trabajado? Map Section - MOBILE -->
+    <div class="lg:hidden">
+      <!-- Título -->
+      <section class="bg-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+            {{ mapaTitle }}
+          </h2>
+        </div>
+      </section>
+      
+      <!-- Mapa - sin espacio -->
+      <div class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
+        <img
+          :src="mapaImage"
+          alt="Mapa de trabajo - Nuevo León"
+          class="w-full h-full object-contain"
+        />
+      </div>
+      
+      <!-- Collage - pegado directamente -->
+      <div class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
+        <img
+          :src="numerosBackgroundImage"
+          alt="Escalada en roca"
+          class="w-full h-full object-contain"
+        />
+      </div>
+    </div>
+
+    <!-- ¿Dónde hemos trabajado? Map Section - DESKTOP -->
+    <section class="map-section bg-white hidden lg:block">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        <h2 class="text-4xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
           {{ mapaTitle }}
         </h2>
       </div>
@@ -414,19 +493,19 @@
           class="w-full h-full object-cover"
         />
         <!-- Potrero Chico label - right side -->
-        <div v-if="mapaLabel1" class="absolute hidden lg:block" style="right: 10%; top: 30%;">
+        <div v-if="mapaLabel1" class="absolute" style="right: 10%; top: 30%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
             {{ mapaLabel1 }}
           </p>
         </div>
         <!-- La Huasteca label - left side -->
-        <div v-if="mapaLabel2" class="absolute hidden lg:block" style="left: 11%; top: 55%;">
+        <div v-if="mapaLabel2" class="absolute" style="left: 11%; top: 55%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 leading-snug max-w-xs">
             {{ mapaLabel2 }}
           </p>
         </div>
         <!-- El Salto label - right bottom -->
-        <div v-if="mapaLabel3" class="absolute hidden lg:block" style="right: 10%; bottom: 16%;">
+        <div v-if="mapaLabel3" class="absolute" style="right: 10%; bottom: 16%;">
           <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
             {{ mapaLabel3 }}
           </p>
@@ -434,19 +513,19 @@
       </div>
     </section>
 
-    <!-- IMG_3366 - Climbing / App Section -->
-    <section class="climbing-app-section relative overflow-hidden" style="height: clamp(400px, 100vw, 1313px);">
+    <!-- IMG_3366 - Climbing / App Section - DESKTOP -->
+    <section class="climbing-app-section relative overflow-hidden hidden lg:block" style="height: clamp(400px, 100vw, 1313px);">
       <img
         :src="numerosBackgroundImage"
         alt="Escalada en roca"
         class="w-full h-full object-cover"
       />
       <!-- Logo overlay - right side -->
-      <div class="absolute top-1/2 -translate-y-1/2 right-12 lg:right-24 flex flex-col items-center gap-6">
+      <div class="absolute top-1/2 -translate-y-1/2 right-24 flex flex-col items-center gap-6">
         <img
           :src="numerosLogoImage"
           alt="Escalada Libre"
-          class="w-40 lg:w-56"
+          class="w-56"
         />
       </div>
     </section>
@@ -464,50 +543,156 @@
           </div>
         </div>
 
-        <!-- Row 1: 5 stats -->
-        <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-y sm:divide-y-0 divide-x-0 lg:divide-x divide-gray-200">
-            <div class="p-6 lg:p-8 text-center">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.actividades }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Actividades<br>realizadas</div>
+        <!-- Versión Móvil: Cards agrupados de 2 en 2 -->
+        <div class="lg:hidden space-y-6">
+          <!-- Card 1: Actividades + Árboles -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.actividades }}</div>
+                </div>
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
+                </div>
+              </div>
             </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Árboles<br>sembrados</div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Actividades<br>realizadas</div>
+              </div>
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Árboles<br>sembrados</div>
+              </div>
             </div>
-            <div class="p-6 lg:p-8 text-center border-t sm:border-t-0 sm:border-l lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.rutas }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Rutas<br>rehabilitadas</div>
+          </div>
+
+          <!-- Card 2: Rutas + Bolts -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.rutas }}</div>
+                </div>
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.bolts }}</div>
+                </div>
+              </div>
             </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.bolts }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Bolts<br>instalados</div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Rutas<br>rehabilitadas</div>
+              </div>
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Bolts<br>instalados</div>
+              </div>
             </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200 sm:col-span-3 lg:col-span-1">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Señalamientos<br>instalados</div>
+          </div>
+
+          <!-- Card 3: Señalamientos + Voluntarios -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
+                </div>
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Señalamientos<br>instalados</div>
+              </div>
+              <div class="text-center">
+                <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Voluntarios</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Años útil + Costo reequipado -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
+                </div>
+                <div class="py-8 px-6 text-center">
+                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.costo_reequipado }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Años de vida útil<br>de una vía</div>
+              </div>
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Costo por reequipado<br>de rutas</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: Monto total invertido (solo) -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="py-8 px-6 text-center">
+                <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
+              </div>
+            </div>
+            <div class="text-center">
+              <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Monto total invertido</div>
             </div>
           </div>
         </div>
 
-        <!-- Row 2: 4 stats -->
-        <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)]">
-          <div class="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
-            <div class="p-6 lg:p-8 text-center">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Voluntarios</div>
+        <!-- Versión Desktop -->
+        <div class="hidden lg:block">
+          <!-- Row 1: 5 stats -->
+          <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+            <div class="grid grid-cols-5 divide-x divide-gray-200">
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.actividades }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Actividades<br>realizadas</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Árboles<br>sembrados</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.rutas }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Rutas<br>rehabilitadas</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.bolts }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Bolts<br>instalados</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Señalamientos<br>instalados</div>
+              </div>
             </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Años de vida útil<br>de una vía</div>
-            </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.costo_reequipado }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Costo por reequipado<br>de rutas</div>
-            </div>
-            <div class="p-6 lg:p-8 text-center border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div class="text-4xl lg:text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
-              <div class="text-sm lg:text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Monto total invertido</div>
+          </div>
+
+          <!-- Row 2: 4 stats -->
+          <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)]">
+            <div class="grid grid-cols-4 divide-x divide-gray-200">
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
+                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Voluntarios</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Años de vida útil<br>de una vía</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.costo_reequipado }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Costo por reequipado<br>de rutas</div>
+              </div>
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
+                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Monto total invertido</div>
+              </div>
             </div>
           </div>
         </div>
@@ -595,7 +780,7 @@
     <section class="team-section py-16 lg:py-24 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
-        <div class="flex items-center justify-between mb-12">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-4">
           <h2 class="text-2xl lg:text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? 'Nuestro team' }}</h2>
           <NuxtLink
             :to="teamLinkUrl"
@@ -624,7 +809,7 @@
             <div class="flex-1" style="font-family: 'Readex Pro', sans-serif; color: #6A6867;">
               <h3 class="text-xl lg:text-[25px] mb-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">{{ member.name }}</h3>
               <p class="mb-3" style="font-size: 15px; font-family: 'Readex Pro', sans-serif; font-weight: 600;">{{ member.role ?? '' }}</p>
-              <p class="text-sm lg:text-base leading-relaxed" style="font-weight: 400;">{{ member.bio }}</p>
+              <p class="leading-relaxed" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 600;">{{ member.bio }}</p>
             </div>
           </div>
         </div>
@@ -696,6 +881,8 @@ const heroImage = computed(() =>
   sec('hero')?.featured_media?.url
   ?? (sec('hero')?.settings?.image as string)
   ?? '/images/huasteca4-1920px.jpg')
+const heroImageMobile = computed(() =>
+  sec('hero')?.mobile_image?.url ?? heroImage.value)
 const heroLocation = computed(() =>
   (sec('hero')?.settings?.location as string) ?? 'La Huasteca')
 const heroLocationHtml = computed(() => {
@@ -711,6 +898,8 @@ const heroLocationHtml = computed(() => {
   }
   return loc
 })
+const heroLocationMobile = computed(() =>
+  (sec('hero')?.settings?.location_movil as string) ?? 'La Huasteca')
 
 // Intro text + parallax
 const introText = computed(() =>
@@ -721,6 +910,8 @@ const parallaxMountainImage = computed(() =>
   sec('intro')?.featured_media?.url
   ?? (sec('intro')?.settings?.mountain_image as string)
   ?? '/images/potrero-1.png')
+const parallaxMountainImageMobile = computed(() =>
+  sec('intro')?.mobile_image?.url ?? null)
 const parallaxLocation = computed(() =>
   (sec('intro')?.settings?.location as string) ?? 'El Potrero Chico, Hidalgo N.L. México')
 
@@ -733,6 +924,8 @@ const conservacionImage = computed(() =>
   sec('conservacion')?.featured_media?.url
   ?? (sec('conservacion')?.settings?.image as string)
   ?? '/images/n-1.png')
+const conservacionImageMobile = computed(() =>
+  sec('conservacion')?.mobile_image?.url ?? null)
 const conservacionLocation = computed(() =>
   (sec('conservacion')?.settings?.location as string) ?? 'El Salto, Coahuila de Zaragoza, Santiago N.L. México')
 const conservacionLocationHtml = computed(() => {
@@ -782,14 +975,14 @@ const sponsorsSliderData = computed(() => {
       name: s.name,
       logo: s.logo?.url ?? '/images/exposure.png',
       slideImage: s.slide_image?.url ?? '/images/slide1.png',
-      description: s.description ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
+      tagline: s.tagline ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
       url: s.website_url ?? '#',
     }))
   }
   return [
-    { id: -1, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
-    { id: -2, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
-    { id: -3, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -1, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -2, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -3, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
   ]
 })
 
@@ -1018,6 +1211,20 @@ onMounted(() => {
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
 }
 
+.hero-title {
+  font-size: 2.1875rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 3.75rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 :deep(.conservacion-body),
 :deep(.conservacion-body *) {
   color: #6A6867 !important;
@@ -1039,16 +1246,27 @@ onMounted(() => {
 }
 
 /* Swiper Custom Styles */
+:deep(.swiper-pagination-custom) {
+  display: flex !important;
+  gap: 8px;
+  justify-content: center;
+}
+
 :deep(.swiper-pagination-custom .swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  background: white;
-  opacity: 0.5;
+  background: #9CA3AF;
+  opacity: 0.4;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 :deep(.swiper-pagination-custom .swiper-pagination-bullet-active) {
   opacity: 1;
-  background: #F8C52D;
+  background: #6B7280;
+  width: 40px;
+  border-radius: 6px;
 }
 
 /* Apoyo swiper - hide default arrows */
