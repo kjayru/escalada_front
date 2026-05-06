@@ -148,6 +148,8 @@ const introBody = computed(
     'Lo que comenzó en 2016 como una respuesta colectiva ante el posible cierre de la pared de escalada "Las Ánimas" por parte del INAH, se transformó en una serie de acciones organizadas que darían pie a la creación de Escalada Libre México A.C. en 2017. Desde entonces, la asociación ha trabajado por establecer un vínculo respetuoso entre la comunidad escaladora, las autoridades y los habitantes de las zonas donde se practica este deporte. Con iniciativas como charlas comunitarias, instalación de señalética, reequipamiento de rutas y la obtención del estatus de donataria autorizada, Escalada Libre ha consolidado su compromiso con el desarrollo sustentable de la escalada en México.',
 )
 
+
+
 // Bloques de imagen+texto — PageSections con type='split' o settings.fecha
 // (administradas desde Filament > ContentBlockSchema en la página Historia)
 const timelineBlocks = computed(() => {
