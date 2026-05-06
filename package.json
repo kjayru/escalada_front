@@ -7,7 +7,14 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "pm2:start": "pm2 start ecosystem.config.cjs --env production",
+    "pm2:reload": "pm2 reload ecosystem.config.cjs --env production",
+    "pm2:restart": "pm2 restart escalada-nuxt",
+    "pm2:stop": "pm2 stop escalada-nuxt",
+    "pm2:delete": "pm2 delete escalada-nuxt",
+    "pm2:logs": "pm2 logs escalada-nuxt",
+    "pm2:status": "pm2 status"
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
