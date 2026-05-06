@@ -2,7 +2,7 @@
   <div class="actividades-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
+    <section class="hero-banner relative overflow-hidden h-[400px] lg:h-[1080px]">
       <img
         :src="heroImage"
         :alt="heroAlt"
@@ -12,8 +12,42 @@
     </section>
 
     <!-- Intro + Photo Mosaic -->
-    <section class="mosaic-section bg-white pt-40">
-      <div class="mosaic-grid">
+    <section class="mosaic-section bg-white pt-12 lg:pt-40">
+      
+      <!-- Versión MÓVIL: diseño simplificado -->
+      <div class="block lg:hidden px-4 sm:px-6">
+        <!-- Texto e Intro -->
+        <div class="flex flex-col items-center justify-center text-center mb-12 px-4 py-8">
+          <h1 class="text-3xl font-medium text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif;">{{ introTitle }}</h1>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div class="text-base font-normal text-[#6A6867] leading-relaxed max-w-md mb-8" style="font-family: 'Readex Pro', sans-serif;" v-html="introDesc"></div>
+          <a
+            href="#cronologia"
+            class="inline-flex items-center justify-center w-full max-w-sm px-10 py-3 border border-[#6A6867] rounded-full text-[#6A6867] font-bold hover:bg-[#6A6867] hover:text-white transition-colors text-sm"
+            style="font-family: 'Readex Pro', sans-serif;"
+          >
+            VER ACTIVIDADES
+          </a>
+        </div>
+
+        <!-- Grid simple de fotos: 2 columnas -->
+        <div class="grid grid-cols-2 gap-2">
+          <div
+            v-for="(img, index) in galleryImages.slice(0, 12)"
+            :key="index"
+            class="overflow-hidden aspect-square"
+          >
+            <img
+              :src="img.url ?? mosaicImg(index)"
+              :alt="img.alt ?? mosaicAlt(index)"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Versión DESKTOP: mosaico complejo original -->
+      <div class="hidden lg:block mosaic-grid">
 
         <!-- Left tall photo (pos 0) -->
         <div class="mosaic-left-tall">
@@ -340,11 +374,17 @@ const toggleYear = (year: string) => {
 <style scoped>
 /* ── Mosaic photo grid ── */
 .mosaic-grid {
-  display: grid;
   width: min(100% - 4rem, 1680px);
   margin: 0 auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 419px 419px 419px 419px;
+}
+
+/* Solo aplicar display: grid en desktop (cuando no esté oculto) */
+@media (min-width: 1024px) {
+  .mosaic-grid {
+    display: grid;
+  }
 }
 
 .mosaic-left-tall {
@@ -425,66 +465,5 @@ const toggleYear = (year: string) => {
   overflow: hidden;
 }
 
-/* Responsive: on smaller screens collapse to simple flow */
-@media (max-width: 1023px) {
-  .mosaic-grid {
-    display: grid;
-    width: min(100% - 2rem, 1680px);
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-  }
-
-  .mosaic-left-tall,
-  .mosaic-center-left,
-  .mosaic-center-right,
-  .mosaic-second-row-right,
-  .mosaic-top-right,
-  .mosaic-bottom-left,
-  .mosaic-bottom-center,
-  .mosaic-bottom-center-right,
-  .mosaic-mid-bottom-fill,
-  .mosaic-bottom-far-left,
-  .mosaic-bottom-fill {
-    grid-column: auto;
-    grid-row: auto;
-    height: 300px;
-  }
-
-  .mosaic-right-tall {
-    grid-column: auto;
-    grid-row: auto;
-    height: 300px;
-  }
-
-  .mosaic-center-text {
-    grid-column: 1 / 3;
-    grid-row: auto;
-  }
-}
-
-@media (max-width: 639px) {
-  .mosaic-grid {
-    width: min(100% - 2rem, 1680px);
-    grid-template-columns: 1fr;
-  }
-
-  .mosaic-center-text {
-    grid-column: 1;
-  }
-
-  .mosaic-left-tall,
-  .mosaic-center-left,
-  .mosaic-center-right,
-  .mosaic-second-row-right,
-  .mosaic-top-right,
-  .mosaic-bottom-left,
-  .mosaic-bottom-center,
-  .mosaic-bottom-center-right,
-  .mosaic-mid-bottom-fill,
-  .mosaic-bottom-far-left,
-  .mosaic-bottom-fill,
-  .mosaic-right-tall {
-    height: 260px;
-  }
-}
+/* Media queries ya no son necesarias - usamos versiones separadas con Tailwind */
 </style>
