@@ -55,27 +55,112 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://escaladapro-api.test'
     }
   },
+  // routeRules: {
+  //   // Páginas estáticas — pre-renderizadas en build
+  //   '/':               { prerender: true },
+  //   '/historia':       { prerender: true },
+  //   '/transparencia':  { prerender: true },
+  //   '/como-apoyar':    { prerender: true },
+  //   '/como-apoyar/productos': { prerender: true },
+  //   '/como-apoyar/productos/**': { ssr: true },
+  //   '/como-apoyar/**': { prerender: true },
+  //   '/patrocinio':     { prerender: true },
+  //   '/patrocinio-2':   { prerender: true },
+  //   // Patrocinadores detalle — SSR para SEO dinámico
+  //   '/patrocinador/**': { ssr: true },
+  //   // Páginas con contenido dinámico desde la BD — SSR
+  //   '/nosotros':       { ssr: true },
+  //   // Blog — SSR para SEO dinámico
+  //   '/blog':           { ssr: true },
+  //   '/blog/**':        { ssr: true },
+  //   // Actividades — SSR (contenido dinámico indexable)
+  //   '/actividades':    { ssr: true },
+  //   // Contacto — solo cliente, no necesita SEO
+  //   '/contacto':       { ssr: false },
+  // }
+
   routeRules: {
-    // Páginas estáticas — pre-renderizadas en build
-    '/':               { prerender: true },
-    '/historia':       { prerender: true },
-    '/transparencia':  { prerender: true },
-    '/como-apoyar':    { prerender: true },
-    '/como-apoyar/productos': { prerender: true },
-    '/como-apoyar/productos/**': { ssr: true },
-    '/como-apoyar/**': { prerender: true },
-    '/patrocinio':     { prerender: true },
-    '/patrocinio-2':   { prerender: true },
-    // Patrocinadores detalle — SSR para SEO dinámico
-    '/patrocinador/**': { ssr: true },
-    // Páginas con contenido dinámico desde la BD — SSR
-    '/nosotros':       { ssr: true },
-    // Blog — SSR para SEO dinámico
-    '/blog':           { ssr: true },
-    '/blog/**':        { ssr: true },
-    // Actividades — SSR (contenido dinámico indexable)
-    '/actividades':    { ssr: true },
-    // Contacto — solo cliente, no necesita SEO
-    '/contacto':       { ssr: false },
-  }
+  // Solo deja prerender si realmente son páginas fijas
+  '/': { prerender: true },
+
+  // Si estas páginas se editan desde backend/admin, mejor SSR
+  '/historia': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/transparencia': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/como-apoyar': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/como-apoyar/productos': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/como-apoyar/productos/**': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/patrocinio': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/patrocinador/**': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/nosotros': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/blog': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/blog/**': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/actividades': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
+
+  '/contacto': { ssr: false }
+}
 })
