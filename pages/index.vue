@@ -257,16 +257,14 @@
                 <div class="max-w-xl w-full lg:w-auto">
                   <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
                   <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
-                  <a
-                    :href="sponsor.url"
-                    :target="sponsor.url !== '#' ? '_blank' : undefined"
-                    :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
+                  <NuxtLink
+                    :to="`/patrocinador/${sponsor.slug}`"
                     class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
                     style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
                   >
                     Ver más
                     <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
-                  </a>
+                  </NuxtLink>
                 </div>
               </div>
             </div>
@@ -973,16 +971,16 @@ const sponsorsSliderData = computed(() => {
     return sp.map((s: Sponsor) => ({
       id: s.id,
       name: s.name,
+      slug: s.slug,
       logo: s.logo?.url ?? '/images/exposure.png',
       slideImage: s.slide_image?.url ?? '/images/slide1.png',
       tagline: s.tagline ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
-      url: s.website_url ?? '#',
     }))
   }
   return [
-    { id: -1, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
-    { id: -2, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
-    { id: -3, name: 'Exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.', url: '#' },
+    { id: -1, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
+    { id: -2, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
+    { id: -3, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', tagline: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
   ]
 })
 
