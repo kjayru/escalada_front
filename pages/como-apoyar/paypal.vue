@@ -86,8 +86,8 @@
             </form>
           </div>
 
-          <!-- Right: Decorative image -->
-          <div class="lg:w-[40%] flex items-start justify-center pt-0 lg:pt-4">
+          <!-- Right: Decorative image (oculta en móvil) -->
+          <div class="hidden lg:flex lg:w-[40%] items-start justify-center pt-0 lg:pt-4">
             <img
               v-if="paypalMethod?.image"
               :src="paypalMethod.image"

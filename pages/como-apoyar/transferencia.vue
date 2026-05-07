@@ -36,8 +36,8 @@
             </div>
           </div>
 
-          <!-- Right: Decorative image -->
-          <div class="lg:w-[50%] flex items-start justify-center lg:justify-end pt-0 lg:pt-4">
+          <!-- Right: Decorative image (oculta en móvil) -->
+          <div class="hidden lg:flex lg:w-[50%] items-start justify-center lg:justify-end pt-0 lg:pt-4">
             <img
               v-if="bankMethod?.image"
               :src="bankMethod.image"
