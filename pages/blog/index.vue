@@ -122,7 +122,7 @@
     </section>
 
     <!-- Partners Slider -->
-    <section class="partners-slider relative" style="height: calc(100vh - 90px);">
+    <section class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
       <Swiper
         :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
         :slides-per-view="1"
@@ -134,6 +134,7 @@
         :pagination="{
           el: '.blog-swiper-pagination',
           clickable: true,
+          type: 'bullets',
         }"
         :autoplay="{
           delay: 5000,
@@ -144,15 +145,15 @@
       >
         <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
           <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-              <div class="max-w-xl">
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
+              <div class="max-w-xl w-full lg:w-auto">
                 <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
                 <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.description }}</p>
                 <a
                   :href="sponsor.url"
                   :target="sponsor.url !== '#' ? '_blank' : undefined"
                   :rel="sponsor.url !== '#' ? 'noopener noreferrer' : undefined"
-                  class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                  class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
                   style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
                 >
                   Ver más
@@ -163,22 +164,22 @@
           </div>
         </SwiperSlide>
 
-        <!-- Navigation Arrows -->
-        <div class="blog-swiper-button-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+        <!-- Navigation Arrows - Hidden on mobile, visible on desktop -->
+        <div class="blog-swiper-button-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </div>
-        <div class="blog-swiper-button-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+        <div class="blog-swiper-button-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
         </div>
-
-        <!-- Pagination Dots -->
-        <div class="blog-swiper-pagination absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2"></div>
       </Swiper>
     </section>
+    
+    <!-- Pagination Dots - Outside slider -->
+    <div class="blog-swiper-pagination flex justify-center gap-2 pt-8"></div>
 
     <!-- Otros patrocinadores -->
     <section class="otros-patrocinadores py-16 lg:py-20 bg-white">

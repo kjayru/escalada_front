@@ -269,7 +269,7 @@
       </section>
 
       <!-- ── Slider de Patrocinadores ───────────────────────────── -->
-      <section v-if="sponsorsSlider.length" class="partners-slider relative" style="height: calc(100vh - 90px);">
+      <section v-if="sponsorsSlider.length" class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
         <Swiper
           :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
           :slides-per-view="1"
@@ -281,6 +281,7 @@
           :pagination="{
             el: '.sp-slider-dots',
             clickable: true,
+            type: 'bullets',
           }"
           :autoplay="{
             delay: 5000,
@@ -291,35 +292,35 @@
         >
           <SwiperSlide v-for="sp in sponsorsSlider" :key="sp.id">
             <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sp.slideImage}')`">
-              <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-                <div class="max-w-xl">
+              <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
+                <div class="max-w-xl w-full lg:w-auto">
                   <img :src="sp.logo" :alt="sp.name" class="w-64 mb-8" />
                   <p class="text-white text-lg mb-8 leading-relaxed">{{ sp.description }}</p>
                   <NuxtLink
                     :to="`/patrocinador/${sp.slug}`"
-                    class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                    class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
                     style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
                   >
                     Ver más
-                    <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+                    <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
                   </NuxtLink>
                 </div>
               </div>
             </div>
           </SwiperSlide>
 
-          <!-- Flechas -->
-          <div class="sp-slider-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+          <!-- Flechas - Hidden on mobile, visible on desktop -->
+          <div class="sp-slider-prev absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
           </div>
-          <div class="sp-slider-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+          <div class="sp-slider-next absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </div>
-
-          <!-- Paginación -->
-          <div class="sp-slider-dots absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2"></div>
         </Swiper>
       </section>
+      
+      <!-- Pagination Dots - Outside slider -->
+      <div class="sp-slider-dots flex justify-center gap-2 pt-8"></div>
 
       <!-- ── Mountain Pre-Footer ──────────────────────────────────── -->
       <!-- Mountain Pre-Footer -->
