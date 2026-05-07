@@ -156,7 +156,7 @@
                 >
                   Ver más
                   <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
-                </a>
+                </NuxtLink>
               </div>
             </div>
           </div>
