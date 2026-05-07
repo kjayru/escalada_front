@@ -25,13 +25,14 @@
           <!-- Título -->
           <NuxtLink
             :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
-            class="text-2xl font-normal text-[#6A6867] leading-tight mb-4 block hover:opacity-80 transition-opacity"
+            class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 block hover:opacity-80 transition-opacity"
+            style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
           >
             {{ featured.titulo }}
           </NuxtLink>
 
           <!-- Descripción -->
-          <p class="text-base text-[#6A6867] leading-relaxed">
+          <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
             {{ featured.descripcion }}
           </p>
         </div>
@@ -62,13 +63,14 @@
             <div class="bg-white px-10 lg:px-14 pt-8 pb-6">
               <NuxtLink
                 :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
-                class="text-3xl lg:text-[38px] font-normal text-[#6A6867] leading-tight max-w-[400px] block hover:opacity-80 transition-opacity"
+                class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight max-w-[400px] block hover:opacity-80 transition-opacity"
+                style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
               >
                 {{ featured.titulo }}
               </NuxtLink>
             </div>
             <!-- Descripción: sin fondo -->
-            <p class="text-base text-[#6A6867] leading-relaxed max-w-[360px] px-10 lg:px-14 pt-4">
+            <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed max-w-[360px] px-10 lg:px-14 pt-4" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
               {{ featured.descripcion }}
             </p>
           </div>
@@ -109,11 +111,12 @@
             </div>
             <NuxtLink
               :to="post.slug ? '/blog/' + post.slug : '#'"
-              class="text-2xl lg:text-[32px] font-normal text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
             >
               {{ post.titulo }}
             </NuxtLink>
-            <p class="text-base text-[#6A6867] leading-relaxed max-w-[412px]">
+            <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed max-w-[412px]" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
               {{ post.descripcion }}
             </p>
           </div>
@@ -258,11 +261,12 @@
             </div>
             <NuxtLink
               :to="post.slug ? '/blog/' + post.slug : '#'"
-              class="text-2xl lg:text-[32px] font-normal text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
             >
               {{ post.titulo }}
             </NuxtLink>
-            <p class="text-base text-[#6A6867] leading-relaxed max-w-[412px]">
+            <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed max-w-[412px]" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
               {{ post.descripcion }}
             </p>
           </div>
