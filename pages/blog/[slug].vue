@@ -90,7 +90,7 @@
       <section class="bg-white py-16 lg:py-20">
         <div class="max-w-[690px] mx-auto px-4 sm:px-6">
           <!-- Extracto destacado -->
-          <p v-if="post.excerpt" class="text-base lg:text-[22px] font-normal text-[#6A6867] leading-relaxed mb-10">
+          <p v-if="post.excerpt" class="text-[#6A6867] leading-relaxed mb-10" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
             {{ post.excerpt }}
           </p>
 
@@ -188,7 +188,7 @@
         <div class="max-w-[1114px] mx-auto px-4 sm:px-6 lg:px-8">
 
           <div class="border-t border-gray-300 pt-10 mb-10">
-            <h2 class="text-sm lg:text-base font-semibold text-[#6A6867] text-center tracking-[0.35em] uppercase">
+            <h2 class="text-center" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; color: #6A6867;">
               Lo más reciente
             </h2>
           </div>
@@ -215,10 +215,10 @@
                 <div v-else class="w-full h-full bg-gray-100"></div>
               </div>
               <!-- Título -->
-              <h3 class="text-base font-semibold text-[#6A6867] leading-snug mb-2 group-hover:opacity-75 transition-opacity">
+              <h3 class="text-[#6A6867] leading-snug mb-2 group-hover:opacity-75 transition-opacity" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
                 {{ reciente.title }}
               </h3>
-              <p v-if="reciente.excerpt" class="text-sm text-[#6A6867] leading-relaxed">
+              <p v-if="reciente.excerpt" class="text-[#6A6867] leading-relaxed" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">
                 {{ reciente.excerpt }}
               </p>
             </NuxtLink>
