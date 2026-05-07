@@ -73,18 +73,23 @@
         <div class="max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8">
 
           <!-- Imagen principal -->
-          <div class="relative overflow-hidden mb-4" style="height: 617px;">
+          <div 
+            class="relative overflow-hidden mb-4" 
+            style="height: 617px;"
+            @touchstart="handleTouchStart"
+            @touchend="handleTouchEnd"
+          >
             <img
               :src="gallery[imagenActiva]?.url"
               :alt="gallery[imagenActiva]?.alt || sponsor?.name"
-              class="w-full h-full object-cover transition-opacity duration-300"
+              class="w-full h-full object-contain transition-opacity duration-300"
             />
 
-            <!-- Flecha izquierda -->
+            <!-- Flecha izquierda (oculta en móvil) -->
             <button
               v-if="gallery.length > 1"
               @click="anterior"
-              class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white flex items-center justify-center shadow transition-colors"
+              class="hidden lg:absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white lg:flex items-center justify-center shadow transition-colors"
               aria-label="Imagen anterior"
             >
               <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,17 +97,29 @@
               </svg>
             </button>
 
-            <!-- Flecha derecha -->
+            <!-- Flecha derecha (oculta en móvil) -->
             <button
               v-if="gallery.length > 1"
               @click="siguiente"
-              class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#F8C52D] hover:bg-[#e0b525] flex items-center justify-center shadow transition-colors"
+              class="hidden lg:absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#F8C52D] hover:bg-[#e0b525] lg:flex items-center justify-center shadow transition-colors"
               aria-label="Imagen siguiente"
             >
               <svg class="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </button>
+          </div>
+
+          <!-- Dots -->
+          <div v-if="gallery.length > 1" class="flex items-center justify-center gap-2 mb-4">
+            <button
+              v-for="(img, index) in gallery"
+              :key="index"
+              class="w-2 h-2 rounded-full transition-colors"
+              :class="imagenActiva === index ? 'bg-[#F8C52D]' : 'bg-[#6A6867]'"
+              @click="imagenActiva = index"
+              :aria-label="`Ir a imagen ${index + 1}`"
+            />
           </div>
 
           <!-- Miniaturas -->
@@ -362,6 +379,30 @@ const siguiente = () => {
   imagenActiva.value = imagenActiva.value === gallery.value.length - 1
     ? 0
     : imagenActiva.value + 1
+}
+
+// Touch events para swipe en móvil
+let touchStartX = 0
+let touchEndX = 0
+
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX = e.changedTouches[0].screenX
+}
+
+const handleTouchEnd = (e: TouchEvent) => {
+  touchEndX = e.changedTouches[0].screenX
+  handleSwipe()
+}
+
+const handleSwipe = () => {
+  const swipeThreshold = 50
+  if (touchStartX - touchEndX > swipeThreshold) {
+    // Swipe izquierda -> siguiente
+    siguiente()
+  } else if (touchEndX - touchStartX > swipeThreshold) {
+    // Swipe derecha -> anterior
+    anterior()
+  }
 }
 
 const hasSocial = computed(() => {
