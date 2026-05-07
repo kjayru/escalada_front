@@ -78,8 +78,8 @@
               <!-- Reference counter badge -->
               <div class="flex justify-center mt-6">
                 <div 
-                  class="flex items-center justify-center text-white px-8 bg-cover bg-center bg-no-repeat min-w-[280px]"
-                  style="background-image: url('/images/fondobotoncontador.png'); background-size: 100% 100%; height: 32px;"
+                  class="flex items-center justify-center text-white px-8 bg-cover bg-center bg-no-repeat"
+                  style="background-image: url('/images/fondobotoncontador.png'); background-size: 100% 100%; width: 192px; height: 32px;"
                 >
                   <span class="text-xl font-bold tracking-wider" style="font-family: 'Readex Pro', sans-serif;">{{ donationRef }}</span>
                   <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

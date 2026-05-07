@@ -66,22 +66,24 @@
             class="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 py-10 border-b border-gray-200"
           >
             <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center justify-center" style="width: 193px; height: 193px;">
+            <div class="flex-shrink-0 flex items-center justify-center w-[118px] h-[118px] sm:w-[193px] sm:h-[193px]">
               <!-- Logo desde admin (imagen subida) -->
               <img
                 v-if="gym.logo"
                 :src="gym.logo"
                 :alt="gym.name"
                 class="w-full h-full object-contain"
+                style="max-width: 118px;"
               />
               <!-- Fallback: inicial del nombre en círculo -->
               <div
                 v-else
-                class="w-[193px] h-[193px] rounded-full flex items-center justify-center"
+                class="w-full h-full rounded-full flex items-center justify-center"
                 style="background-color: #F8C52D;"
               >
                 <span
-                  style="font-family: 'Readex Pro', sans-serif; font-size: 4rem; font-weight: 700; color: #6A6867;"
+                  class="text-5xl sm:text-6xl"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700; color: #6A6867;"
                 >
                   {{ gym.name.charAt(0).toUpperCase() }}
                 </span>
@@ -108,8 +110,8 @@
                 :href="gym.website_url"
                 target="_blank"
                 rel="noopener noreferrer"
-                style="display: inline-block; padding: 10px 32px; border: 1px solid #6A6867; border-radius: 6.25rem; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.0625rem; font-style: normal; font-weight: 700; line-height: normal; text-decoration: none;"
-                class="hover:bg-gray-100 transition-colors"
+                style="padding: 10px 32px; border: 1px solid #6A6867; border-radius: 6.25rem; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.0625rem; font-style: normal; font-weight: 700; line-height: normal; text-decoration: none;"
+                class="block sm:inline-block w-full sm:w-auto text-center hover:bg-gray-100 transition-colors"
               >
                 IR AL SITIO
               </a>
