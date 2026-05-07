@@ -305,10 +305,22 @@
             >
               <div class="absolute inset-0 bg-black/30"></div>
               <div class="absolute bottom-8 right-8 z-10">
+                <!-- Enlace interno (NuxtLink) -->
+                <NuxtLink
+                  v-if="item.link_url && !item.link_url.startsWith('http') && item.link_url !== '#'"
+                  :to="item.link_url"
+                  class="inline-flex items-center gap-3 text-white group/link"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                >
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                </NuxtLink>
+                <!-- Enlace externo (a) -->
                 <a
+                  v-else
                   :href="item.link_url ?? '#'"
-                  :target="item.link_url && item.link_url !== '#' ? '_blank' : undefined"
-                  :rel="item.link_url && item.link_url !== '#' ? 'noopener noreferrer' : undefined"
+                  :target="item.link_url && item.link_url.startsWith('http') ? '_blank' : undefined"
+                  :rel="item.link_url && item.link_url.startsWith('http') ? 'noopener noreferrer' : undefined"
                   class="inline-flex items-center gap-3 text-white group/link"
                   style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
                 >
