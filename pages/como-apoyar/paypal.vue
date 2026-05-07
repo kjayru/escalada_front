@@ -76,11 +76,16 @@
               </button>
 
               <!-- Reference counter badge -->
-              <div class="mt-3 inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 text-sm font-mono rounded-sm">
-                <span>{{ donationRef }}</span>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <div class="flex justify-center mt-6">
+                <div 
+                  class="flex items-center justify-center text-white px-8 bg-cover bg-center bg-no-repeat min-w-[280px]"
+                  style="background-image: url('/images/fondobotoncontador.png'); background-size: 100% 100%; height: 32px;"
+                >
+                  <span class="text-xl font-bold tracking-wider" style="font-family: 'Readex Pro', sans-serif;">{{ donationRef }}</span>
+                  <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
 
             </form>
