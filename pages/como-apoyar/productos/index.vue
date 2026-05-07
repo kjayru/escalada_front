@@ -23,8 +23,8 @@
             </p>
           </div>
 
-          <!-- Derecha: imagen decorativa -->
-          <div class="lg:w-[40%] flex justify-center lg:justify-end">
+          <!-- Derecha: imagen decorativa (oculta en móvil) -->
+          <div class="hidden lg:flex lg:w-[40%] justify-center lg:justify-end">
             <img
               v-if="productsMethod?.image"
               :src="productsMethod.image"
@@ -46,16 +46,16 @@
     </section>
 
     <!-- Grilla de Productos -->
-    <section class="bg-white pb-20 lg:pb-28" style="padding-top: 10rem;">
+    <section class="bg-white pb-20 lg:pb-28 pt-12 lg:pt-40">
       <div class="mx-auto px-8 lg:px-20" style="max-width: 1007.28px;">
-        <div class="grid grid-cols-1 sm:grid-cols-2" style="gap: 93px;">
+        <div class="grid grid-cols-2 gap-6 lg:gap-[93px]">
           <div
             v-for="producto in productos"
             :key="producto.id"
             class="product-card flex flex-col"
           >
             <!-- Imagen del producto -->
-            <div class="overflow-hidden mb-4" style="max-width: 457px; max-height: 430px; height: 430px;">
+            <div class="overflow-hidden mb-4 w-full aspect-square lg:aspect-auto lg:h-[430px]">
               <img
                 :src="producto.imagen"
                 :alt="producto.nombre"
@@ -64,16 +64,16 @@
             </div>
 
             <!-- Nombre y precio -->
-            <div class="flex items-start justify-between mb-4 px-1">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 px-1">
               <span
                 style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
-                class="leading-tight"
+                class="leading-tight mb-2 lg:mb-0"
               >
                 {{ producto.nombre }}
               </span>
               <span
-                style="color: #6A6867; text-align: right; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
-                class="flex-shrink-0 ml-4"
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-style: normal; font-weight: 500;"
+                class="flex-shrink-0 text-left lg:text-right lg:ml-4"
               >
                 {{ producto.precio }}
               </span>
@@ -83,8 +83,8 @@
             <div class="px-1">
               <NuxtLink
                 :to="`/como-apoyar/productos/${producto.slug}`"
-                style="display: inline-block; width: 262px; padding-top: 12px; padding-bottom: 12px; background: #F8C52D; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-align: center; text-decoration: none; border-radius: 6.25rem;"
-                class="hover:opacity-90 transition-opacity"
+                style="background: #F8C52D; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-align: center; text-decoration: none; border-radius: 6.25rem;"
+                class="block w-full lg:inline-block lg:w-[262px] py-3 hover:opacity-90 transition-opacity"
               >
                 COMPRAR
               </NuxtLink>

@@ -23,15 +23,20 @@
           <!-- Galería izquierda -->
           <div style="width: 680px; max-width: 100%; flex-shrink: 0;">
             <!-- Imagen principal con flechas y zoom -->
-            <div class="relative bg-gray-50" style="aspect-ratio: 3/3.2; overflow: hidden;">
+            <div 
+              class="relative bg-gray-50" 
+              style="aspect-ratio: 3/3.2; overflow: hidden;"
+              @touchstart="handleTouchStart"
+              @touchend="handleTouchEnd"
+            >
               <img
                 :src="imagenActiva"
                 :alt="producto?.name"
                 class="w-full h-full object-cover"
               />
-              <!-- Flecha izquierda -->
+              <!-- Flecha izquierda (oculta en móvil) -->
               <button
-                class="absolute top-1/2 -translate-y-1/2 flex items-center justify-center z-10 transition-colors"
+                class="hidden lg:absolute top-1/2 -translate-y-1/2 lg:flex items-center justify-center z-10 transition-colors"
                 style="left: 0.75rem; width:2.5rem; height:2.5rem; flex-shrink:0; border-radius:0.75rem; background:#D9D9D9;"
                 onmouseover="this.style.background='#F8C52D'"
                 onmouseout="this.style.background='#D9D9D9'"
@@ -42,9 +47,9 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
-              <!-- Flecha derecha -->
+              <!-- Flecha derecha (oculta en móvil) -->
               <button
-                class="absolute top-1/2 -translate-y-1/2 flex items-center justify-center z-10 transition-colors"
+                class="hidden lg:absolute top-1/2 -translate-y-1/2 lg:flex items-center justify-center z-10 transition-colors"
                 style="right: 0.75rem; width:2.5rem; height:2.5rem; flex-shrink:0; border-radius:0.75rem; background:#D9D9D9;"
                 onmouseover="this.style.background='#F8C52D'"
                 onmouseout="this.style.background='#D9D9D9'"
@@ -65,10 +70,21 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                 </svg>
               </button>
+              <!-- Dots (solo en móvil) -->
+              <div class="flex lg:hidden items-center justify-center gap-2 absolute bottom-3 left-1/2 -translate-x-1/2">
+                <button
+                  v-for="(img, i) in galeria"
+                  :key="i"
+                  class="w-2 h-2 rounded-full transition-colors"
+                  :class="indiceActivo === i ? 'bg-[#F8C52D]' : 'bg-white/60'"
+                  @click="indiceActivo = i"
+                  :aria-label="`Ir a imagen ${i + 1}`"
+                />
+              </div>
             </div>
 
-            <!-- Thumbnails -->
-            <div class="flex gap-2 mt-2">
+            <!-- Thumbnails (ocultos en móvil) -->
+            <div class="hidden lg:flex gap-2 mt-2">
               <button
                 v-for="(img, i) in galeria.slice(0, 4)"
                 :key="i"
@@ -392,6 +408,30 @@ const anteriorImagen = () => {
 }
 const siguienteImagen = () => {
   indiceActivo.value = (indiceActivo.value + 1) % galeria.value.length
+}
+
+// Touch events para swipe en móvil
+let touchStartX = 0
+let touchEndX = 0
+
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX = e.changedTouches[0].screenX
+}
+
+const handleTouchEnd = (e: TouchEvent) => {
+  touchEndX = e.changedTouches[0].screenX
+  handleSwipe()
+}
+
+const handleSwipe = () => {
+  const swipeThreshold = 50
+  if (touchStartX - touchEndX > swipeThreshold) {
+    // Swipe izquierda -> siguiente
+    siguienteImagen()
+  } else if (touchEndX - touchStartX > swipeThreshold) {
+    // Swipe derecha -> anterior
+    anteriorImagen()
+  }
 }
 
 // Modal lightbox
