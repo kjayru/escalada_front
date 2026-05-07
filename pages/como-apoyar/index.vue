@@ -48,8 +48,8 @@
             <!-- Label vertical izquierdo — solo desktop -->
             <div class="hidden md:flex w-10 lg:w-14 items-center justify-center flex-shrink-0">
               <span
-                class="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6A6867]"
-                style="writing-mode: vertical-rl; transform: rotate(180deg);"
+                class="uppercase text-[#6A6867]"
+                style="writing-mode: vertical-rl; transform: rotate(180deg); font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400; letter-spacing: 0.25em; text-transform: capitalize;"
               >{{ block.subheading }}</span>
             </div>
             <!-- Imagen con fondo de color -->
@@ -70,19 +70,24 @@
             </div>
             <!-- Texto + botón -->
             <div class="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-8 md:py-12 bg-white">
-              <h3 class="text-2xl md:text-2xl font-medium text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif;">{{ block.title }}</h3>
+              <h3 class="mb-4" :style="block.title?.toLowerCase().includes('proyecto')
+                ? 'color: #000; font-family: Readex Pro, sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;'
+                : 'color: #000; font-family: Readex Pro, sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 600;'">{{ block.title }}</h3>
               <!-- eslint-disable-next-line vue/no-v-html -->
-              <div class="text-base text-[#6A6867] leading-relaxed mb-8 max-w-[480px]" v-html="block.body"></div>
+              <div class="leading-relaxed mb-8 max-w-[480px]" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;" v-html="block.body"></div>
               <div v-if="block.boton">
                 <NuxtLink
                   :to="block.boton_url ?? '#'"
-                  class="inline-block px-8 py-3 font-semibold text-sm transition-colors tracking-wider"
+                  class="inline-block px-8 py-3 transition-colors"
                   :class="block.title?.toLowerCase().includes('proyecto')
-                    ? 'text-[#111111] hover:bg-gray-50'
-                    : 'text-gray-900 hover:opacity-90'"
-                  :style="block.title?.toLowerCase().includes('proyecto')
-                    ? 'border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;'
-                    : 'background: #F8C52D; border-radius: 25px;'"
+                    ? 'hover:bg-gray-50'
+                    : 'hover:opacity-90'"
+                  :style="[
+                    block.title?.toLowerCase().includes('proyecto')
+                      ? 'border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;'
+                      : 'background: #F8C52D; border-radius: 25px;',
+                    'color: #6A6867; text-align: center; font-family: Readex Pro, sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;'
+                  ]"
                 >
                   {{ block.boton.toUpperCase() }}
                 </NuxtLink>
