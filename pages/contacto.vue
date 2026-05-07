@@ -18,17 +18,18 @@
       <div class="max-w-[830px] mx-auto px-4 sm:px-6">
 
         <!-- Título -->
-        <h1 class="text-[35px] font-medium text-[#6A6867] leading-tight mb-6">
+        <h1 class="leading-tight mb-6" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
           {{ contactSection?.heading ?? '¡Contáctanos!' }}
         </h1>
 
         <!-- Descripción -->
         <div
           v-if="contactSection?.body"
-          class="text-xl text-[#6A6867] leading-relaxed mb-12 prose max-w-none"
+          class="leading-relaxed mb-12 prose max-w-none"
+          style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
           v-html="contactSection.body"
         />
-        <p v-else class="text-xl text-[#6A6867] leading-relaxed mb-12">
+        <p v-else class="leading-relaxed mb-12" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
           En Escalada Libre México A.C. queremos escucharte.
         </p>
 
