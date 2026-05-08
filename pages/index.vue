@@ -174,14 +174,14 @@
 
     <!-- Secciones destacadas 01/02/03 -->
     <section
-      v-for="(item, idx) in featuredSections"
-      :key="item.num"
+      v-for="item in featuredSections"
+      :key="item.id ?? item.num"
       class="py-16 lg:py-24 bg-white"
     >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <!-- Contenido de texto -->
-          <div :class="['relative overflow-hidden order-first', idx % 2 !== 0 ? 'lg:order-last' : '']">
+          <div :class="['relative overflow-hidden order-first', item.imagePosition === 'left' ? 'lg:order-last' : '']">
             <!-- Número de fondo (decorativo) -->
             <div
               class="absolute top-0 left-0 leading-none select-none pointer-events-none"
@@ -205,9 +205,7 @@
                 <h2>{{ item.title }}</h2>
               </NuxtLink>
               <!-- Descripción -->
-              <p class="text-[17px] text-[#6A6867] leading-relaxed max-w-[380px]" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
-                {{ item.body }}
-              </p>
+              <div class="text-[17px] text-[#6A6867] leading-relaxed max-w-[380px] [&>p]:mb-0" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="item.body"></div>
               <!-- Enlace: siempre justo después del texto -->
               <NuxtLink
                 :to="item.link"
@@ -220,8 +218,8 @@
             </div>
           </div>
           <!-- Imagen -->
-          <div :class="['order-last', idx % 2 === 0 ? 'lg:order-last' : 'lg:order-first']">
-            <img :src="item.image" :alt="item.title" class="w-full h-auto" />
+          <div :class="['order-last', item.imagePosition === 'left' ? 'lg:order-first' : 'lg:order-last']">
+            <img v-if="item.image" :src="item.image" :alt="item.title" class="w-full h-auto" />
           </div>
         </div>
       </div>
@@ -913,25 +911,45 @@ const conservacionLocationHtml = computed(() => {
 
 // Featured sections 01/02/03
 const fallbackFeatured = [
-  { num: '01', tag: 'NOSOTROS', title: 'Protegemos las montañas y a la comunidad.', body: 'Somos un grupo de deportistas del Noreste de México con interés en beneficiar, de manera segura y sustentable, al fomento del montañismo y escalada en sus diferentes modalidades', image: '/images/img-20200308-wa-00051.png', link: '/nosotros' },
-  { num: '02', tag: 'ACTIVIDADES', title: 'Reforestación completa.', body: 'Llenamos de vida en zonas de Santiago, N.L. cubriendo áreas que lo necesitaban debido a daños ocasionados por incendios.', image: '/images/reforestacion-casualas-1.png', link: '/actividades' },
-  { num: '03', tag: 'HISTORIA', title: 'Sucesos en la pared de escalada "Las ánimas".', body: 'Debido a ciertas inspecciones que realizó el Instituto Nacional de Antropología e Historia, el Instituto decidió intervenir en la zona.', image: '/images/unrioenelrio-home-1.png', link: '/historia' },
+  { id: 'fb-01', num: '01', tag: 'NOSOTROS', title: 'Protegemos las montañas y a la comunidad.', body: 'Somos un grupo de deportistas del Noreste de México con interés en beneficiar, de manera segura y sustentable, al fomento del montañismo y escalada en sus diferentes modalidades', image: '/images/img-20200308-wa-00051.png', link: '/nosotros', imagePosition: 'right' },
+  { id: 'fb-02', num: '02', tag: 'ACTIVIDADES', title: 'Reforestación completa.', body: 'Llenamos de vida en zonas de Santiago, N.L. cubriendo áreas que lo necesitaban debido a daños ocasionados por incendios.', image: '/images/reforestacion-casualas-1.png', link: '/actividades', imagePosition: 'left' },
+  { id: 'fb-03', num: '03', tag: 'HISTORIA', title: 'Sucesos en la pared de escalada "Las ánimas".', body: 'Debido a ciertas inspecciones que realizó el Instituto Nacional de Antropología e Historia, el Instituto decidió intervenir en la zona.', image: '/images/unrioenelrio-home-1.png', link: '/historia', imagePosition: 'right' },
 ]
 
 const featuredSections = computed(() => {
+  // Prioridad 1: secciones tipo 'featured' configuradas en el CMS
+  const cmsSections = (page.value?.sections ?? [])
+    .filter((s: PageSection) => s.type === 'featured')
+    .sort((a: PageSection, b: PageSection) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+
+  if (cmsSections.length) {
+    return cmsSections.map((s: PageSection) => ({
+      id: s.id,
+      num: (s.settings?.number as string) ?? '',
+      tag: (s.settings?.tag as string) ?? '',
+      title: s.heading ?? '',
+      body: s.body ?? '',
+      image: s.featured_media?.url ?? null,
+      link: (s.settings?.link_url as string) ?? '#',
+      imagePosition: (s.settings?.image_position as string) ?? 'right',
+    }))
+  }
+
+  // Prioridad 2: últimos posts del blog (comportamiento anterior)
   const data = blogResp.value?.data
   const posts = Array.isArray(data) ? data : []
-  // Priorizar los 3 posts con is_featured = true, luego los más recientes
   const featured = posts.filter((p: BlogPost) => p.is_featured)
   const pool = featured.length >= 3 ? featured : posts
   if (pool.length >= 3) {
     return pool.slice(0, 3).map((p: BlogPost, i: number) => ({
+      id: `blog-${p.id ?? i}`,
       num: String(i + 1).padStart(2, '0'),
       tag: (p.category ?? 'BLOG').toUpperCase(),
       title: p.title,
       body: p.excerpt ?? '',
-      image: p.featured_media?.url ?? '/images/n-1.png',
+      image: p.featured_media?.url ?? null,
       link: `/blog/${p.slug}`,
+      imagePosition: i % 2 === 0 ? 'right' : 'left',
     }))
   }
   return fallbackFeatured
