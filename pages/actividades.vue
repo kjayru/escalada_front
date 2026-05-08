@@ -38,6 +38,7 @@
             class="overflow-hidden aspect-square"
           >
             <img
+              v-if="img.url ?? mosaicImg(index)"
               :src="img.url ?? mosaicImg(index)"
               :alt="img.alt ?? mosaicAlt(index)"
               class="w-full h-full object-cover"
@@ -52,6 +53,7 @@
         <!-- Left tall photo (pos 0) -->
         <div class="mosaic-left-tall">
           <img
+            v-if="mosaicImg(0)"
             :src="mosaicImg(0)"
             :alt="mosaicAlt(0)"
             class="w-full h-full object-cover"
@@ -75,6 +77,7 @@
         <!-- Top-right photo (04) -->
         <div class="mosaic-top-right">
           <img
+            v-if="mosaicImg(3)"
             :src="mosaicImg(3)"
             :alt="mosaicAlt(3)"
             class="w-full h-full object-cover"
@@ -84,6 +87,7 @@
         <!-- Second row left photo (02) -->
         <div class="mosaic-center-left">
           <img
+            v-if="mosaicImg(1)"
             :src="mosaicImg(1)"
             :alt="mosaicAlt(1)"
             class="w-full h-full object-cover"
@@ -93,6 +97,7 @@
         <!-- Second row center photo (03) -->
         <div class="mosaic-center-right">
           <img
+            v-if="mosaicImg(2)"
             :src="mosaicImg(2)"
             :alt="mosaicAlt(2)"
             class="w-full h-full object-cover"
@@ -102,6 +107,7 @@
         <!-- Second row right photo (05) -->
         <div class="mosaic-second-row-right">
           <img
+            v-if="mosaicImg(4)"
             :src="mosaicImg(4)"
             :alt="mosaicAlt(4)"
             class="w-full h-full object-cover"
@@ -111,6 +117,7 @@
         <!-- Third row left photo (06) -->
         <div class="mosaic-bottom-left">
           <img
+            v-if="mosaicImg(5)"
             :src="mosaicImg(5)"
             :alt="mosaicAlt(5)"
             class="w-full h-full object-cover"
@@ -120,6 +127,7 @@
         <!-- Third row center photo (07) -->
         <div class="mosaic-bottom-center">
           <img
+            v-if="mosaicImg(6)"
             :src="mosaicImg(6)"
             :alt="mosaicAlt(6)"
             class="w-full h-full object-cover"
@@ -129,6 +137,7 @@
         <!-- Third row center-right photo (08) -->
         <div class="mosaic-bottom-center-right">
           <img
+            v-if="mosaicImg(7)"
             :src="mosaicImg(7)"
             :alt="mosaicAlt(7)"
             class="w-full h-full object-cover"
@@ -138,6 +147,7 @@
         <!-- Right tall photo (09) -->
         <div class="mosaic-right-tall">
           <img
+            v-if="mosaicImg(8)"
             :src="mosaicImg(8)"
             :alt="mosaicAlt(8)"
             class="w-full h-full object-cover"
@@ -147,6 +157,7 @@
         <!-- Bottom far-left photo (10) -->
         <div class="mosaic-bottom-far-left">
           <img
+            v-if="mosaicImg(9)"
             :src="mosaicImg(9)"
             :alt="mosaicAlt(9)"
             class="w-full h-full object-cover"
@@ -156,6 +167,7 @@
         <!-- Bottom fill photo (11) -->
         <div class="mosaic-bottom-fill">
           <img
+            v-if="mosaicImg(10)"
             :src="mosaicImg(10)"
             :alt="mosaicAlt(10)"
             class="w-full h-full object-cover"
@@ -165,6 +177,7 @@
         <!-- Bottom center-right photo (12) -->
         <div class="mosaic-mid-bottom-fill">
           <img
+            v-if="mosaicImg(11)"
             :src="mosaicImg(11)"
             :alt="mosaicAlt(11)"
             class="w-full h-full object-cover"
@@ -309,23 +322,8 @@ const galleryImages = computed(() =>
   ),
 )
 
-const MOSAIC_FALLBACKS = [
-  '/images/n-1.png',
-  '/images/img-20200308-wa-00051.png',
-  '/images/reforestacion-casualas-1.png',
-  '/images/huasteca-41.png',
-  '/images/potrero-1.png',
-  '/images/slide1.png',
-  '/images/patrocinador1.png',
-  '/images/patrocinador2.png',
-  '/images/unrioenelrio-home-1.png',
-  '/images/source-pico-norte.png',
-  '/images/screen-shot-20241119-at-64211-pm-1.png',
-  '/images/img-33661.png',
-]
-
 const mosaicImg = (i: number) =>
-  galleryImages.value[i]?.url ?? MOSAIC_FALLBACKS[i] ?? ''
+  galleryImages.value[i]?.url ?? null
 const mosaicAlt = (i: number) =>
   galleryImages.value[i]?.alt || 'Actividades de escalada'
 

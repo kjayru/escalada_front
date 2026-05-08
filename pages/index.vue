@@ -331,28 +331,8 @@
             </div>
           </template>
 
-          <!-- Fallback hardcodeado -->
-          <template v-else>
-            <div class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px]" style="background-image: url('/images/patrocinador1.png');">
-              <div class="absolute inset-0 bg-black/30"></div>
-              <div class="absolute bottom-8 right-8 z-10">
-                <a href="#" class="inline-flex items-center gap-3 text-white group/link" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
-                  Ver más
-                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
-                </a>
-              </div>
-            </div>
-
-            <div class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px]" style="background-image: url('/images/patrocinador2.png');">
-              <div class="absolute inset-0 bg-black/30"></div>
-              <div class="absolute bottom-8 right-8 z-10">
-                <a href="#" class="inline-flex items-center gap-3 text-white group/link" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
-                  Ver más
-                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
-                </a>
-              </div>
-            </div>
-          </template>
+          <!-- Sin datos: sección oculta hasta que el backend provea -->
+          <template v-else></template>
         </div>
       </div>
     </section>
@@ -411,15 +391,9 @@
           </div>
         </template>
         <template v-else>
-          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]">
-            <img src="/images/exposure_box.svg" alt="Exposure" class="max-w-[55%] max-h-24 object-contain" />
-          </div>
-          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]">
-            <img src="/images/logo-climbwork-box.png" alt="ClimbWork" class="max-w-[55%] max-h-24 object-contain" />
-          </div>
-          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]">
-            <img src="/images/black-diamond-logo-box.png" alt="Black Diamond" class="max-w-[55%] max-h-24 object-contain" />
-          </div>
+          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]"></div>
+          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]"></div>
+          <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]"></div>
         </template>
       </div>
     </section>
@@ -441,20 +415,7 @@
               </span>
             </template>
           </template>
-          <!-- Fallback hardcodeado -->
-          <template v-else>
-            <img src="/images/pico-norte-1.png" alt="Pico Norte Climbing" class="h-14 lg:h-16 object-contain" />
-            <img src="/images/n-1.png" alt="Logo patrocinador" class="h-14 lg:h-16 object-contain" />
-            <img src="/images/mad-rock-1.png" alt="Mad Rock" class="h-8 lg:h-10 object-contain" />
-            <img src="/images/img-33661.png" alt="Medi Lab" class="h-8 lg:h-10 object-contain" />
-            <img src="/images/clinica-everest-1.png" alt="Clínica Everest IPETH" class="h-8 lg:h-10 object-contain" />
-            <img src="/images/hanuman-cafe-1.png" alt="Hanuman" class="h-14 lg:h-16 object-contain" />
-            <img src="/images/mountain-bites-1.png" alt="Mountain Bites" class="h-14 lg:h-16 object-contain" />
-            <img src="/images/monkey-hands-1.png" alt="Monkey Hands" class="h-8 lg:h-10 object-contain" />
-            <img src="/images/cumbre-cotidiana-1.png" alt="La Cumbre Cotidiana" class="h-8 lg:h-10 object-contain" />
-            <img src="/images/photo-202409191744391.png" alt="Papelería Morelos" class="h-14 lg:h-16 object-contain" />
-            <img src="/images/altrac-vertical-1.png" alt="ALTRAC" class="h-14 lg:h-16 object-contain" />
-          </template>
+          <template v-else></template>
         </div>
       </div>
     </section>
@@ -999,9 +960,7 @@ const sponsorsSliderData = computed(() => {
 // Sponsors — top tiles (3 grandes)
 const sponsorTilesData = computed(() => {
   const placements = homeTilesPlacements.value ?? []
-  if (placements.length) return placements
-  const sp = sponsors.value ?? []
-  return sp.length >= 3 ? sp.slice(0, 3) : null
+  return placements.length ? placements : null
 })
 
 // Sponsors — fila de logos pequeños

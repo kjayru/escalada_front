@@ -14,6 +14,7 @@
             <!-- Imagen (primero en móvil) -->
             <div class="overflow-hidden mb-5 order-1 lg:order-2" style="height: 264px;">
               <img
+                v-if="articulo.imagen"
                 :src="articulo.imagen"
                 :alt="articulo.titulo"
                 class="w-full h-full object-cover"
@@ -113,25 +114,16 @@ watch(paginaActual, () => refresh())
 
 const totalPaginas = computed(() => response.value?.meta?.last_page ?? 1)
 
-const fallbackArticulos = [
-  { id: 1, slug: '', tagline: 'MESA DE TRABAJO', titulo: 'Nos reunimos con el gobierno de Nuevo León', descripcion: 'Con el fin de la gestión integral de la Huasteca zona natural protegida de Nuevo León', imagen: '/images/n-1.png' },
-  { id: 2, slug: '', tagline: 'EVENTOS', titulo: 'Todo para escaladores', descripcion: 'El fin de semana se realiza el evento TensaFest dirigido a deportistas que practican la escalada...', imagen: '/images/img-20200308-wa-00051.png' },
-  { id: 3, slug: '', tagline: 'EVENTOS', titulo: 'Exposición fotográfica', descripcion: 'Con gran respuesta de la comunidad, hemos realizado una exposición fotográfica de las montañas...', imagen: '/images/huasteca-41.png' },
-]
-
 const articulos = computed(() => {
   const apiData = response.value?.data ?? []
-  if (apiData.length) {
-    return apiData.map((p: BlogPost) => ({
-      id: p.id,
-      slug: p.slug,
-      tagline: p.author?.name?.toUpperCase() ?? 'BLOG',
-      titulo: p.title,
-      descripcion: p.excerpt ?? '',
-      imagen: p.featured_media?.url ?? '/images/n-1.png',
-    }))
-  }
-  return fallbackArticulos
+  return apiData.map((p: BlogPost) => ({
+    id: p.id,
+    slug: p.slug,
+    tagline: p.author?.name?.toUpperCase() ?? 'BLOG',
+    titulo: p.title,
+    descripcion: p.excerpt ?? '',
+    imagen: p.featured_media?.url ?? null,
+  }))
 })
 
 const paginasVisibles = computed(() => {

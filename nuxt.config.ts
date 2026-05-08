@@ -80,8 +80,12 @@ export default defineNuxtConfig({
   // }
 
   routeRules: {
-  // Solo deja prerender si realmente son páginas fijas
-  '/': { prerender: true },
+  '/': {
+    ssr: true,
+    headers: {
+      'cache-control': 'no-store, max-age=0'
+    }
+  },
 
   // Si estas páginas se editan desde backend/admin, mejor SSR
   '/historia': {
