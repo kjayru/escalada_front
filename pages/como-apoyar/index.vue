@@ -101,22 +101,27 @@
 
     <!-- Slider: Como Apoyar (type=slider desde CMS) -->
     <section v-if="sliderSlides.length" class="slider-como-apoyar py-16 lg:py-24 bg-white overflow-hidden">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div class="flex items-center justify-between">
-          <h2 v-if="sliderSection?.heading" class="text-2xl lg:text-[2.1875rem] font-medium text-black" style="font-family: 'Readex Pro', sans-serif;">
-            {{ sliderSection.heading }}
-          </h2>
-          <div class="flex items-center gap-4 ml-auto">
-            <button class="slider-como-prev flex items-center justify-center">
-              <img src="/images/arrow.svg" alt="Anterior" class="w-6 h-auto rotate-180" />
-            </button>
-            <span class="text-[#6A6867] text-lg font-medium tracking-wide" style="font-family: 'Readex Pro', sans-serif;">
-              {{ String(sliderCurrent).padStart(2, '0') }} / {{ String(sliderTotal).padStart(2, '0') }}
-            </span>
-            <button class="slider-como-next flex items-center justify-center">
-              <img src="/images/arrow.svg" alt="Siguiente" class="w-6 h-auto" />
-            </button>
-          </div>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+        <h2 class="text-3xl lg:text-[55px] leading-tight mb-4" style="font-family: 'Readex Pro', sans-serif; font-weight: 500; color: #000;">
+          {{ sliderSection?.heading ?? 'Cómo nos puedes apoyar' }}
+        </h2>
+        <p v-if="sliderSection?.subheading" class="text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
+          {{ sliderSection.subheading }}
+        </p>
+      </div>
+
+      <!-- Contador centrado -->
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex justify-center">
+        <div class="flex items-center gap-6">
+          <button class="slider-como-prev flex items-center justify-center">
+            <img src="/images/arrow.svg" alt="Anterior" class="w-6 h-auto rotate-180" />
+          </button>
+          <span class="text-[#6A6867] text-lg font-medium tracking-wide" style="font-family: 'Readex Pro', sans-serif;">
+            {{ String(sliderCurrent).padStart(2, '0') }} / {{ String(sliderTotal).padStart(2, '0') }}
+          </span>
+          <button class="slider-como-next flex items-center justify-center">
+            <img src="/images/arrow.svg" alt="Siguiente" class="w-6 h-auto" />
+          </button>
         </div>
       </div>
 
@@ -141,7 +146,7 @@
           <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 px-4 sm:px-6 lg:px-8 py-8" style="max-width: 960px; margin: 0 auto;">
             <!-- Imagen circular -->
             <div class="flex-shrink-0">
-              <div class="w-64 h-64 lg:w-[383px] lg:h-[383px] rounded-full overflow-hidden bg-[#F8C52D]">
+              <div class="w-64 h-64 lg:w-[383px] lg:h-[383px] rounded-full overflow-hidden bg-gray-200">
                 <img
                   v-if="slide.featured_media?.url"
                   :src="slide.featured_media.url"
@@ -151,12 +156,12 @@
               </div>
             </div>
             <!-- Texto -->
-            <div class="flex-1 text-center lg:text-left">
+            <div class="flex-1 text-center">
               <h3 class="text-2xl lg:text-[28px] text-black mb-4" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
-                {{ String(idx + 1).padStart(2, '0') }}. {{ slide.title }}
+                {{ idx + 1 }}. {{ slide.title }}
               </h3>
               <!-- eslint-disable-next-line vue/no-v-html -->
-              <div v-if="slide.body" class="text-base lg:text-lg text-[#6A6867] mb-8 leading-relaxed max-w-sm mx-auto lg:mx-0" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="slide.body"></div>
+              <div v-if="slide.body" class="text-base lg:text-lg text-[#6A6867] mb-8 leading-relaxed max-w-sm mx-auto" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="slide.body"></div>
               <NuxtLink
                 v-if="slide.link_url"
                 :to="slide.link_url"
