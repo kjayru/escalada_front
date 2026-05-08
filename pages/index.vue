@@ -403,9 +403,9 @@
           <template v-if="logoRowItems.length">
             <template v-for="item in logoRowItems" :key="item.id">
               <img
-                v-if="item.sponsor.logo?.url"
-                :src="item.sponsor.logo.url"
-                :alt="item.sponsor.logo.alt ?? item.sponsor.name"
+                v-if="item.banner?.url || item.sponsor.logo?.url"
+                :src="item.banner?.url ?? item.sponsor.logo!.url"
+                :alt="item.banner?.url ? (item.sponsor.name) : (item.sponsor.logo?.alt ?? item.sponsor.name)"
                 :class="['object-contain', ['mad-rock','medi-lab','clinica-everest-ipeth','monkey-hands','la-cumbre-cotidiana'].includes(item.sponsor.slug) ? 'h-8 lg:h-10' : 'h-14 lg:h-16']"
               />
               <span v-else class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">
