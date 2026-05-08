@@ -672,10 +672,10 @@
     <section class="apoyo-section py-16 lg:py-24 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <h2 class="text-3xl lg:text-[55px] leading-tight mb-4 text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500; color: #000;">
-          Cómo nos puedes apoyar
+          {{ apoyarSliderSection?.heading ?? 'Cómo nos puedes apoyar' }}
         </h2>
         <p class="text-[30px] text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
-          Existen cuatro maneras en las que puedes apoyarnos:
+          {{ apoyarSliderSection?.subheading ?? 'Existen cuatro maneras en las que puedes apoyarnos:' }}
         </p>
       </div>
 
@@ -727,9 +727,8 @@
             </div>
             <div class="flex-1 text-center">
               <h3 class="text-2xl lg:text-[28px] text-[#000000] mb-4" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">{{ idx + 1 }}. {{ method.title }}</h3>
-              <p class="text-base lg:text-lg text-[#6A6867] mb-8 leading-relaxed max-w-sm" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
-                {{ method.body }}
-              </p>
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div v-if="method.body" class="text-base lg:text-lg text-[#6A6867] mb-8 leading-relaxed max-w-sm mx-auto [&>p]:mb-0" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="method.body"></div>
               <a
                 v-if="method.settings?.button_url"
                 :href="method.settings.button_url"
@@ -1075,8 +1074,35 @@ const teamMembers = computed<Member[]>(() => {
   return featured.length ? featured : allMembers.slice(0, 2)
 })
 
-// Apoyo carousel counter
-const apoyarMethods = computed<SupportMethod[]>(() => apoyarCampaign.value?.methods ?? [])
+// Apoyo carousel — lee el bloque type='slider' de la página inicio (CMS)
+// con fallback a la campaña de apoyo si no hay slides en CMS
+const apoyarSliderSection = computed(() =>
+  page.value?.sections?.find((s: PageSection) => s.type === 'slider'),
+)
+
+const apoyarSlides = computed(() =>
+  (apoyarSliderSection.value?.items ?? [])
+    .slice()
+    .sort((a, b) => a.sort_order - b.sort_order),
+)
+
+const apoyarCampaignMethods = computed<SupportMethod[]>(() => apoyarCampaign.value?.methods ?? [])
+
+// Si hay slides en el CMS los usamos, si no usamos la campaña (compatibilidad)
+const apoyarMethods = computed(() =>
+  apoyarSlides.value.length
+    ? apoyarSlides.value.map(s => ({
+        id: s.id,
+        title: s.title ?? '',
+        body: s.body ?? '',
+        image: s.featured_media?.url ?? null,
+        link_url: s.link_url,
+        link_label: s.link_label,
+        settings: { button_url: s.link_url, button_label: s.link_label },
+        sort_order: s.sort_order,
+      }))
+    : apoyarCampaignMethods.value,
+)
 const apoyarTotal = computed(() => apoyarMethods.value.length || 4)
 const apoyarCurrent = ref(1)
 const onApoyarSlideChange = (swiper: any) => {
