@@ -492,7 +492,7 @@
         class="w-full h-full object-cover"
       />
       <!-- Logo overlay - right side -->
-      <div class="absolute top-1/2 -translate-y-1/2 right-24 flex flex-col items-center gap-6">
+      <div v-if="numerosLogoImage" class="absolute top-1/2 -translate-y-1/2 right-24 flex flex-col items-center gap-6">
         <img
           :src="numerosLogoImage"
           alt="Escalada Libre"
@@ -994,8 +994,7 @@ const numerosBackgroundImage = computed(() =>
   ?? st('numeros.imagen', '/images/img-33661.png')
 )
 const numerosLogoImage = computed(() =>
-  (numerosSection.value?.media?.[0] as { url?: string } | undefined)?.url
-  ?? '/images/logo2.png'
+  (numerosSection.value?.media?.[0] as { url?: string } | undefined)?.url ?? null
 )
 
 // Count-up animation for stats section
