@@ -18,6 +18,7 @@ export interface SectionItem {
   link_label: string | null
   sort_order: number
   settings: Record<string, unknown> | null
+  featured_media: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
 }
 
 export interface PageSection {

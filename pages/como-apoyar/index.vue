@@ -99,6 +99,78 @@
       </div>
     </section>
 
+    <!-- Slider: Como Apoyar (type=slider desde CMS) -->
+    <section v-if="sliderSlides.length" class="slider-como-apoyar py-16 lg:py-24 bg-white overflow-hidden">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="flex items-center justify-between">
+          <h2 v-if="sliderSection?.heading" class="text-2xl lg:text-[2.1875rem] font-medium text-black" style="font-family: 'Readex Pro', sans-serif;">
+            {{ sliderSection.heading }}
+          </h2>
+          <div class="flex items-center gap-4 ml-auto">
+            <button class="slider-como-prev flex items-center justify-center">
+              <img src="/images/arrow.svg" alt="Anterior" class="w-6 h-auto rotate-180" />
+            </button>
+            <span class="text-[#6A6867] text-lg font-medium tracking-wide" style="font-family: 'Readex Pro', sans-serif;">
+              {{ String(sliderCurrent).padStart(2, '0') }} / {{ String(sliderTotal).padStart(2, '0') }}
+            </span>
+            <button class="slider-como-next flex items-center justify-center">
+              <img src="/images/arrow.svg" alt="Siguiente" class="w-6 h-auto" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <Swiper
+        :modules="[SwiperNavigation, SwiperAutoplay]"
+        :slides-per-view="1"
+        :space-between="0"
+        :centered-slides="true"
+        :breakpoints="{
+          768: { slidesPerView: 1.2, spaceBetween: 0 },
+          1024: { slidesPerView: 1.5, spaceBetween: 0 },
+        }"
+        :navigation="{
+          prevEl: '.slider-como-prev',
+          nextEl: '.slider-como-next',
+        }"
+        :loop="sliderSlides.length > 1"
+        @slideChange="onSliderSlideChange"
+        class="slider-como-swiper w-full"
+      >
+        <SwiperSlide v-for="(slide, idx) in sliderSlides" :key="slide.id">
+          <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 px-4 sm:px-6 lg:px-8 py-8" style="max-width: 960px; margin: 0 auto;">
+            <!-- Imagen circular -->
+            <div class="flex-shrink-0">
+              <div class="w-64 h-64 lg:w-[383px] lg:h-[383px] rounded-full overflow-hidden bg-[#F8C52D]">
+                <img
+                  v-if="slide.featured_media?.url"
+                  :src="slide.featured_media.url"
+                  :alt="slide.featured_media.alt ?? slide.title ?? ''"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <!-- Texto -->
+            <div class="flex-1 text-center lg:text-left">
+              <h3 class="text-2xl lg:text-[28px] text-black mb-4" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">
+                {{ String(idx + 1).padStart(2, '0') }}. {{ slide.title }}
+              </h3>
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div v-if="slide.body" class="text-base lg:text-lg text-[#6A6867] mb-8 leading-relaxed max-w-sm mx-auto lg:mx-0" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="slide.body"></div>
+              <NuxtLink
+                v-if="slide.link_url"
+                :to="slide.link_url"
+                class="inline-block px-8 py-3 rounded-full bg-[#F8C52D] text-black font-medium transition-colors duration-200 hover:bg-black hover:text-[#F8C52D]"
+                style="font-family: 'Readex Pro', sans-serif;"
+              >
+                {{ slide.link_label ?? 'Ver más' }}
+              </NuxtLink>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    </section>
+
     <!-- Únete al equipo -->
     <section v-if="joinSection" class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
       <img
@@ -177,7 +249,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation as SwiperNavigation, Autoplay as SwiperAutoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import type { SupportMethod } from '~/types/api'
 
 const api = useApi()
@@ -261,6 +337,28 @@ const splitBlocks = computed(() =>
     boton_url: (s.settings?.boton_url as string | undefined) ?? null,
   })),
 )
+
+// ── Slider (Como apoyar) ────────────────────────────────────────────────────
+const sliderSection = computed(() =>
+  page.value?.sections?.find(s => s.type === 'slider'),
+)
+
+const sliderSlides = computed(() =>
+  (sliderSection.value?.items ?? [])
+    .slice()
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((item, idx) => ({
+      ...item,
+      num: idx + 1,
+    })),
+)
+
+const sliderTotal = computed(() => sliderSlides.value.length || 1)
+const sliderCurrent = ref(1)
+const onSliderSlideChange = (swiper: any) => {
+  sliderCurrent.value = (swiper.realIndex % sliderTotal.value) + 1
+}
+// ───────────────────────────────────────────────────────────────────────────
 
 const campaignSubtitle = computed(() =>
   methods.value.length
