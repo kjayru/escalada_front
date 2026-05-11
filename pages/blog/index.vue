@@ -279,7 +279,8 @@
       <button
         @click="loadMore"
         :disabled="isLoadingMore"
-        class="px-20 h-[52px] flex items-center justify-center bg-white border border-[#9E9E9E] rounded-full text-[#9E9E9E] font-semibold text-sm tracking-widest hover:border-gray-500 hover:text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        class="px-20 h-[52px] flex items-center justify-center bg-white border border-[#6A6867] rounded-full text-[#6A6867] font-bold text-[0.9375rem] tracking-widest hover:bg-[#6A6867] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        style="font-family: 'Readex Pro', sans-serif; font-style: normal; line-height: normal;"
       >
         {{ isLoadingMore ? 'CARGANDO...' : 'MÁS ARTÍCULOS' }}
       </button>
