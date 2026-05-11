@@ -1,7 +1,7 @@
 <template>
   <section class="prefooter-cards lg:pt-24 pb-0 bg-white">
-    <div class="px-[1.40rem] md:px-0 max-w-[1280px] mx-auto">
-      <div class="grid md:grid-cols-3 gap-y-3 md:gap-y-0">
+    <div class="px-4 sm:px-6 lg:px-[6rem] max-w-[1280px] mx-auto">
+      <div class="grid md:grid-cols-3 gap-4">
         <!-- Newsletter Card -->
         <div class="bg-[#F9D363] p-8 flex flex-col justify-between min-h-[357px]">
           <div>
