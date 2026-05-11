@@ -88,7 +88,7 @@
       <!-- Text Content -->
       <div class="bg-gray-50 flex items-center justify-center" style="min-height: 420px; padding: 6rem 1rem;">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-2xl">
+          <div class="max-w-2xl mx-auto">
             <div class="leading-relaxed" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 35px; text-align: left;" v-html="introText"></div>
           </div>
         </div>
@@ -132,7 +132,7 @@
       <!-- Text Content -->
       <div class="bg-gray-50 flex items-center justify-center" style="min-height: 600px; padding: 10rem 1rem;">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-2xl">
+          <div class="max-w-2xl mx-auto">
             <h2 class="leading-snug mb-6" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 35px;">
               {{ conservacionTitle }}
             </h2>

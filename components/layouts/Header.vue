@@ -207,13 +207,13 @@ const isParentActive = (url: string) => {
 /* ── Botón Donar (compartido header + overlay) ── */
 .btn-donar {
   background-color: #F5C400;
-  color: #1a1a1a;
+  color: #6A6867;
   border: 2px solid #F5C400;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-donar:hover {
-  background-color: #1a1a1a;
+  background-color: #6A6867;
   color: #F5C400;
 }
 
