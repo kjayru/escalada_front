@@ -1000,9 +1000,9 @@ const mapaImage = computed(() =>
   ?? (mapaSection.value?.settings?.imagen as string)
   ?? (mapaSection.value?.settings?.image as string)
   ?? '/images/home-mapa-completo.jpg')
-const mapaLabel1 = computed(() => (mapaSection.value?.settings?.label_1 as string) ?? 'Potrero Chico, Hidalgo N.L., México')
-const mapaLabel2 = computed(() => (mapaSection.value?.settings?.label_2 as string) ?? 'La Huasteca, Santa Catarina, N.L., México')
-const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as string) ?? 'El Salto, Ciénega de Gonzalez, N.L., México')
+const mapaLabel1 = computed(() => (mapaSection.value?.settings?.label_1 as string) || null)
+const mapaLabel2 = computed(() => (mapaSection.value?.settings?.label_2 as string) || null)
+const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as string) || null)
 
 // Numeros section (climbing-app section)
 const numerosSection = computed(() => sec('numeros'))
