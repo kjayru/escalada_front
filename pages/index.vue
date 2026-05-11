@@ -746,7 +746,7 @@
 
     <!-- Nuestro Team -->
     <section class="team-section py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="px-4 sm:px-6 lg:px-[6rem] 3xl:px-0 max-w-[1225px] mx-auto">
         <!-- Header -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-4">
           <h2 class="text-2xl lg:text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? 'Nuestro team' }}</h2>
