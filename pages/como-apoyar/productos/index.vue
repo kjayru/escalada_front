@@ -83,8 +83,8 @@
             <div class="px-1">
               <NuxtLink
                 :to="`/como-apoyar/productos/${producto.slug}`"
-                style="background: #F8C52D; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-align: center; text-decoration: none; border-radius: 6.25rem;"
-                class="block w-full lg:inline-block lg:w-[262px] py-3 hover:opacity-90 transition-opacity"
+                style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-align: center; text-decoration: none; border-radius: 6.25rem;"
+                class="btn-producto-hover block w-full lg:inline-block lg:w-[262px] py-3"
               >
                 COMPRAR
               </NuxtLink>
@@ -148,3 +148,16 @@ const productos = computed(() => {
   }))
 })
 </script>
+
+<style scoped>
+.btn-producto-hover {
+  background: #F8C52D;
+  color: #6A6867;
+  transition: all 0.2s ease;
+}
+
+.btn-producto-hover:hover {
+  background: #6A6867;
+  color: #F8C52D;
+}
+</style>

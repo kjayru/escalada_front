@@ -187,8 +187,8 @@
             <!-- CTA contacto -->
             <NuxtLink
               to="/contacto"
-              style="display: flex; align-items: center; justify-content: center; border-radius: 6.25rem; background: #F8C52D; height: 2.8125rem; color: #6A6867; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-decoration: none;"
-              class="w-full hover:opacity-90 transition-opacity"
+              style="display: flex; align-items: center; justify-content: center; border-radius: 6.25rem; height: 2.8125rem; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; text-decoration: none;"
+              class="btn-contacto-hover w-full"
             >
               CONTÁCTANOS PARA ADQUIRIRLO
             </NuxtLink>
@@ -217,7 +217,10 @@
     <!-- Otros Productos -->
     <section v-if="otrosProductos.length" class="bg-white pb-20 lg:pb-28">
       <div class="max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-base font-semibold text-[#6A6867] uppercase tracking-[0.2em] text-center mb-10">
+        <h2
+          style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
+          class="text-center mb-10"
+        >
           OTROS PRODUCTOS
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -233,16 +236,23 @@
                 class="w-full h-full object-cover"
               />
             </div>
-            <div class="flex items-start justify-between mb-4 px-1">
-              <span class="text-sm text-[#6A6867] font-normal leading-tight">{{ otro.name }}</span>
-              <span class="text-sm font-semibold text-[#6A6867] shrink-0 ml-4">
+            <div class="flex flex-col mb-4 px-1">
+              <span
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+                class="leading-tight mb-2"
+              >{{ otro.name }}</span>
+              <span
+                style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-style: normal; font-weight: 600;"
+                class="text-left"
+              >
                 {{ formatPrecio(otro.price, otro.currency) }}
               </span>
             </div>
             <div class="px-1">
               <NuxtLink
                 :to="`/como-apoyar/productos/${otro.slug}`"
-                class="inline-block w-full py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm text-center tracking-widest hover:bg-[#e0b525] transition-colors"
+                style="text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; border-radius: 6.25rem; text-decoration: none;"
+                class="btn-otro-producto-hover inline-block w-full py-3"
               >
                 COMPRAR
               </NuxtLink>
@@ -487,6 +497,28 @@ const otrosProductos = computed<Product[]>(() => {
 </script>
 
 <style scoped>
+.btn-contacto-hover {
+  background: #F8C52D;
+  color: #6A6867;
+  transition: all 0.2s ease;
+}
+
+.btn-contacto-hover:hover {
+  background: #6A6867;
+  color: #F8C52D;
+}
+
+.btn-otro-producto-hover {
+  background: #F8C52D;
+  color: #6A6867;
+  transition: all 0.2s ease;
+}
+
+.btn-otro-producto-hover:hover {
+  background: #6A6867;
+  color: #F8C52D;
+}
+
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity 0.2s ease;

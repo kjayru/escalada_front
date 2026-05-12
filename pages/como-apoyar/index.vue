@@ -77,16 +77,11 @@
               <div v-if="block.boton">
                 <NuxtLink
                   :to="block.boton_url ?? '#'"
-                  class="inline-block px-8 py-3 transition-colors"
+                  class="inline-block px-8 py-3"
                   :class="block.title?.toLowerCase().includes('proyecto')
-                    ? 'hover:bg-gray-50'
-                    : 'hover:opacity-90'"
-                  :style="[
-                    block.title?.toLowerCase().includes('proyecto')
-                      ? 'border: 1.5px solid #111111; border-radius: 25px; background: #ffffff;'
-                      : 'background: #F8C52D; border-radius: 25px;',
-                    'color: #6A6867; text-align: center; font-family: Readex Pro, sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;'
-                  ]"
+                    ? 'btn-border-hover'
+                    : 'btn-yellow-hover'"
+                  style="border-radius: 25px; text-align: center; font-family: Readex Pro, sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
                 >
                   {{ block.boton.toUpperCase() }}
                 </NuxtLink>
@@ -197,8 +192,8 @@
         <div v-if="joinSection.boton">
           <NuxtLink
             :to="joinSection.boton_url ?? '/contacto'"
-            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
-            style="border: 1.5px solid #ffffff; border-radius: 25px;"
+            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
+            style="border-radius: 25px;"
           >
             {{ joinSection.boton.toUpperCase() }}
           </NuxtLink>
@@ -206,8 +201,8 @@
         <div v-else>
           <NuxtLink
             to="/contacto"
-            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
-            style="border: 1.5px solid #ffffff; border-radius: 25px;"
+            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
+            style="border-radius: 25px;"
           >
             ÚNETE A NUESTRO EQUIPO
           </NuxtLink>
@@ -234,8 +229,8 @@
         <div>
           <NuxtLink
             to="/contacto"
-            class="inline-block px-10 py-3 text-white font-semibold text-sm hover:bg-white/10 transition-colors tracking-wider"
-            style="border: 1.5px solid #ffffff; border-radius: 25px;"
+            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
+            style="border-radius: 25px;"
           >
             ÚNETE A NUESTRO EQUIPO
           </NuxtLink>
@@ -388,3 +383,43 @@ useSeoMeta({
   description: 'Descubre cómo puedes apoyar a Escalada Libre Costa Rica a través de donaciones, transferencias, gyms o comprando nuestros productos.',
 })
 </script>
+
+<style scoped>
+/* Botón amarillo con hover invertido */
+.btn-yellow-hover {
+  background: #F8C52D;
+  color: #6A6867;
+  transition: all 0.2s ease;
+}
+
+.btn-yellow-hover:hover {
+  background: #6A6867;
+  color: #F8C52D;
+}
+
+/* Botón con borde negro y hover invertido */
+.btn-border-hover {
+  background: #ffffff;
+  color: #6A6867;
+  border: 1.5px solid #111111;
+  transition: all 0.2s ease;
+}
+
+.btn-border-hover:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* Botón con borde blanco y hover invertido */
+.btn-white-border-hover {
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid #ffffff;
+  transition: all 0.2s ease;
+}
+
+.btn-white-border-hover:hover {
+  background: #ffffff;
+  color: #000000;
+}
+</style>
