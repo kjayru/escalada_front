@@ -270,7 +270,8 @@ const { data: post, pending, error } = await useAsyncData<BlogPost>(
   () => api.blog.getBySlug(slug.value),
   { 
     watch: [slug],
-    getCachedData: () => null  // Deshabilitar caché para siempre obtener datos frescos
+    server: true,
+    lazy: false
   }
 )
 
