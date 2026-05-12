@@ -4,7 +4,8 @@
     <!-- Hero Banner -->
     <section class="hero-banner relative overflow-hidden" style="height: 779px;">
       <img
-        :src="(sec('hero')?.settings?.image as string) ?? '/images/n-1.png'"
+        v-if="sec('hero')?.settings?.image"
+        :src="sec('hero')?.settings?.image as string"
         :alt="(sec('hero')?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
