@@ -51,13 +51,15 @@
           <!-- Tagline -->
           <p
             v-if="sponsor.tagline"
-            class="text-2xl lg:text-[32px] font-normal text-[#6A6867] leading-snug mb-10 max-w-[550px] mx-auto"
+            class="text-2xl lg:text-[2.1875rem] font-normal lg:font-medium text-[#6A6867] leading-snug mb-10 max-w-[550px] mx-auto"
+            style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
           >
             {{ sponsor.tagline }}
           </p>
           <p
             v-else
-            class="text-2xl lg:text-[32px] font-normal text-[#6A6867] leading-snug mb-10 max-w-[550px] mx-auto"
+            class="text-2xl lg:text-[2.1875rem] font-normal lg:font-medium text-[#6A6867] leading-snug mb-10 max-w-[550px] mx-auto"
+            style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
           >
             {{ sponsor.name }}
           </p>
@@ -75,7 +77,7 @@
           <!-- Imagen principal -->
           <div 
             class="relative overflow-hidden mb-4" 
-            style="height: 617px;"
+            style="height: 617px; border: 0.5px solid #6A6867;"
             @touchstart="handleTouchStart"
             @touchend="handleTouchEnd"
           >
@@ -90,6 +92,7 @@
               v-if="gallery.length > 1"
               @click="anterior"
               class="hidden lg:absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white lg:flex items-center justify-center shadow transition-colors"
+              style="border-radius: 0.75rem;"
               aria-label="Imagen anterior"
             >
               <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,6 +105,7 @@
               v-if="gallery.length > 1"
               @click="siguiente"
               class="hidden lg:absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#F8C52D] hover:bg-[#e0b525] lg:flex items-center justify-center shadow transition-colors"
+              style="border-radius: 0.75rem;"
               aria-label="Imagen siguiente"
             >
               <svg class="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,9 +132,9 @@
               v-for="(img, index) in gallery"
               :key="index"
               @click="imagenActiva = index"
-              class="overflow-hidden transition-opacity"
+              class="transition-opacity"
               :class="imagenActiva === index ? 'opacity-100 ring-2 ring-[#F8C52D]' : 'opacity-60 hover:opacity-80'"
-              style="height: 148px;"
+              style="height: 148px; border: 0.5px solid #6A6867; padding: 23px;"
             >
               <img
                 :src="img.url"
@@ -159,15 +163,17 @@
               </p>
 
               <div class="flex flex-col gap-6">
-                <!-- Botón "Comprar aquí" → /contacto -->
-                <div>
-                  <NuxtLink
-                    to="/contacto"
+                <!-- Botón "Comprar aquí" -->
+                <div v-if="sponsor.buy_url">
+                  <a
+                    :href="sponsor.buy_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="inline-block px-10 py-3 bg-[#F8C52D] text-[#6A6867] font-bold tracking-widest transition-colors hover:bg-[#6A6867] hover:text-[#F8C52D] rounded-[6.25rem]"
                     style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; text-align: center;"
                   >
                     COMPRAR AQUÍ
-                  </NuxtLink>
+                  </a>
                 </div>
 
                 <!-- Redes sociales -->
