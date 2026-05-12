@@ -110,8 +110,8 @@
                 :href="gym.website_url"
                 target="_blank"
                 rel="noopener noreferrer"
-                style="padding: 10px 32px; border: 1px solid #6A6867; border-radius: 6.25rem; color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.0625rem; font-style: normal; font-weight: 700; line-height: normal; text-decoration: none;"
-                class="block sm:inline-block w-full sm:w-auto text-center hover:bg-gray-100 transition-colors"
+                style="padding: 10px 32px; border-radius: 6.25rem; font-family: 'Readex Pro', sans-serif; font-size: 1.0625rem; font-style: normal; font-weight: 700; line-height: normal; text-decoration: none;"
+                class="btn-gym-hover block sm:inline-block w-full sm:w-auto text-center"
               >
                 IR AL SITIO
               </a>
@@ -156,3 +156,18 @@ useSeoMeta({
   description: 'Apoya a Escalada Libre Costa Rica donando directamente en los gimnasios de escalada participantes.',
 })
 </script>
+
+<style scoped>
+.btn-gym-hover {
+  background: transparent;
+  color: #6A6867;
+  border: 1px solid #6A6867;
+  transition: all 0.2s ease;
+}
+
+.btn-gym-hover:hover {
+  background: #6A6867;
+  color: #ffffff;
+  border: 1px solid #6A6867;
+}
+</style>
