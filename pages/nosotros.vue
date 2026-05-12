@@ -4,9 +4,9 @@
     <!-- Hero Banner -->
     <section class="hero-banner relative overflow-hidden" style="height: 779px;">
       <img
-        v-if="sec('hero')?.settings?.image"
-        :src="sec('hero')?.settings?.image as string"
-        :alt="(sec('hero')?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
+        v-if="heroSection?.featured_media?.url || heroSection?.settings?.image"
+        :src="(heroSection?.featured_media?.url || heroSection?.settings?.image) as string"
+        :alt="(heroSection?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
     </section>
@@ -214,6 +214,11 @@ const apiImg = (path: string | null | undefined): string => {
 // Encuentra una sección por su settings.key (definido en el admin)
 const sec = (key: string) =>
   page.value?.sections?.find(s => s.settings?.key === key)
+
+// Hero section (busca por tipo, no por key)
+const heroSection = computed(() =>
+  page.value?.sections?.find(s => s.type === 'hero')
+)
 
 // SEO
 useSeoMeta({
