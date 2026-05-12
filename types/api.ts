@@ -108,6 +108,7 @@ export interface Sponsor {
   website_url: string | null
   buy_url: string | null
   logo: MediaItem | null
+  circle_logo: MediaItem | null
   slide_image: MediaItem | null
   gallery: MediaItem[]
   contact: {
