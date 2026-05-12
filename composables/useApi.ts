@@ -21,10 +21,8 @@ import type {
 export const useApi = () => {
   const config = useRuntimeConfig()
   
-  // Detectar la URL del frontend para el proxy de storage
-  const frontendBase = typeof window !== 'undefined' 
-    ? window.location.origin 
-    : 'http://localhost:3000'
+  // Usar siteUrl de la configuración para el proxy de storage
+  const frontendBase = config.public.siteUrl as string
   
   const apiFetch = $fetch.create({ 
     baseURL: config.public.apiBase as string,

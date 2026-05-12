@@ -243,6 +243,67 @@
         </div>
       </section>
 
+      <!-- Partners Slider -->
+      <div v-if="sponsorsSliderData.length" class="bg-white pb-12">
+        <section class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
+          <Swiper
+            :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
+            :slides-per-view="1"
+            :space-between="0"
+            :navigation="{
+              prevEl: '.swiper-button-prev-custom',
+              nextEl: '.swiper-button-next-custom',
+            }"
+            :pagination="{
+              el: '.swiper-pagination-custom',
+              clickable: true,
+              type: 'bullets',
+            }"
+            :autoplay="{
+              delay: 5000,
+              disableOnInteraction: false,
+            }"
+            :loop="true"
+            class="h-full w-full"
+          >
+            <!-- Slides dinámicos de patrocinadores -->
+            <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
+              <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
+                <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
+                  <div class="max-w-xl w-full lg:w-auto">
+                    <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                    <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+                    <NuxtLink
+                      :to="`/patrocinador/${sponsor.slug}`"
+                      class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
+                      style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                    >
+                      Ver más
+                      <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <!-- Navigation Arrows - Hidden on mobile, visible on desktop -->
+            <div class="swiper-button-prev-custom absolute top-1/2 left-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </div>
+            <div class="swiper-button-next-custom absolute top-1/2 right-8 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hidden lg:flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </Swiper>
+        </section>
+        
+        <!-- Pagination Dots - Outside slider -->
+        <div class="swiper-pagination-custom flex justify-center gap-2 pt-8"></div>
+      </div>
+
       <!-- Newsletter + Product Cards -->
       <SectionsPrefooterNewsletterSection />
 
@@ -256,7 +317,12 @@
 </template>
 
 <script setup lang="ts">
-import type { BlogPost } from '~/types/api'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation as SwiperNavigation, Pagination as SwiperPagination, Autoplay as SwiperAutoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import type { BlogPost, Sponsor } from '~/types/api'
 
 const route = useRoute()
 const api = useApi()
@@ -297,6 +363,27 @@ const recentPosts = computed(() =>
     .filter(p => p.slug !== slug.value)
     .slice(0, 3)
 )
+
+// Sponsors para el slider
+const { data: sponsors } = await useAsyncData(
+  'sponsors',
+  () => api.sponsors.getAll()
+)
+
+const sponsorsSliderData = computed(() => {
+  const sp = sponsors.value ?? []
+  if (sp.length) {
+    return sp.map((s: Sponsor) => ({
+      id: s.id,
+      name: s.name,
+      slug: s.slug,
+      logo: s.logo?.url ?? '/images/exposure.png',
+      slideImage: s.slide_image?.url ?? '/images/slide1.png',
+      tagline: s.tagline ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
+    }))
+  }
+  return []
+})
 
 // URL pública para compartir
 const pageUrl = computed(() =>
