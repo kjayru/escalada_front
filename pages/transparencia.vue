@@ -190,7 +190,7 @@ type AcordeonItem = { id: string; label: string; docs: { name: string; url: stri
 const tabYearLabel: Record<string, string> = {
   asambleas: 'Asamblea',
   reportes: 'Reporte',
-  estados: 'Ejercicio',
+  estados: 'Estado de cuenta',
 }
 
 const fallbackItems: AcordeonItem[] = [
