@@ -46,15 +46,13 @@
               v-if="block.mobileImage"
               :src="block.mobileImage"
               :alt="block.title"
-              class="w-full h-full object-cover lg:hidden"
-              style="max-height: 100%;"
+              class="w-full h-auto object-contain lg:hidden"
             />
             <!-- Imagen para desktop -->
             <img
               :src="block.image"
               :alt="block.title"
-              class="w-full h-full object-cover hidden lg:block"
-              style="max-height: 100%;"
+              class="w-full h-auto object-contain hidden lg:block"
             />
           </template>
           <div v-else class="w-full bg-gray-200" style="height: 420px;"></div>
