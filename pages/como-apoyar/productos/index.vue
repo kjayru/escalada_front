@@ -14,13 +14,12 @@
             >
               {{ productsMethod?.title ?? 'Tu aportación es de mucha ayuda' }}
             </h1>
-            <p
+            <div
               v-if="productsMethod?.body"
+              v-html="productsMethod.body"
               style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
-              class="leading-relaxed max-w-[420px]"
-            >
-              {{ productsMethod.body }}
-            </p>
+              class="leading-relaxed max-w-[420px] prose prose-lg"
+            ></div>
           </div>
 
           <!-- Derecha: imagen decorativa (oculta en móvil) -->
@@ -159,5 +158,18 @@ const productos = computed(() => {
 .btn-producto-hover:hover {
   background: #6A6867;
   color: #F8C52D;
+}
+
+/* Estilos para contenido HTML del RichEditor */
+.prose :deep(p) {
+  margin-bottom: 1.25rem;
+}
+
+.prose :deep(p:last-child) {
+  margin-bottom: 0;
+}
+
+.prose :deep(p:empty) {
+  margin-bottom: 0.625rem;
 }
 </style>

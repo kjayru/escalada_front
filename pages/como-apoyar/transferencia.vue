@@ -12,8 +12,18 @@
               Tu aportación es de mucha ayuda
             </h1>
 
-            <p class="mb-8" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
-              {{ bankMethod?.body ?? 'Te compartimos los datos para tu aportación por medio de transferencia' }}
+            <div
+              v-if="bankMethod?.body"
+              v-html="bankMethod.body"
+              class="mb-8 prose prose-lg max-w-none"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+            ></div>
+            <p
+              v-else
+              class="mb-8"
+              style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+            >
+              Te compartimos los datos para tu aportación por medio de transferencia
             </p>
 
             <!-- Bank details card -->
@@ -91,3 +101,18 @@ useSeoMeta({
   description: 'Realiza tu donación a Escalada Libre Costa Rica mediante transferencia interbancaria.',
 })
 </script>
+
+<style scoped>
+/* Estilos para contenido HTML del RichEditor */
+.prose :deep(p) {
+  margin-bottom: 1.25rem;
+}
+
+.prose :deep(p:last-child) {
+  margin-bottom: 0;
+}
+
+.prose :deep(p:empty) {
+  margin-bottom: 0.625rem;
+}
+</style>
