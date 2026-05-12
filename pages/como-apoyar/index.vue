@@ -181,19 +181,19 @@
       <div
         class="relative z-10 flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 min-h-[420px] md:min-h-[759px]"
       >
-        <h2 class="text-3xl lg:text-[48px] font-medium text-white leading-tight mb-6 max-w-[460px]">
+        <h2 class="mb-6 max-w-[460px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
           {{ joinSection.heading ?? 'Únete al equipo' }}
         </h2>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-if="joinSection.body" class="text-base lg:text-lg text-white/90 leading-relaxed mb-10 max-w-[400px]" v-html="joinSection.body"></div>
-        <p v-else class="text-base lg:text-lg text-white/90 leading-relaxed mb-10 max-w-[400px]">
+        <div v-if="joinSection.body" class="leading-relaxed mb-10 max-w-[400px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;" v-html="joinSection.body"></div>
+        <p v-else class="leading-relaxed mb-10 max-w-[400px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
           Súmate al equipo Escalada Libre y forma parte del cambio que queremos ver en nuestras montañas.
         </p>
         <div v-if="joinSection.boton">
           <NuxtLink
             :to="joinSection.boton_url ?? '/contacto'"
-            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
-            style="border-radius: 25px;"
+            class="inline-block px-10 py-3 btn-white-border-hover"
+            style="border-radius: 25px; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
           >
             {{ joinSection.boton.toUpperCase() }}
           </NuxtLink>
@@ -201,8 +201,8 @@
         <div v-else>
           <NuxtLink
             to="/contacto"
-            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
-            style="border-radius: 25px;"
+            class="inline-block px-10 py-3 btn-white-border-hover"
+            style="border-radius: 25px; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
           >
             ÚNETE A NUESTRO EQUIPO
           </NuxtLink>
@@ -220,17 +220,17 @@
       <div
         class="relative z-10 flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 min-h-[420px] md:min-h-[759px]"
       >
-        <h2 class="text-3xl lg:text-[48px] font-medium text-white leading-tight mb-6 max-w-[460px]">
+        <h2 class="mb-6 max-w-[460px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
           Únete al equipo
         </h2>
-        <p class="text-base lg:text-lg text-white/90 leading-relaxed mb-10 max-w-[400px]">
+        <p class="leading-relaxed mb-10 max-w-[400px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
           Súmate al equipo Escalada Libre y forma parte del cambio que queremos ver en nuestras montañas.
         </p>
         <div>
           <NuxtLink
             to="/contacto"
-            class="inline-block px-10 py-3 font-semibold text-sm tracking-wider btn-white-border-hover"
-            style="border-radius: 25px;"
+            class="inline-block px-10 py-3 btn-white-border-hover"
+            style="border-radius: 25px; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
           >
             ÚNETE A NUESTRO EQUIPO
           </NuxtLink>
