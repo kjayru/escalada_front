@@ -268,7 +268,10 @@ const slug = computed(() => route.params.slug as string)
 const { data: post, pending, error } = await useAsyncData<BlogPost>(
   `blog-post-${slug.value}`,
   () => api.blog.getBySlug(slug.value),
-  { watch: [slug] }
+  { 
+    watch: [slug],
+    getCachedData: () => null  // Deshabilitar caché para siempre obtener datos frescos
+  }
 )
 
 // Settings de redes sociales y contacto
