@@ -88,11 +88,21 @@ const isParentActive = (url: string) => {
 
 <style scoped>
 .footer-nav-link {
-  @apply text-[#6A6867] text-base leading-[35px] hover:text-[#F8C52D] transition-colors;
+  color: #6A6867;
+  font-family: Inter, sans-serif;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 35px;
+  transition: color 0.2s;
+}
+
+.footer-nav-link:hover {
+  color: #F8C52D;
 }
 
 .footer-nav-link.router-link-active {
-  @apply text-[#F8C52D];
+  color: #F8C52D;
 }
 
 @media (max-width: 1300px) {
