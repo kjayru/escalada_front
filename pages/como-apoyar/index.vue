@@ -187,9 +187,9 @@
     </section>
 
     <!-- Únete al equipo -->
-    <section v-if="joinSection" class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
+    <section v-if="joinSection && joinSection.image" class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
       <img
-        :src="joinSection.image ?? '/images/slide1.png'"
+        :src="joinSection.image"
         :alt="joinSection.heading ?? 'Únete al equipo Escalada Libre'"
         class="absolute inset-0 w-full h-full object-cover"
       />
@@ -215,34 +215,6 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <NuxtLink
-            to="/contacto"
-            class="inline-block px-10 py-3 btn-white-border-hover"
-            style="border-radius: 25px; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
-          >
-            ÚNETE A NUESTRO EQUIPO
-          </NuxtLink>
-        </div>
-      </div>
-    </section>
-    <!-- Únete al equipo (fallback hardcoded si no hay sección en CMS) -->
-    <section v-else class="relative overflow-hidden min-h-[420px] md:min-h-[759px]">
-      <img
-        src="/images/slide1.png"
-        alt="Únete al equipo Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-black/50"></div>
-      <div
-        class="relative z-10 flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 min-h-[420px] md:min-h-[759px]"
-      >
-        <h2 class="mb-6 max-w-[460px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
-          Únete al equipo
-        </h2>
-        <p class="leading-relaxed mb-10 max-w-[400px]" style="color: #FFF; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
-          Súmate al equipo Escalada Libre y forma parte del cambio que queremos ver en nuestras montañas.
-        </p>
-        <div>
           <NuxtLink
             to="/contacto"
             class="inline-block px-10 py-3 btn-white-border-hover"

@@ -157,8 +157,9 @@
       >
         <div class="lg:w-[45%] flex flex-col justify-center">
           <img
-            src="/images/exposure.png"
-            alt="Exposure"
+            v-if="sponsorLogoSrc"
+            :src="sponsorLogoSrc"
+            :alt="sponsor?.name ?? 'Sponsor'"
             class="mb-10 filter brightness-0 invert"
             style="max-width: 467px; max-height: 127px; object-fit: contain;"
           />
@@ -214,7 +215,7 @@
       api.sponsors.getAll().catch(() => [])
     )
     const sponsor = computed(() => sponsors.value?.[0] ?? null)
-    const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? '/images/exposure.png')
+    const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? null)
     const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
 
     const imagenActiva = ref(0)

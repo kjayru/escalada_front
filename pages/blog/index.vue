@@ -341,20 +341,18 @@ const [{ data: response }, { data: otrosPlacements }, { data: sponsors }] = awai
 const sponsorsSliderData = computed(() => {
   const sp = sponsors.value ?? []
   if (sp.length) {
-    return sp.map((s: Sponsor) => ({
-      id: s.id,
-      name: s.name,
-      slug: s.slug,
-      logo: s.logo?.url ?? '/images/exposure.png',
-      slideImage: s.slide_image?.url ?? '/images/slide1.png',
-      description: s.description ?? 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.',
-    }))
+    return sp
+      .filter((s: Sponsor) => (s.circle_logo?.url || s.logo?.url) && s.slide_image?.url)
+      .map((s: Sponsor) => ({
+        id: s.id,
+        name: s.name,
+        slug: s.slug,
+        logo: s.circle_logo?.url ?? s.logo?.url,
+        slideImage: s.slide_image?.url,
+        description: s.description ?? '',
+      }))
   }
-  return [
-    { id: -1, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
-    { id: -2, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
-    { id: -3, name: 'Exposure', slug: 'exposure', logo: '/images/exposure.png', slideImage: '/images/slide1.png', description: 'Somos distribuidores autorizados con amplia experiencia en proyectos con Escalada Libre, ofreciendo productos para montañismo y escalada en México.' },
-  ]
+  return []
 })
 
 const toPost = (p: BlogPost) => ({

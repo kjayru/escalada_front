@@ -362,14 +362,16 @@ const { data: allSponsors } = await useAsyncData<Sponsor[]>(
 
 const sponsorsSlider = computed(() => {
   const list = allSponsors.value ?? []
-  return list.map((s: Sponsor) => ({
-    id: s.id,
-    slug: s.slug,
-    name: s.name,
-    logo: s.circle_logo?.url ?? s.logo?.url ?? '/images/exposure.png',
-    slideImage: s.slide_image?.url ?? '/images/slide1.png',
-    description: s.tagline ?? s.description ?? '',
-  }))
+  return list
+    .filter((s: Sponsor) => (s.circle_logo?.url || s.logo?.url) && s.slide_image?.url)
+    .map((s: Sponsor) => ({
+      id: s.id,
+      slug: s.slug,
+      name: s.name,
+      logo: s.circle_logo?.url ?? s.logo?.url,
+      slideImage: s.slide_image?.url,
+      description: s.tagline ?? s.description ?? '',
+    }))
 })
 
 // Galería: combina las imágenes del array gallery del API
