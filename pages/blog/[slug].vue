@@ -35,38 +35,32 @@
           <!-- Línea divisoria -->
           <div class="border-t border-gray-200 mb-8"></div>
 
-          <!-- Iconos de compartir -->
+          <!-- Iconos de redes sociales -->
           <div class="flex items-center justify-center gap-5 mb-12">
             <a
-              :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`"
+              :href="socialLinks.facebook"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Compartir en Facebook"
-              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
+              aria-label="Síguenos en Facebook"
+              class="hover:opacity-80 transition-opacity"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-              </svg>
+              <img src="/images/blog-facebook.svg" alt="Facebook" class="w-5 h-5" />
             </a>
             <a
-              :href="`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(post.title)}`"
+              :href="socialLinks.instagram"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Compartir en Twitter"
-              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
+              aria-label="Síguenos en Instagram"
+              class="hover:opacity-80 transition-opacity"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-              </svg>
+              <img src="/images/blog-instagram.svg" alt="Instagram" class="w-5 h-5" />
             </a>
             <a
-              :href="`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(pageUrl)}`"
-              aria-label="Compartir por correo"
-              class="text-[#F8C52D] hover:text-[#e0b525] transition-colors"
+              :href="`mailto:${socialLinks.email}`"
+              aria-label="Enviar correo electrónico"
+              class="hover:opacity-80 transition-opacity"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+              <img src="/images/blog-mail.svg" alt="Email" class="w-5 h-5" />
             </a>
           </div>
 
@@ -144,6 +138,28 @@
                   class="w-full h-48 object-cover"
                 />
               </div>
+            </div>
+
+            <!-- Bloque tipo: video -->
+            <div v-else-if="section.type === 'video'" class="max-w-[1114px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 v-if="section.heading" class="text-2xl font-semibold text-[#6A6867] mb-6 text-center" style="font-family: 'Readex Pro', sans-serif;">
+                {{ section.heading }}
+              </h2>
+              <div class="relative w-full overflow-hidden rounded-lg" style="background-color: #000;">
+                <video
+                  v-if="section.video_file"
+                  controls
+                  :poster="section.video_poster?.url"
+                  class="w-full h-auto"
+                  preload="metadata"
+                >
+                  <source :src="section.video_file.url" :type="section.video_file.mime_type || 'video/mp4'">
+                  Tu navegador no soporta la reproducción de videos.
+                </video>
+              </div>
+              <p v-if="section.subheading" class="text-center text-[#6A6867] mt-4 italic">
+                {{ section.subheading }}
+              </p>
             </div>
 
             <!-- Bloque tipo: cards -->
@@ -254,6 +270,18 @@ const { data: post, pending, error } = await useAsyncData<BlogPost>(
   () => api.blog.getBySlug(slug.value),
   { watch: [slug] }
 )
+
+// Settings de redes sociales y contacto
+const { data: settings } = await useAsyncData(
+  'site-settings',
+  () => api.settings.getAll()
+)
+
+const socialLinks = computed(() => ({
+  facebook: settings.value?.settings?.facebook || 'https://www.facebook.com/escaladalibreac',
+  instagram: settings.value?.settings?.instagram || 'https://www.instagram.com/escaladalibreac',
+  email: settings.value?.settings?.email || 'contacto@escaladalibre.org'
+}))
 
 // Artículos recientes (excluyendo el actual, máximo 3)
 const { data: allPosts } = await useAsyncData(

@@ -31,6 +31,8 @@ export interface PageSection {
   settings: Record<string, unknown> | null
   featured_media: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
   mobile_image: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
+  video_file: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'mime_type' | 'size'> | null
+  video_poster: Pick<MediaItem, 'id' | 'url' | 'file_name' | 'alt'> | null
   items: SectionItem[]
   media: MediaItem[]
 }

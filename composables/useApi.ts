@@ -20,7 +20,18 @@ import type {
 
 export const useApi = () => {
   const config = useRuntimeConfig()
-  const apiFetch = $fetch.create({ baseURL: config.public.apiBase as string })
+  
+  // Detectar la URL del frontend para el proxy de storage
+  const frontendBase = typeof window !== 'undefined' 
+    ? window.location.origin 
+    : 'http://localhost:3000'
+  
+  const apiFetch = $fetch.create({ 
+    baseURL: config.public.apiBase as string,
+    headers: {
+      'X-Frontend-Base': frontendBase,
+    },
+  })
 
   return {
     /** Instancia cruda para casos no cubiertos por los módulos */
@@ -64,7 +75,7 @@ export const useApi = () => {
 
     settings: {
       getAll: () =>
-        apiFetch<{ settings: SettingsMap }>('/api/v1/settings').then(r => r.settings),
+        apiFetch<{ settings: SettingsMap }>('/api/v1/settings'),
       getByKey: (key: string) =>
         apiFetch<{ key: string; value: string }>(`/api/v1/settings/${key}`),
     },

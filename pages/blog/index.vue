@@ -8,13 +8,17 @@
       <div class="block lg:hidden max-w-[1200px] mx-auto px-6 mb-16">
         <div class="flex flex-col">
           <!-- Imagen primero -->
-          <div class="overflow-hidden mb-5" style="height: 300px;">
+          <NuxtLink
+            :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
+            class="overflow-hidden mb-5 block"
+            style="height: 300px;"
+          >
             <img
               :src="featured.imagen"
               :alt="featured.titulo"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hover:opacity-90 transition-opacity"
             />
-          </div>
+          </NuxtLink>
 
           <!-- Categoría/Tagline -->
           <div class="flex items-center gap-4 mb-4">
@@ -44,13 +48,17 @@
         <div class="relative mb-16" style="height: 500px;">
 
           <!-- Imagen: desde 30% izquierdo hasta el borde derecho, altura completa -->
-          <div class="absolute top-0 bottom-0 right-0 overflow-hidden" style="left: 30%;">
+          <NuxtLink
+            :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
+            class="absolute top-0 bottom-0 right-0 overflow-hidden"
+            style="left: 30%;"
+          >
             <img
               :src="featured.imagen"
               :alt="featured.titulo"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hover:opacity-90 transition-opacity"
             />
-          </div>
+          </NuxtLink>
 
           <!-- Card: solo el título tiene fondo blanco, tagline y descripción sin fondo -->
           <div class="absolute left-0 right-auto z-10 flex flex-col justify-center px-0" style="width: 52%; top: 0; bottom: 0;">
@@ -89,13 +97,17 @@
           :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'"
         >
           <!-- Imagen (primero en móvil) -->
-          <div class="lg:w-[55%] overflow-hidden order-1" style="height: 453px;">
+          <NuxtLink
+            :to="post.slug ? '/blog/' + post.slug : '#'"
+            class="lg:w-[55%] overflow-hidden order-1 block"
+            style="height: 453px;"
+          >
             <img
               :src="post.imagen"
               :alt="post.titulo"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hover:opacity-90 transition-opacity"
             />
-          </div>
+          </NuxtLink>
 
           <!-- Texto -->
           <div
@@ -245,13 +257,17 @@
           :class="index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'"
         >
           <!-- Imagen -->
-          <div class="lg:w-[55%] overflow-hidden" style="height: 453px;">
+          <NuxtLink
+            :to="post.slug ? '/blog/' + post.slug : '#'"
+            class="lg:w-[55%] overflow-hidden block"
+            style="height: 453px;"
+          >
             <img
               :src="post.imagen"
               :alt="post.titulo"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hover:opacity-90 transition-opacity"
             />
-          </div>
+          </NuxtLink>
 
           <!-- Texto -->
           <div class="lg:w-[45%] flex flex-col justify-center px-10 lg:px-16 py-12">
