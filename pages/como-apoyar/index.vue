@@ -37,7 +37,7 @@
         </div>
 
         <!-- Method rows — dinámicos desde CMS (type=split) -->
-        <div class="max-w-[1400px] mx-auto border-t border-gray-200">
+        <div class="max-w-[1400px] mx-auto">
 
           <div
             v-for="block in splitBlocks"
@@ -51,24 +51,40 @@
                 style="writing-mode: vertical-rl; transform: rotate(180deg); font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400; letter-spacing: 0.25em; text-transform: capitalize;"
               >{{ block.subheading }}</span>
             </div>
-            <!-- Imagen con fondo de color -->
+            <!-- Imagen como fondo del bloque o img para proyecto -->
             <div
-              :class="block.title?.toLowerCase().includes('proyecto') ? 'w-full md:w-1/2 overflow-hidden' : 'w-full md:w-1/2 flex items-center justify-center p-8'"
-              :style="block.title?.toLowerCase().includes('proyecto')
-                ? { minHeight: '280px', borderRadius: '0 0 0 40px' }
-                : { background: block.background ?? '#f6f6f6', minHeight: '240px' }"
+              v-if="block.title?.toLowerCase().includes('proyecto')"
+              class="w-full md:w-1/2 overflow-hidden"
+              style="border-radius: 0 0 0 40px;"
             >
               <img
                 v-if="block.image"
                 :src="block.image"
                 :alt="block.title"
-                :class="block.title?.toLowerCase().includes('proyecto') ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'"
-                :style="block.title?.toLowerCase().includes('proyecto') ? 'min-height: 280px;' : 'max-height: 220px;'"
+                class="w-full h-full object-cover"
               />
-              <div v-else class="w-full bg-gray-200" style="height: 240px;"></div>
+            </div>
+            <div
+              v-else
+              class="w-full md:w-1/2 overflow-hidden"
+              :style="{
+                minHeight: '480px',
+                backgroundImage: block.image ? `url(${block.image})` : 'none',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: block.background ?? '#f6f6f6'
+              }"
+            >
             </div>
             <!-- Texto + botón -->
-            <div class="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-8 md:py-12 bg-white">
+            <div 
+              class="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-8 md:py-12" 
+              :style="{
+                background: block.title?.toLowerCase().includes('proyecto') ? '#FFFFFF' : '#F6F6F6',
+                minHeight: block.title?.toLowerCase().includes('proyecto') ? 'auto' : '480px'
+              }"
+            >
               <h3 class="mb-4" :style="block.title?.toLowerCase().includes('proyecto')
                 ? 'color: #000; font-family: Readex Pro, sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;'
                 : 'color: #000; font-family: Readex Pro, sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 600;'">{{ block.title }}</h3>
