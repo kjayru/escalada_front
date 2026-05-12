@@ -197,14 +197,22 @@
 
         <!-- Más sobre el producto -->
         <div class="mt-12 border-t border-gray-200 pt-10">
-          <h2 class="text-sm font-semibold text-[#3a3a3a] mb-5 tracking-wide">Mas sobre el producto</h2>
+          <h2
+            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+            class="mb-5"
+          >Mas sobre el producto</h2>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div
             v-if="producto?.description"
-            class="text-sm text-[#6A6867] leading-relaxed space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:before:content-['–_'] [&_li]:before:mr-1"
+            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
+            class="leading-relaxed space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:before:content-['–_'] [&_li]:before:mr-1"
             v-html="producto.description"
           />
-          <p v-else class="text-sm text-[#6A6867] leading-relaxed">
+          <p
+            v-else
+            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
+            class="leading-relaxed"
+          >
             Información del producto próximamente disponible.
           </p>
           <!-- Línea divisoria inferior -->
