@@ -163,7 +163,8 @@
                 <div>
                   <NuxtLink
                     to="/contacto"
-                    class="inline-block px-10 py-3 bg-[#F8C52D] text-gray-900 font-semibold text-sm tracking-widest hover:bg-[#e0b525] transition-colors"
+                    class="inline-block px-10 py-3 bg-[#F8C52D] text-[#6A6867] font-bold tracking-widest transition-colors hover:bg-[#6A6867] hover:text-[#F8C52D] rounded-[6.25rem]"
+                    style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; text-align: center;"
                   >
                     COMPRAR AQUÍ
                   </NuxtLink>
