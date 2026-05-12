@@ -9,7 +9,6 @@
         class="absolute inset-0 w-full h-full object-cover"
         :class="{ grayscale: !heroBannerUrl }"
       />
-      <div class="absolute inset-0 bg-black/10"></div>
       <div class="relative z-10 min-h-[360px] lg:min-h-[1080px]"></div>
     </section>
 

@@ -8,7 +8,6 @@
         alt="Cómo apoyar - Escalada Libre"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
-      <div class="absolute inset-0 bg-black/30"></div>
     </section>
 
     <!-- Intro: ¿Por qué donar? -->

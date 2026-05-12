@@ -8,7 +8,6 @@
         :alt="(sec('hero')?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
         class="absolute inset-0 w-full h-full object-cover object-center"
       />
-      <div class="absolute inset-0 bg-black/35"></div>
     </section>
 
     <!-- Misión / Visión -->

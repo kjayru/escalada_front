@@ -16,7 +16,6 @@
         alt="Historia - Escalada Libre"
         class="absolute inset-0 w-full h-full object-cover object-center hidden lg:block"
       />
-      <div class="absolute inset-0 bg-black/20"></div>
     </section>
 
     <!-- Intro Section -->

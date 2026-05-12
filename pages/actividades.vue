@@ -8,7 +8,6 @@
         :alt="heroAlt"
         class="absolute inset-0 w-full h-full object-cover object-top"
       />
-      <div class="absolute inset-0 bg-black/20"></div>
     </section>
 
     <!-- Intro + Photo Mosaic -->
