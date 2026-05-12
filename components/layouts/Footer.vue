@@ -27,13 +27,16 @@
     </div>
 
     <!-- Imagen de fondo montaña -->
-    <div class="w-full overflow-hidden h-[180px] sm:h-[300px] lg:h-[450px]">
-      <img
-        src="/images/back_footer.png"
-        alt="Sierra Madre Occidental"
-        class="w-full h-full object-cover"
-      />
-    </div>
+    <div 
+      class="w-full footer-mountain" 
+      style="
+        min-height: 487px;
+        background-image: url('/images/back_footer.png');
+        background-size: cover;
+        background-position: 0 -146px;
+        background-repeat: no-repeat;
+      "
+    ></div>
 
   </footer>
 </template>
@@ -90,5 +93,11 @@ const isParentActive = (url: string) => {
 
 .footer-nav-link.router-link-active {
   @apply text-[#F8C52D];
+}
+
+@media (max-width: 1300px) {
+  .footer-mountain {
+    background-position: 0 -82px !important;
+  }
 }
 </style>
