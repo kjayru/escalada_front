@@ -5,8 +5,8 @@
         <!-- Newsletter Card -->
         <div class="bg-[#F9D363] p-8 flex flex-col justify-between min-h-[357px]">
           <div>
-            <p class="text-xs font-semibold tracking-[0.2em] uppercase text-white mb-4">{{ newsletterEtiqueta }}</p>
-            <h3 class="text-xl lg:text-[30px] font-medium text-white leading-snug mb-6" style="font-family: 'Readex Pro', sans-serif;">
+            <p class="uppercase mb-4" style="color: #000; font-family: 'Readex Pro', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em;">{{ newsletterEtiqueta }}</p>
+            <h3 class="leading-snug mb-6" style="color: #0D0D0D; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-weight: 700;">
               {{ newsletterTitulo }}
             </h3>
           </div>
