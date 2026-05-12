@@ -52,55 +52,59 @@
 
           <!-- Nombre -->
           <div class="flex flex-col gap-2">
-            <label class="text-xl font-light text-[#6A6867]">Nombre*</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Nombre*</label>
             <input
               v-model="form.nombre"
               type="text"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-base text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
 
           <!-- Apellido -->
           <div class="flex flex-col gap-2">
-            <label class="text-xl font-light text-[#6A6867]">Apellido*</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Apellido*</label>
             <input
               v-model="form.apellido"
               type="text"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-base text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
 
           <!-- Correo electrónico -->
           <div class="flex flex-col gap-2">
-            <label class="text-xl font-light text-[#6A6867]">Correo electrónico*</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Correo electrónico*</label>
             <input
               v-model="form.correo"
               type="email"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-base text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
 
           <!-- Teléfono -->
           <div class="flex flex-col gap-2">
-            <label class="text-xl font-light text-[#6A6867]">Teléfono</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Teléfono</label>
             <input
               v-model="form.telefono"
               type="tel"
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-base text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
 
           <!-- Mensaje -->
           <div class="flex flex-col gap-2">
-            <label class="text-xl font-light text-[#6A6867]">Mensaje</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Mensaje</label>
             <textarea
               v-model="form.mensaje"
               rows="8"
-              class="w-full px-5 py-4 border border-[#6a6867] rounded-[10px] text-base text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors resize-none"
-              style="height: 289px;"
+              class="w-full px-5 py-4 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors resize-none"
+              style="height: 289px; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             ></textarea>
           </div>
 
@@ -111,7 +115,8 @@
             <button
               type="submit"
               :disabled="cargando"
-              class="w-full h-[45px] bg-[#F8C52D] text-[#6A6867] font-bold text-sm tracking-widest rounded-full hover:bg-[#e0b525] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              class="w-full h-[45px] bg-[#F8C52D] text-[#6A6867] font-bold rounded-full transition-colors disabled:opacity-60 disabled:cursor-not-allowed hover:bg-[#6A6867] hover:text-[#F8C52D]"
+              style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; text-align: center;"
             >
               {{ cargando ? 'ENVIANDO...' : 'ENVIAR' }}
             </button>
