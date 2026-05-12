@@ -54,8 +54,9 @@
             class="product-card flex flex-col"
           >
             <!-- Imagen del producto -->
-            <div class="overflow-hidden mb-4 w-full aspect-square lg:aspect-auto lg:h-[430px]">
+            <div class="overflow-hidden mb-4 w-full aspect-square lg:aspect-auto lg:h-[430px] bg-gray-100">
               <img
+                v-if="producto.imagen"
                 :src="producto.imagen"
                 :alt="producto.nombre"
                 class="w-full h-full object-cover"
@@ -143,7 +144,7 @@ const productos = computed(() => {
     slug: p.slug,
     nombre: p.name,
     precio: formatPrecio(p.price, p.currency),
-    imagen: p.featured_media?.url ?? '/images/pico-norte-1.png',
+    imagen: p.featured_media?.url ?? null,
   }))
 })
 </script>

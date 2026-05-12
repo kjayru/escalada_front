@@ -120,5 +120,17 @@ export const useApi = () => {
       getAll: () =>
         apiFetch<Gym[]>('/api/v1/gyms'),
     },
+
+    paypal: {
+      createOrder: (data: { amount: number; nombre: string; apellido: string; correo: string }) =>
+        apiFetch<{ id: string; status: string; links: Array<{ href: string; rel: string }> }>(
+          '/api/v1/paypal/orders',
+          { method: 'POST', body: data }
+        ),
+      captureOrder: (orderId: string) =>
+        apiFetch<any>(`/api/v1/paypal/orders/${orderId}/capture`, { method: 'POST' }),
+      getOrder: (orderId: string) =>
+        apiFetch<any>(`/api/v1/paypal/orders/${orderId}`),
+    },
   }
 }

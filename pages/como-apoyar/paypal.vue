@@ -12,6 +12,14 @@
               Tu aportación es de mucha ayuda
             </h1>
 
+            <!-- Mensaje de estado -->
+            <div v-if="message" :class="[
+              'p-4 rounded-lg mb-6',
+              messageType === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'
+            ]">
+              {{ message }}
+            </div>
+
             <form @submit.prevent="handleDonate" class="mt-6">
 
               <!-- Nombre -->
@@ -69,10 +77,11 @@
               <!-- DONAR button -->
               <button
                 type="submit"
-                class="w-full hover:opacity-90 transition-opacity"
+                :disabled="loading"
+                :class="['w-full transition-opacity', loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90']"
                 style="margin-top: 70px; height: 45px; border-radius: 6.25rem; background: #F8C52D; color: #6A6867; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
               >
-                DONAR
+                {{ loading ? 'PROCESANDO...' : 'DONAR' }}
               </button>
 
               <!-- Reference counter badge -->
@@ -120,9 +129,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 
 const api = useApi()
+const route = useRoute()
+const router = useRouter()
 
 const { data: campaign } = await useAsyncData(
   'support-campaign-como-apoyar-paypal',
@@ -131,10 +142,6 @@ const { data: campaign } = await useAsyncData(
 
 const paypalMethod = computed(() =>
   campaign.value?.methods?.find((m: any) => m.type === 'paypal')
-)
-
-const paypalLink = computed(() =>
-  paypalMethod.value?.settings?.paypal_link ?? 'https://www.paypal.com/donate'
 )
 
 const suggestedAmount = computed(() =>
@@ -147,6 +154,9 @@ useSeoMeta({
 })
 
 const donationRef = ref('00001')
+const loading = ref(false)
+const message = ref('')
+const messageType = ref<'success' | 'error' | ''>('')
 
 const form = reactive({
   nombre: '',
@@ -155,9 +165,105 @@ const form = reactive({
   cantidad: suggestedAmount.value ? String(suggestedAmount.value) : '',
 })
 
-const handleDonate = () => {
-  const url = new URL(paypalLink.value)
-  if (form.cantidad) url.searchParams.set('amount', form.cantidad)
-  window.open(url.toString(), '_blank')
+const handleDonate = async () => {
+  if (loading.value) return
+  
+  try {
+    loading.value = true
+    message.value = ''
+    messageType.value = ''
+    
+    // Validar que los campos estén llenos
+    if (!form.nombre || !form.apellido || !form.correo || !form.cantidad) {
+      message.value = 'Por favor completa todos los campos'
+      messageType.value = 'error'
+      return
+    }
+
+    const amount = parseFloat(form.cantidad)
+    if (isNaN(amount) || amount < 1) {
+      message.value = 'Por favor ingresa una cantidad válida'
+      messageType.value = 'error'
+      return
+    }
+
+    // Crear orden en PayPal
+    const order = await api.paypal.createOrder({
+      amount,
+      nombre: form.nombre,
+      apellido: form.apellido,
+      correo: form.correo,
+    })
+
+    // Buscar el link de aprobación
+    const approveLink = order.links?.find((link: any) => link.rel === 'approve')
+    
+    if (approveLink) {
+      // Guardar datos del formulario en sessionStorage para recuperarlos después
+      sessionStorage.setItem('paypal-donation-data', JSON.stringify({
+        orderId: order.id,
+        ...form,
+      }))
+      
+      // Redirigir a PayPal para aprobar el pago
+      window.location.href = approveLink.href
+    } else {
+      message.value = 'No se pudo obtener el enlace de PayPal'
+      messageType.value = 'error'
+    }
+  } catch (error: any) {
+    console.error('Error creando orden de PayPal:', error)
+    message.value = error.data?.error || 'Ocurrió un error al procesar tu donación. Por favor intenta de nuevo.'
+    messageType.value = 'error'
+  } finally {
+    loading.value = false
+  }
 }
+
+// Manejar retorno desde PayPal
+onMounted(async () => {
+  const token = route.query.token as string
+  const success = route.query.success === 'true'
+  const canceled = route.query.canceled === 'true'
+
+  if (canceled) {
+    message.value = 'La donación fue cancelada'
+    messageType.value = 'error'
+    // Limpiar la URL
+    router.replace({ query: {} })
+    return
+  }
+
+  if (success && token) {
+    try {
+      loading.value = true
+      
+      // Recuperar datos de la donación
+      const savedData = sessionStorage.getItem('paypal-donation-data')
+      const donationData = savedData ? JSON.parse(savedData) : null
+
+      // Capturar el pago
+      await api.paypal.captureOrder(token)
+      
+      message.value = '¡Gracias por tu donación! Tu pago se ha procesado exitosamente.'
+      messageType.value = 'success'
+      
+      // Limpiar formulario y sessionStorage
+      form.nombre = ''
+      form.apellido = ''
+      form.correo = ''
+      form.cantidad = suggestedAmount.value ? String(suggestedAmount.value) : ''
+      sessionStorage.removeItem('paypal-donation-data')
+      
+      // Limpiar la URL
+      router.replace({ query: {} })
+    } catch (error: any) {
+      console.error('Error capturando pago:', error)
+      message.value = 'Ocurrió un error al procesar tu pago. Por favor contacta con nosotros.'
+      messageType.value = 'error'
+    } finally {
+      loading.value = false
+    }
+  }
+})
 </script>

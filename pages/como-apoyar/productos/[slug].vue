@@ -24,12 +24,13 @@
           <div style="width: 680px; max-width: 100%; flex-shrink: 0;">
             <!-- Imagen principal con flechas y zoom -->
             <div 
-              class="relative bg-gray-50" 
+              class="relative bg-gray-100" 
               style="aspect-ratio: 3/3.2; overflow: hidden;"
               @touchstart="handleTouchStart"
               @touchend="handleTouchEnd"
             >
               <img
+                v-if="imagenActiva"
                 :src="imagenActiva"
                 :alt="producto?.name"
                 class="w-full h-full object-cover"
@@ -239,7 +240,8 @@
           >
             <div class="overflow-hidden mb-4 bg-gray-100" style="height: 240px;">
               <img
-                :src="otro.featured_media?.url ?? '/images/pico-norte-1.png'"
+                v-if="otro.featured_media?.url"
+                :src="otro.featured_media.url"
                 :alt="otro.name"
                 class="w-full h-full object-cover"
               />
@@ -414,12 +416,11 @@ const galeria = computed(() => {
   for (const m of gallery) {
     if (m.url && !imgs.includes(m.url)) imgs.push(m.url)
   }
-  if (!imgs.length) imgs.push('/images/pico-norte-1.png')
   return imgs
 })
 
 const indiceActivo = ref(0)
-const imagenActiva = computed(() => galeria.value[indiceActivo.value] ?? '/images/pico-norte-1.png')
+const imagenActiva = computed(() => galeria.value[indiceActivo.value] ?? null)
 
 const anteriorImagen = () => {
   indiceActivo.value = (indiceActivo.value - 1 + galeria.value.length) % galeria.value.length
