@@ -44,9 +44,6 @@
                 style="background-image: url('/images/fondobotoncontador.png'); background-size: 100% 100%; width: 192px; height: 32px;"
               >
                 <span class="text-xl font-bold tracking-wider" style="font-family: 'Readex Pro', sans-serif;">00001</span>
-                <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
               </div>
             </div>
           </div>
