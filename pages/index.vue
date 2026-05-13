@@ -507,7 +507,7 @@
           <div class="inline-block">
             <div class="w-48 h-3 bg-[#F8C52D] mx-auto mb-4"></div>
             <h2 class="text-3xl lg:text-[35px] text-gray-900" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
-              {{ st('numeros.titulo', 'Escalada Libre en Números') }}
+              {{ st('numeros.titulo', '') }}
             </h2>
           </div>
         </div>
@@ -1030,15 +1030,15 @@ function animateCounters() {
   const duration = 1800
   const totalFrames = 60
   const statDefs: Array<{ key: keyof typeof statDisplayValues; raw: string }> = [
-    { key: 'actividades', raw: st('stat.actividades', '74') },
-    { key: 'arboles', raw: st('stat.arboles', '500') },
-    { key: 'rutas', raw: st('stat.rutas', '93') },
-    { key: 'bolts', raw: st('stat.bolts', '1110') },
-    { key: 'senalizaciones', raw: st('stat.senalizaciones', '15') },
-    { key: 'voluntarios', raw: st('stat.voluntarios', '300') },
-    { key: 'anos_util', raw: st('stat.anos_util', '30') },
-    { key: 'costo_reequipado', raw: st('stat.costo_reequipado', '$3700') },
-    { key: 'monto_invertido', raw: st('stat.monto_invertido', '$400,000') },
+    { key: 'actividades', raw: st('stat.actividades', '') },
+    { key: 'arboles', raw: st('stat.arboles', '') },
+    { key: 'rutas', raw: st('stat.rutas', '') },
+    { key: 'bolts', raw: st('stat.bolts', '') },
+    { key: 'senalizaciones', raw: st('stat.senalizaciones', '') },
+    { key: 'voluntarios', raw: st('stat.voluntarios', '') },
+    { key: 'anos_util', raw: st('stat.anos_util', '') },
+    { key: 'costo_reequipado', raw: st('stat.costo_reequipado', '') },
+    { key: 'monto_invertido', raw: st('stat.monto_invertido', '') },
   ]
   statDefs.forEach(({ key, raw }) => {
     const prefix = raw.startsWith('$') ? '$' : ''

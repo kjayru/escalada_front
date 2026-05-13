@@ -82,9 +82,9 @@ const [
 const st = (key: string, fallback: string): string =>
   (settings.value as SettingsMap)?.[key] ?? fallback
 
-const newsletterTitulo = computed(() => st('newsletter.titulo', 'Recibe noticias de Escalada Libre a tu correo'))
-const newsletterEtiqueta = computed(() => st('newsletter.etiqueta', 'NEWSLETTER'))
-const newsletterBoton = computed(() => st('newsletter.boton', 'SUSCRIBIRME'))
+const newsletterTitulo = computed(() => st('newsletter.titulo', ''))
+const newsletterEtiqueta = computed(() => st('newsletter.etiqueta', ''))
+const newsletterBoton = computed(() => st('newsletter.boton', ''))
 
 const prefooterCards = computed(() => prefooterPlacements.value ?? [])
 </script>
