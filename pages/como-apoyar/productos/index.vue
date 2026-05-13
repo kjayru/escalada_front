@@ -127,13 +127,15 @@ const productsMethod = computed(() =>
   campaign.value?.methods?.find((m: any) => m.type === 'products')
 )
 
-const formatPrecio = (price: number | null, currency: string | null) => {
-  if (!price) return ''
+const formatPrecio = (price: number | string | null, currency: string | null) => {
+  if (price === null || price === undefined || price === '') return ''
+  const num = typeof price === 'string' ? parseFloat(price) : price
+  if (isNaN(num)) return ''
   const cur = currency?.trim() ?? 'MXN'
   try {
-    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur, currencyDisplay: 'symbol' }).format(price)
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur, currencyDisplay: 'symbol' }).format(num)
   } catch {
-    return `$${price.toFixed(2)}`
+    return `$${num.toFixed(2)}`
   }
 }
 
