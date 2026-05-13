@@ -14,3 +14,41 @@
     @apply text-gray-900 bg-white antialiased;
   }
 }
+
+@layer components {
+  .article-body ul {
+    @apply list-disc pl-6 mb-4 space-y-1;
+  }
+
+  .article-body ol {
+    @apply list-decimal pl-6 mb-4 space-y-1;
+  }
+
+  .article-body li {
+    @apply leading-relaxed;
+  }
+
+  .article-body p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .article-body h2 {
+    @apply text-2xl font-semibold mt-8 mb-3;
+  }
+
+  .article-body h3 {
+    @apply text-xl font-semibold mt-6 mb-2;
+  }
+
+  .article-body strong {
+    @apply font-semibold;
+  }
+
+  .article-body em {
+    @apply italic;
+  }
+
+  .article-body a {
+    @apply underline;
+  }
+}
