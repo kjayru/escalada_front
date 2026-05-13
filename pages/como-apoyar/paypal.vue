@@ -81,7 +81,7 @@
                 :class="['w-full transition-opacity', loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90']"
                 style="margin-top: 70px; height: 45px; border-radius: 6.25rem; background: #F8C52D; color: #6A6867; text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700;"
               >
-                {{ loading ? 'PROCESANDO...' : 'DONAR' }}
+                {{ loading ? 'PROCESANDO...' : (paypalMethod?.settings?.button_label || 'DONAR') }}
               </button>
 
               <!-- Reference counter badge -->
