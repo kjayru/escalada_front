@@ -256,6 +256,9 @@ onMounted(async () => {
     message.value = 'La donación fue cancelada'
     messageType.value = 'error'
     paymentCompleted.value = true
+    router.replace({ query: {} })
+    return
+  }
 
   if (success && token) {
     try {
