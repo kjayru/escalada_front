@@ -132,5 +132,9 @@ export const useApi = () => {
       getOrder: (orderId: string) =>
         apiFetch<any>(`/api/v1/paypal/orders/${orderId}`),
     },
+
+    donations: {
+      count: () => apiFetch<{ count: number }>('/api/v1/donations/count'),
+    },
   }
 }

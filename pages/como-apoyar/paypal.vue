@@ -12,10 +12,29 @@
               Tu aportación es de mucha ayuda
             </h1>
 
-            <!-- Mensaje de estado -->
+            <!-- Panel resultado post-pago -->
+            <div v-if="paymentCompleted" class="mt-6 py-12 text-center">
+              <div v-if="messageType === 'success'">
+                <p class="text-6xl mb-6">🙌</p>
+                <h2 class="text-2xl font-semibold mb-4" style="color: #6A6867; font-family: 'Readex Pro', sans-serif;">
+                  ¡Gracias por tu apoyo!
+                </h2>
+                <p style="color: #6A6867; font-family: 'Readex Pro', sans-serif;">
+                  {{ message }}
+                </p>
+              </div>
+              <div v-else class="p-4 rounded-lg bg-red-100 border border-red-400 text-red-700">
+                {{ message }}
+              </div>
+            </div>
+
+            <!-- Formulario (visible solo antes del resultado) -->
+            <template v-if="!paymentCompleted">
+
+            <!-- Mensaje de estado (errores de validación) -->
             <div v-if="message" :class="[
               'p-4 rounded-lg mb-6',
-              messageType === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'
+              messageType === 'error' ? 'bg-red-100 border border-red-400 text-red-700' : 'bg-green-100 border border-green-400 text-green-700'
             ]">
               {{ message }}
             </div>
@@ -90,11 +109,12 @@
                   class="flex items-center justify-center text-white px-8 bg-cover bg-center bg-no-repeat"
                   style="background-image: url('/images/fondobotoncontador.png'); background-size: 100% 100%; width: 192px; height: 32px;"
                 >
-                  <span class="text-xl font-bold tracking-wider" style="font-family: 'Readex Pro', sans-serif;">{{ donationRef }}</span>
+                  <span class="text-xl font-bold tracking-wider" style="font-family: 'Readex Pro', sans-serif;">{{ String(donationCount).padStart(5, '0') }}</span>
                 </div>
               </div>
 
             </form>
+            </template>
           </div>
 
           <!-- Right: Decorative image (oculta en móvil) -->
@@ -140,6 +160,11 @@ const { data: campaign } = await useAsyncData(
   () => api.supportCampaigns.getBySlug('como-apoyar-home').catch(() => null),
 )
 
+const { data: countData } = await useAsyncData(
+  'donations-count',
+  () => api.donations.count().catch(() => ({ count: 0 })),
+)
+
 const paypalMethod = computed(() =>
   campaign.value?.methods?.find((m: any) => m.type === 'paypal')
 )
@@ -153,7 +178,8 @@ useSeoMeta({
   description: 'Realiza tu donación a Escalada Libre Costa Rica de forma segura a través de PayPal.',
 })
 
-const donationRef = ref('00001')
+const paymentCompleted = ref(false)
+const donationCount = ref(countData.value?.count ?? 0)
 const loading = ref(false)
 const message = ref('')
 const messageType = ref<'success' | 'error' | ''>('')
@@ -229,10 +255,7 @@ onMounted(async () => {
   if (canceled) {
     message.value = 'La donación fue cancelada'
     messageType.value = 'error'
-    // Limpiar la URL
-    router.replace({ query: {} })
-    return
-  }
+    paymentCompleted.value = true
 
   if (success && token) {
     try {
@@ -247,6 +270,8 @@ onMounted(async () => {
       
       message.value = '¡Gracias por tu donación! Tu pago se ha procesado exitosamente.'
       messageType.value = 'success'
+      paymentCompleted.value = true
+      donationCount.value += 1
       
       // Limpiar formulario y sessionStorage
       form.nombre = ''
@@ -261,6 +286,7 @@ onMounted(async () => {
       console.error('Error capturando pago:', error)
       message.value = 'Ocurrió un error al procesar tu pago. Por favor contacta con nosotros.'
       messageType.value = 'error'
+      paymentCompleted.value = true
     } finally {
       loading.value = false
     }
