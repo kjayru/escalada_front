@@ -359,9 +359,11 @@
     <section class="sponsor-tiles bg-white py-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 sm:px-10 lg:px-16">
         <template v-if="sponsorTilesData">
-          <div
+          <component
             v-for="item in sponsorTilesData"
             :key="item.id"
+            :is="item.link_url ? 'a' : 'div'"
+            v-bind="item.link_url ? { href: item.link_url, target: '_blank', rel: 'noopener noreferrer' } : {}"
             class="sponsor-tile flex items-center justify-center p-8 min-h-[200px] lg:min-h-[547px] bg-[#F6F6F6]"
           >
             <template v-if="'sponsor' in item">
@@ -386,7 +388,7 @@
                 <div class="text-3xl lg:text-4xl font-bold tracking-widest uppercase text-gray-800">{{ (item as any).name }}</div>
               </div>
             </template>
-          </div>
+          </component>
         </template>
         <template v-else>
           <div class="sponsor-tile bg-[#F6F6F6] flex items-center justify-center p-10 min-h-[200px] lg:min-h-[547px]"></div>
