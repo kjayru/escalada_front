@@ -480,10 +480,18 @@ onUnmounted(() => window.removeEventListener('keydown', manejarTeclado))
 const cantidad = ref(1)
 
 // Precio formateado
-const formatPrecio = (price: number | null | undefined, currency: string | null | undefined) => {
+const formatPrecio = (price: number | string | null | undefined, currency: string | null | undefined) => {
   if (!price) return ''
-  const cur = currency ?? 'MXN'
-  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur }).format(price)
+  const num = typeof price === 'string' ? parseFloat(price) : price
+  if (isNaN(num)) return ''
+  const currencyMap: Record<string, string> = { MX: 'MXN', US: 'USD', EU: 'EUR' }
+  const raw = currency ?? 'MXN'
+  const cur = currencyMap[raw.toUpperCase()] ?? raw
+  try {
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur }).format(num)
+  } catch {
+    return `${num.toFixed(2)} ${cur}`
+  }
 }
 
 const precioFormateado = computed(() =>
