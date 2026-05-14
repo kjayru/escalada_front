@@ -163,7 +163,6 @@
             <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
               <div class="max-w-xl w-full lg:w-auto">
                 <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
-                <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.description }}</p>
                 <NuxtLink
                   :to="`/patrocinador/${sponsor.slug}`"
                   class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
@@ -349,7 +348,6 @@ const sponsorsSliderData = computed(() => {
         slug: s.slug,
         logo: s.circle_logo?.url ?? s.logo?.url,
         slideImage: s.slide_image?.url,
-        description: s.description ?? '',
       }))
   }
   return []
