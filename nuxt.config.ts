@@ -167,5 +167,11 @@ export default defineNuxtConfig({
   },
 
   '/contacto': { ssr: false }
-}
+},
+
+  // Desactivar caché de useAsyncData para que el contenido del CMS
+  // se refleje de inmediato al recargar o navegar entre páginas.
+  asyncDataDefaults: {
+    getCachedData: () => null,
+  },
 })
