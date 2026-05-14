@@ -127,8 +127,8 @@ export const useApi = () => {
           '/api/v1/paypal/orders',
           { method: 'POST', body: data }
         ),
-      captureOrder: (orderId: string) =>
-        apiFetch<any>(`/api/v1/paypal/orders/${orderId}/capture`, { method: 'POST' }),
+      captureOrder: (orderId: string, formData?: { nombre: string; apellido: string; correo: string; cantidad: string }) =>
+        apiFetch<any>(`/api/v1/paypal/orders/${orderId}/capture`, { method: 'POST', body: formData ?? {} }),
       getOrder: (orderId: string) =>
         apiFetch<any>(`/api/v1/paypal/orders/${orderId}`),
     },

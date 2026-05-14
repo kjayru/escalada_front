@@ -275,8 +275,8 @@ onMounted(async () => {
       const savedData = sessionStorage.getItem('paypal-donation-data')
       const donationData = savedData ? JSON.parse(savedData) : null
 
-      // Capturar el pago
-      await api.paypal.captureOrder(token)
+      // Capturar el pago, enviando los datos del formulario
+      await api.paypal.captureOrder(token, donationData ?? undefined)
       
       message.value = '¡Gracias por tu donación! Tu pago se ha procesado exitosamente.'
       messageType.value = 'success'
