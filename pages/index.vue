@@ -402,15 +402,21 @@
         <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-10 lg:gap-x-16 lg:gap-y-12">
           <template v-if="logoRowItems.length">
             <template v-for="item in logoRowItems" :key="item.id">
-              <img
-                v-if="item.banner?.url || item.sponsor.logo?.url"
-                :src="item.banner?.url ?? item.sponsor.logo!.url"
-                :alt="item.banner?.url ? (item.sponsor.name) : (item.sponsor.logo?.alt ?? item.sponsor.name)"
-                :class="['object-contain', ['mad-rock','medi-lab','clinica-everest-ipeth','monkey-hands','la-cumbre-cotidiana'].includes(item.sponsor.slug) ? 'h-8 lg:h-10' : 'h-14 lg:h-16']"
-              />
-              <span v-else class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">
-                {{ item.sponsor.name }}
-              </span>
+              <component
+                :is="item.link_url ? 'a' : 'span'"
+                v-bind="item.link_url ? { href: item.link_url, target: '_blank', rel: 'noopener noreferrer' } : {}"
+                class="inline-flex items-center"
+              >
+                <img
+                  v-if="item.banner?.url || item.sponsor.logo?.url"
+                  :src="item.banner?.url ?? item.sponsor.logo!.url"
+                  :alt="item.banner?.url ? (item.sponsor.name) : (item.sponsor.logo?.alt ?? item.sponsor.name)"
+                  :class="['object-contain', ['mad-rock','medi-lab','clinica-everest-ipeth','monkey-hands','la-cumbre-cotidiana'].includes(item.sponsor.slug) ? 'h-8 lg:h-10' : 'h-14 lg:h-16']"
+                />
+                <span v-else class="text-[#6A6867] font-medium text-lg lg:text-xl tracking-wider uppercase">
+                  {{ item.sponsor.name }}
+                </span>
+              </component>
             </template>
           </template>
           <template v-else></template>
