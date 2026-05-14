@@ -236,6 +236,7 @@ export interface Timeline {
 export interface ContactForm {
   name: string
   email: string
+  phone?: string | null
   subject?: string | null
   message: string
 }
