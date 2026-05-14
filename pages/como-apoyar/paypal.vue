@@ -13,14 +13,21 @@
             </h1>
 
             <!-- Panel resultado post-pago -->
-            <div v-if="paymentCompleted" class="mt-6 py-12 text-center">
+            <div v-if="paymentCompleted" class="mt-6 py-8">
               <div v-if="messageType === 'success'">
-                <p class="text-6xl mb-6">🙌</p>
-                <h2 class="text-2xl font-semibold mb-4" style="color: #6A6867; font-family: 'Readex Pro', sans-serif;">
-                  ¡Gracias por tu apoyo!
-                </h2>
-                <p style="color: #6A6867; font-family: 'Readex Pro', sans-serif;">
-                  {{ message }}
+                <!-- Bloque amarillo-verde -->
+                <div style="border-radius: 1.3125rem; background: #ECF963; padding: 1.5rem 2rem; display: inline-block; margin-bottom: 1.5rem;">
+                  <p style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; margin: 0;">
+                    Tu donación ha sido exitosa
+                  </p>
+                </div>
+                <!-- Texto descriptivo -->
+                <p style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400; margin-bottom: 0.5rem;">
+                  Te agradecemos tu invaluable donación
+                </p>
+                <!-- ¡Gracias! -->
+                <p style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;">
+                  ¡Gracias!
                 </p>
               </div>
               <div v-else class="p-4 rounded-lg bg-red-100 border border-red-400 text-red-700">
