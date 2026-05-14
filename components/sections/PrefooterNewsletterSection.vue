@@ -7,19 +7,37 @@
           <div>
             <p class="uppercase mb-4" style="color: #000; font-family: 'Readex Pro', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em;">{{ newsletterEtiqueta }}</p>
             <h3 class="leading-snug mb-6" style="color: #0D0D0D; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-weight: 700;">
-              {{ newsletterTitulo }}
+              <template v-if="subscribed">¡Gracias por suscribirte!</template>
+              <template v-else>{{ newsletterTitulo }}</template>
             </h3>
           </div>
-          <div class="flex flex-col gap-3">
+
+          <!-- Estado de éxito -->
+          <p v-if="subscribed" style="color: #0D0D0D; font-family: 'Readex Pro', sans-serif; font-size: 1rem; font-weight: 400;">
+            Pronto recibirás noticias de Escalada Libre en tu correo.
+          </p>
+
+          <!-- Formulario -->
+          <div v-else class="flex flex-col gap-3">
             <input
+              v-model="emailInput"
               type="email"
               placeholder="Escribe tu correo"
-              class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D]"
+              :disabled="loading"
+              class="w-full px-4 py-3 border border-gray-300 bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#F8C52D] disabled:opacity-60"
               style="font-family: 'Readex Pro', sans-serif; font-weight: 400;"
+              @keyup.enter="handleSubscribe"
             />
-            <button class="self-end px-6 py-3 bg-[#242424] text-white font-medium text-sm uppercase tracking-widest hover:bg-black transition-colors">
-              {{ newsletterBoton }}
+            <button
+              class="self-end px-6 py-3 bg-[#242424] text-white font-medium text-sm uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-2 disabled:opacity-60"
+              :disabled="loading"
+              @click="handleSubscribe"
+            >
+              <!-- Preloader -->
+              <span v-if="loading" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin inline-block" />
+              <span>{{ loading ? 'Enviando…' : newsletterBoton }}</span>
             </button>
+            <p v-if="errorMsg" class="text-red-700 text-xs mt-1">{{ errorMsg }}</p>
           </div>
         </div>
 
@@ -84,7 +102,30 @@ const st = (key: string, fallback: string): string =>
 
 const newsletterTitulo = computed(() => st('newsletter.titulo', ''))
 const newsletterEtiqueta = computed(() => st('newsletter.etiqueta', ''))
-const newsletterBoton = computed(() => st('newsletter.boton', ''))
+const newsletterBoton = computed(() => st('newsletter.boton', 'Suscribirme'))
 
 const prefooterCards = computed(() => prefooterPlacements.value ?? [])
+
+// Newsletter form state
+const emailInput = ref('')
+const loading = ref(false)
+const subscribed = ref(false)
+const errorMsg = ref('')
+
+async function handleSubscribe() {
+  errorMsg.value = ''
+  if (!emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+    errorMsg.value = 'Ingresa un correo válido.'
+    return
+  }
+  loading.value = true
+  try {
+    await api.newsletter.subscribe(emailInput.value)
+    subscribed.value = true
+  } catch {
+    errorMsg.value = 'Ocurrió un error. Inténtalo de nuevo.'
+  } finally {
+    loading.value = false
+  }
+}
 </script>
