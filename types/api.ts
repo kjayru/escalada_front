@@ -192,6 +192,13 @@ export interface TransparencyDocument {
     mime_type: string
     size: number
   } | null
+  image: {
+    id: number
+    url: string
+    file_name: string
+    mime_type: string
+    size: number
+  } | null
 }
 
 export interface Activity {
