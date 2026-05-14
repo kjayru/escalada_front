@@ -174,6 +174,7 @@ const enviarFormulario = async () => {
     await api.contact.send({
       name: `${form.value.nombre} ${form.value.apellido}`.trim(),
       email: form.value.correo,
+      phone: form.value.telefono || null,
       subject: null,
       message: form.value.mensaje,
     })
