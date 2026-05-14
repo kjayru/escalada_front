@@ -6,12 +6,14 @@
       <div class="hero-image absolute inset-0 z-0">
         <!-- Imagen para móviles -->
         <img 
+          v-if="heroImageMobile"
           :src="heroImageMobile"
           :alt="heroLocation"
           class="w-full h-full object-fill lg:hidden"
         />
         <!-- Imagen para desktop -->
         <img 
+          v-if="heroImage"
           :src="heroImage"
           :alt="heroLocation"
           class="w-full h-full object-fill hidden lg:block"
@@ -44,13 +46,13 @@
       <div class="hero-content relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="ml-auto hero-text-block" style="max-width: 50rem;">
           <!-- Small Title -->
-          <div class="flex items-center gap-3 mb-6">
+          <div v-if="heroLabel" class="flex items-center gap-3 mb-6">
             <div class="w-12 h-px" style="background-color: #242424;"></div>
             <span class="text-sm tracking-[0.3em] uppercase" style="color: #242424; font-family: 'Bodoni Moda', serif;">{{ heroLabel }}</span>
           </div>
           
           <!-- Main Title -->
-          <h1 class="hero-title font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;">
+          <h1 v-if="heroTitle" class="hero-title font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;">
             {{ heroTitle }}
           </h1>
         </div>
@@ -68,7 +70,7 @@
       </button>
       
       <!-- Location Tag Mobile - Bottom Right (solo móviles) -->
-      <div class="absolute bottom-8 right-8 z-20 lg:hidden">
+      <div v-if="heroLocationMobile" class="absolute bottom-8 right-8 z-20 lg:hidden">
         <div class="text-white text-sm tracking-wider px-1 py-1 text-right" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
           {{ heroLocationMobile }}
         </div>
@@ -76,7 +78,7 @@
       </div>
       
       <!-- Location Tag Desktop - Bottom Left (solo desktop) -->
-      <div class="absolute bottom-8 left-8 z-20 hidden lg:block">
+      <div v-if="heroLocationHtml" class="absolute bottom-8 left-8 z-20 hidden lg:block">
         <div class="text-white text-sm tracking-wider px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="heroLocationHtml">
         </div>
         <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
@@ -102,7 +104,7 @@
           class="w-full h-auto block"
         />
         <!-- Location Tag -->
-        <div class="absolute bottom-8 right-8">
+        <div v-if="parallaxLocation" class="absolute bottom-8 right-8">
           <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
             {{ parallaxLocation }}
             <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
@@ -111,14 +113,14 @@
       </div>
 
       <!-- Mountain Image Desktop -->
-      <div class="w-full relative" :class="parallaxMountainImageMobile ? 'hidden lg:block' : ''">
+      <div v-if="parallaxMountainImage" class="w-full relative" :class="parallaxMountainImageMobile ? 'hidden lg:block' : ''">
         <img 
           :src="parallaxMountainImage"
           :alt="parallaxLocation"
           class="w-full h-auto block"
         />
         <!-- Location Tag -->
-        <div class="absolute bottom-8 right-8">
+        <div v-if="parallaxLocation" class="absolute bottom-8 right-8">
           <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
             {{ parallaxLocation }}
             <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
@@ -157,7 +159,7 @@
       </div>
 
       <!-- Image Desktop -->
-      <div class="w-full relative" :class="conservacionImageMobile ? 'hidden lg:block' : ''">
+      <div v-if="conservacionImage" class="w-full relative" :class="conservacionImageMobile ? 'hidden lg:block' : ''">
         <img 
           :src="conservacionImage"
           :alt="conservacionLocation"
@@ -426,10 +428,10 @@
       </div>
     </section>
 
-    <!-- ¿Dónde hemos trabajado? Map Section - MOBILE -->
-    <div class="lg:hidden">
+    <!-- ?¿Dónde hemos trabajado? Map Section - MOBILE -->
+    <div v-if="mapaImage || mapaTitle" class="lg:hidden">
       <!-- Título -->
-      <section class="bg-white pt-12 pb-6">
+      <section v-if="mapaTitle" class="bg-white pt-12 pb-6">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
             {{ mapaTitle }}
@@ -438,7 +440,7 @@
       </section>
       
       <!-- Mapa - sin espacio -->
-      <div class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
+      <div v-if="mapaImage" class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
         <img
           :src="mapaImage"
           alt="Mapa de trabajo - Nuevo León"
@@ -447,7 +449,7 @@
       </div>
       
       <!-- Collage - pegado directamente -->
-      <div class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
+      <div v-if="numerosBackgroundImage" class="relative w-full overflow-hidden" style="height: 70vw; max-height: 500px;">
         <img
           :src="numerosBackgroundImage"
           alt="Escalada en roca"
@@ -457,13 +459,13 @@
     </div>
 
     <!-- ¿Dónde hemos trabajado? Map Section - DESKTOP -->
-    <section class="map-section bg-white hidden lg:block">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+    <section v-if="mapaImage || mapaTitle" class="map-section bg-white hidden lg:block">
+      <div v-if="mapaTitle" class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <h2 class="text-4xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
           {{ mapaTitle }}
         </h2>
       </div>
-      <div class="relative w-full overflow-hidden" style="height: clamp(480px, 80vw, 1300px);">
+      <div v-if="mapaImage" class="relative w-full overflow-hidden" style="height: clamp(480px, 80vw, 1300px);">
         <img
           :src="mapaImage"
           alt="Mapa de trabajo - Nuevo León"
@@ -491,7 +493,7 @@
     </section>
 
     <!-- IMG_3366 - Climbing / App Section - DESKTOP -->
-    <section class="climbing-app-section relative overflow-hidden hidden lg:block" style="height: clamp(400px, 100vw, 1313px);">
+    <section v-if="numerosBackgroundImage" class="climbing-app-section relative overflow-hidden hidden lg:block" style="height: clamp(400px, 100vw, 1313px);">
       <img
         :src="numerosBackgroundImage"
         alt="Escalada en roca"
@@ -680,10 +682,10 @@
     <section class="apoyo-section py-16 lg:py-24 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <h2 class="text-3xl lg:text-[55px] leading-tight mb-4 text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500; color: #000;">
-          {{ apoyarSliderSection?.heading ?? 'Cómo nos puedes apoyar' }}
+          {{ apoyarSliderSection?.heading ?? '' }}
         </h2>
         <p class="text-[30px] text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
-          {{ apoyarSliderSection?.subheading ?? 'Existen cuatro maneras en las que puedes apoyarnos:' }}
+          {{ apoyarSliderSection?.subheading ?? '' }}
         </p>
       </div>
 
@@ -757,13 +759,13 @@
       <div class="px-4 sm:px-6 lg:px-[6rem] 3xl:px-0 max-w-[1225px] mx-auto">
         <!-- Header -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-4">
-          <h2 class="text-2xl lg:text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? 'Nuestro team' }}</h2>
+          <h2 class="text-2xl lg:text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? '' }}</h2>
           <NuxtLink
             :to="teamLinkUrl"
             class="inline-flex items-center text-[#6A6867] font-medium hover:text-[#F8C52D] transition-colors text-sm lg:text-base"
             style="font-family: 'Inter', sans-serif;"
           >
-            {{ (sec('mesa-directiva', nosotrosPage)?.settings?.link_label as string) ?? 'CONOCE TODO NUESTRO TEAM' }}
+            {{ (sec('mesa-directiva', nosotrosPage)?.settings?.link_label as string) ?? '' }}
             <img src="/images/flecha-home-team.svg" alt="" class="w-4 h-4 ml-1" />
           </NuxtLink>
         </div>
@@ -777,7 +779,8 @@
           >
             <div class="flex-shrink-0 w-36 h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-gray-200">
               <img
-                :src="member.photo?.url ?? '/images/img-20200308-wa-00051.png'"
+                v-if="member.photo?.url"
+                :src="member.photo.url"
                 :alt="member.name"
                 class="w-full h-full object-cover"
               />
@@ -850,17 +853,17 @@ const sec = (key: string, pg: Ref<Page | null> | null = page) =>
 
 // Hero
 const heroTitle = computed(() =>
-  sec('hero')?.heading ?? 'Proteger, conservar y promover la escalada en Costa Rica.')
+  sec('hero')?.heading ?? '')
 const heroLabel = computed(() =>
-  sec('hero')?.subheading ?? 'ESCALADA LIBRE')
+  sec('hero')?.subheading ?? '')
 const heroImage = computed(() =>
   sec('hero')?.featured_media?.url
   ?? (sec('hero')?.settings?.image as string)
-  ?? '/images/huasteca4-1920px.jpg')
+  ?? '')
 const heroImageMobile = computed(() =>
   sec('hero')?.mobile_image?.url ?? heroImage.value)
 const heroLocation = computed(() =>
-  (sec('hero')?.settings?.location as string) ?? 'La Huasteca')
+  (sec('hero')?.settings?.location as string) ?? '')
 const heroLocationHtml = computed(() => {
   const loc = heroLocation.value
   const keywords = ['Zaragoza', 'González', 'Gonzalez']
@@ -875,35 +878,35 @@ const heroLocationHtml = computed(() => {
   return loc
 })
 const heroLocationMobile = computed(() =>
-  (sec('hero')?.settings?.location_movil as string) ?? 'La Huasteca')
+  (sec('hero')?.settings?.location_movil as string) ?? '')
 
 // Intro text + parallax
 const introText = computed(() =>
-  sec('intro')?.body ?? 'Somos ciudadanos con interés en beneficiar las actividades recreativas de montaña.')
+  sec('intro')?.body ?? '')
 const parallaxSkyImage = computed(() =>
-  (sec('intro')?.settings?.sky_image as string) ?? '/images/hg.png')
+  (sec('intro')?.settings?.sky_image as string) ?? '')
 const parallaxMountainImage = computed(() =>
   sec('intro')?.featured_media?.url
   ?? (sec('intro')?.settings?.mountain_image as string)
-  ?? '/images/potrero-1.png')
+  ?? '')
 const parallaxMountainImageMobile = computed(() =>
   sec('intro')?.mobile_image?.url ?? null)
 const parallaxLocation = computed(() =>
-  (sec('intro')?.settings?.location as string) ?? 'El Potrero Chico, Hidalgo N.L. México')
+  (sec('intro')?.settings?.location as string) ?? '')
 
 // Conservation
 const conservacionTitle = computed(() =>
-  sec('conservacion')?.heading ?? 'Contribuimos al cuidado de los Ecosistemas Terrestres;')
+  sec('conservacion')?.heading ?? '')
 const conservacionBody = computed(() =>
-  sec('conservacion')?.body ?? 'Una Vida Sana, el Desarrollo de Sociedades Pacificas, el Desarrollo de los Pueblos y el Desarrollo Sustentable mediante la elaboración de planes y programas para la protección y mantenimiento de las áreas donde es posible su práctica.')
+  sec('conservacion')?.body ?? '')
 const conservacionImage = computed(() =>
   sec('conservacion')?.featured_media?.url
   ?? (sec('conservacion')?.settings?.image as string)
-  ?? '/images/n-1.png')
+  ?? '')
 const conservacionImageMobile = computed(() =>
   sec('conservacion')?.mobile_image?.url ?? null)
 const conservacionLocation = computed(() =>
-  (sec('conservacion')?.settings?.location as string) ?? 'El Salto, Coahuila de Zaragoza, Santiago N.L. México')
+  (sec('conservacion')?.settings?.location as string) ?? '')
 const conservacionLocationHtml = computed(() => {
   const loc = conservacionLocation.value
   const kw = 'Zaragoza'
@@ -917,11 +920,7 @@ const conservacionLocationHtml = computed(() => {
 })
 
 // Featured sections 01/02/03
-const fallbackFeatured = [
-  { id: 'fb-01', num: '01', tag: 'NOSOTROS', title: 'Protegemos las montañas y a la comunidad.', body: 'Somos un grupo de deportistas del Noreste de México con interés en beneficiar, de manera segura y sustentable, al fomento del montañismo y escalada en sus diferentes modalidades', image: '/images/img-20200308-wa-00051.png', link: '/nosotros', imagePosition: 'right' },
-  { id: 'fb-02', num: '02', tag: 'ACTIVIDADES', title: 'Reforestación completa.', body: 'Llenamos de vida en zonas de Santiago, N.L. cubriendo áreas que lo necesitaban debido a daños ocasionados por incendios.', image: '/images/reforestacion-casualas-1.png', link: '/actividades', imagePosition: 'left' },
-  { id: 'fb-03', num: '03', tag: 'HISTORIA', title: 'Sucesos en la pared de escalada "Las ánimas".', body: 'Debido a ciertas inspecciones que realizó el Instituto Nacional de Antropología e Historia, el Instituto decidió intervenir en la zona.', image: '/images/unrioenelrio-home-1.png', link: '/historia', imagePosition: 'right' },
-]
+const fallbackFeatured: never[] = []
 
 const featuredSections = computed(() => {
   // Prioridad 1: secciones tipo 'featured' configuradas en el CMS
@@ -991,21 +990,21 @@ const logoRowItems = computed(() => logoRowPlacements.value ?? [])
 
 // Sección gracias
 const graciasSection = computed(() => sec('gracias'))
-const graciasTitle = computed(() => graciasSection.value?.heading ?? '¡GRACIAS POR TU APOYO!')
-const graciasButtonText = computed(() => (graciasSection.value?.settings?.button_text as string) ?? 'Donar ahora')
-const graciasButtonUrl = computed(() => (graciasSection.value?.settings?.button_url as string) ?? '/como-apoyar')
+const graciasTitle = computed(() => graciasSection.value?.heading ?? '')
+const graciasButtonText = computed(() => (graciasSection.value?.settings?.button_text as string) ?? '')
+const graciasButtonUrl = computed(() => (graciasSection.value?.settings?.button_url as string) ?? '')
 
 // Team section
 const teamLinkUrl = computed(() => st('equipo.link_url', '/nosotros'))
 
 // Mapa
 const mapaSection = computed(() => sec('mapa'))
-const mapaTitle = computed(() => mapaSection.value?.heading ?? '¿Dónde hemos trabajado?')
+const mapaTitle = computed(() => mapaSection.value?.heading ?? '')
 const mapaImage = computed(() =>
   mapaSection.value?.featured_media?.url
   ?? (mapaSection.value?.settings?.imagen as string)
   ?? (mapaSection.value?.settings?.image as string)
-  ?? '/images/home-mapa-completo.jpg')
+  ?? '')
 const mapaLabel1 = computed(() => (mapaSection.value?.settings?.label_1 as string) || null)
 const mapaLabel2 = computed(() => (mapaSection.value?.settings?.label_2 as string) || null)
 const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as string) || null)
@@ -1014,7 +1013,7 @@ const mapaLabel3 = computed(() => (mapaSection.value?.settings?.label_3 as strin
 const numerosSection = computed(() => sec('numeros'))
 const numerosBackgroundImage = computed(() =>
   numerosSection.value?.featured_media?.url
-  ?? st('numeros.imagen', '/images/img-33661.png')
+  ?? st('numeros.imagen', '')
 )
 const numerosLogoImage = computed(() =>
   (numerosSection.value?.media?.[0] as { url?: string } | undefined)?.url ?? null
