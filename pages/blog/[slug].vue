@@ -245,7 +245,7 @@
 
       <!-- Partners Slider -->
       <div v-if="sponsorsSliderData.length" class="bg-white pb-12">
-        <section class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
+        <section class="partners-slider relative h-[226px] lg:h-[80vh] lg:max-h-[800px]">
           <Swiper
             :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
             :slides-per-view="1"
@@ -269,18 +269,40 @@
             <!-- Slides dinámicos de patrocinadores -->
             <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
               <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
-                <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
-                  <div class="max-w-xl w-full lg:w-auto">
-                    <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
-                    <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+                <!-- Mobile Layout -->
+                <div class="lg:hidden relative z-10 h-full flex flex-col justify-between p-6">
+                  <!-- Logo arriba -->
+                  <div>
+                    <img :src="sponsor.logo" :alt="sponsor.name" class="w-40" />
+                  </div>
+                  <!-- Texto y botón abajo -->
+                  <div class="flex items-end justify-between gap-4">
+                    <p class="text-white text-base leading-relaxed flex-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">{{ sponsor.tagline }}</p>
                     <NuxtLink
                       :to="`/patrocinador/${sponsor.slug}`"
-                      class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
-                      style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                      class="inline-flex items-center gap-2 text-[#F8C52D] flex-shrink-0"
+                      style="font-family: 'Readex Pro', sans-serif; font-weight: 700; font-size: 1.125rem;"
                     >
                       Ver más
-                      <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                      <img src="/images/arrow.svg" alt="" class="w-5 h-auto arrow-icon" />
                     </NuxtLink>
+                  </div>
+                </div>
+                <!-- Desktop Layout -->
+                <div class="hidden lg:block relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full">
+                  <div class="h-full flex items-center">
+                    <div class="max-w-xl">
+                      <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                      <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+                      <NuxtLink
+                        :to="`/patrocinador/${sponsor.slug}`"
+                        class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                        style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                      >
+                        Ver más
+                        <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                      </NuxtLink>
+                    </div>
                   </div>
                 </div>
               </div>

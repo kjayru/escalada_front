@@ -2,7 +2,7 @@
   <div class="como-apoyar-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
+    <section class="hero-banner relative overflow-hidden h-[90vh] lg:h-[1080px]">
       <img
         :src="heroBannerImage ?? '/images/n-1.png'"
         alt="Cómo apoyar - Escalada Libre"
@@ -11,7 +11,7 @@
     </section>
 
     <!-- Intro: ¿Por qué donar? -->
-    <section class="py-20 lg:py-28 bg-white" :style="introExtraStyle">
+    <section class="intro-section py-12 lg:py-28 bg-white" :style="introExtraStyle">
       <div class="max-w-[860px] mx-auto px-8 lg:px-12">
         <h1 class="text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; line-height: 40px;">
           {{ introHeading }}
@@ -373,6 +373,13 @@ useSeoMeta({
 </script>
 
 <style scoped>
+/* Sobrescribir margin-bottom del CMS en móvil */
+@media (max-width: 1023px) {
+  .intro-section {
+    margin-bottom: 3rem !important;
+  }
+}
+
 /* Botón amarillo con hover invertido */
 .btn-yellow-hover {
   background: #F8C52D;

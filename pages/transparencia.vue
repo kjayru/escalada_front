@@ -2,12 +2,11 @@
   <div class="transparencia-page">
 
     <!-- Hero Banner -->
-    <section class="relative overflow-hidden min-h-[360px] lg:min-h-[1080px]">
+    <section v-if="heroBannerUrl" class="relative overflow-hidden min-h-[360px] lg:min-h-[1080px]">
       <img
-        :src="heroBannerUrl ?? '/images/potrero-1.png'"
+        :src="heroBannerUrl"
         :alt="heroBannerAlt"
         class="absolute inset-0 w-full h-full object-cover"
-        :class="{ grayscale: !heroBannerUrl }"
       />
       <div class="relative z-10 min-h-[360px] lg:min-h-[1080px]"></div>
     </section>
@@ -17,7 +16,7 @@
       <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Mobile: apilado vertical -->
-        <div class="flex flex-col lg:hidden">
+        <div v-if="textSection.featured_media?.url" class="flex flex-col lg:hidden">
           <div class="bg-[#ffe7a0] p-8 flex flex-col justify-start">
             <h2
               class="mb-6 leading-tight"
@@ -33,7 +32,7 @@
           </div>
           <div class="w-full overflow-hidden" style="height: 300px;">
             <img
-              :src="textSection.featured_media?.url ?? '/images/pico-norte-1.png'"
+              :src="textSection.featured_media.url"
               :alt="textSection.featured_media?.alt ?? textSection.heading ?? 'Transparencia'"
               class="w-full h-full object-cover"
             />
@@ -41,10 +40,10 @@
         </div>
 
         <!-- Desktop: tarjeta sobrelapada -->
-        <div class="hidden lg:block relative flex justify-end">
+        <div v-if="textSection.featured_media?.url" class="hidden lg:block relative flex justify-end">
           <div class="w-full lg:w-[65%] overflow-hidden ml-auto" style="height: 700px;">
             <img
-              :src="textSection.featured_media?.url ?? '/images/pico-norte-1.png'"
+              :src="textSection.featured_media.url"
               :alt="textSection.featured_media?.alt ?? textSection.heading ?? 'Transparencia'"
               class="w-full h-full object-cover"
             />
@@ -71,7 +70,7 @@
     </section>
 
     <!-- Tabs -->
-    <section class="bg-white pb-8">
+    <section v-if="hasAnyDocuments" class="bg-white pb-8">
       <div class="max-w-[830px] mx-auto px-4">
         <div class="bg-[#f8c52d] rounded-full h-[53px] flex items-center">
           <button
@@ -89,7 +88,7 @@
     </section>
 
     <!-- Acordeón de documentos -->
-    <section class="bg-white pb-16 lg:pb-20">
+    <section v-if="itemsAcordeon.length > 0" class="bg-white pb-16 lg:pb-20">
       <div class="max-w-[1113px] mx-auto px-4 flex flex-col gap-3">
         <div
           v-for="item in itemsAcordeon"
@@ -194,27 +193,10 @@ const tabYearLabel: Record<string, string> = {
   estados: 'Estado de cuenta',
 }
 
-const fallbackItems: AcordeonItem[] = [
-  { id: 'acta', label: 'Acta constitutiva', docs: [{ name: 'Acta constitutiva', url: null, fileName: null }] },
-  { id: '2019', label: 'Asamblea 2019', docs: [{ name: 'Asamblea 2019', url: null, fileName: null }] },
-  {
-    id: '2020', label: 'Asamblea 2020', docs: [
-      { name: 'Reglamento', url: null, fileName: null },
-      { name: 'Asamblea general Ordinaria 2020', url: null, fileName: null },
-      { name: 'Lista de asistencia asamblea ordinaria 2020', url: null, fileName: null },
-      { name: 'Asamblea extraordinaria 2022', url: null, fileName: null },
-    ],
-  },
-  { id: '2021', label: 'Asamblea 2021', docs: [{ name: 'Asamblea 2021', url: null, fileName: null }] },
-  { id: '2022', label: 'Asamblea 2022', docs: [{ name: 'Asamblea 2022', url: null, fileName: null }] },
-  { id: '2023', label: 'Asamblea 2023', docs: [{ name: 'Asamblea 2023', url: null, fileName: null }] },
-  { id: '2024', label: 'Asamblea 2024', docs: [{ name: 'Asamblea 2024', url: null, fileName: null }] },
-  { id: '2025', label: 'Asamblea 2025', docs: [{ name: 'Asamblea 2025', url: null, fileName: null }] },
-]
+const hasAnyDocuments = computed(() => (docs.value ?? []).length > 0)
 
 const itemsAcordeon = computed<AcordeonItem[]>(() => {
   const filtrados = (docs.value ?? []).filter((d: TransparencyDocument) => d.type === tabActiva.value)
-  if (filtrados.length === 0 && tabActiva.value === 'asambleas') return fallbackItems
   if (filtrados.length === 0) return []
 
   const prefix = tabYearLabel[tabActiva.value] ?? ''

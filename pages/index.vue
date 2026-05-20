@@ -229,7 +229,7 @@
 
     <!-- Partners Slider -->
     <div class="bg-white pb-12">
-      <section class="partners-slider relative h-[70vh] lg:h-[80vh] max-h-[600px] lg:max-h-[800px]">
+      <section class="partners-slider relative h-[226px] lg:h-[80vh] lg:max-h-[800px]">
         <Swiper
           :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
           :slides-per-view="1"
@@ -253,18 +253,40 @@
           <!-- Slides dinámicos de patrocinadores -->
           <SwiperSlide v-for="sponsor in sponsorsSliderData" :key="sponsor.id">
             <div class="relative h-full w-full bg-cover bg-center" :style="`background-image: url('${sponsor.slideImage}')`">
-              <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end lg:items-center pb-20 lg:pb-0">
-                <div class="max-w-xl w-full lg:w-auto">
-                  <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
-                  <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+              <!-- Mobile Layout -->
+              <div class="lg:hidden relative z-10 h-full flex flex-col justify-between p-6">
+                <!-- Logo arriba -->
+                <div>
+                  <img :src="sponsor.logo" :alt="sponsor.name" class="w-40" />
+                </div>
+                <!-- Texto y botón abajo -->
+                <div class="flex items-end justify-between gap-4">
+                  <p class="text-white text-base leading-relaxed flex-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">{{ sponsor.tagline }}</p>
                   <NuxtLink
                     :to="`/patrocinador/${sponsor.slug}`"
-                    class="inline-flex items-center gap-3 text-[#F8C52D] justify-end lg:justify-start w-full lg:w-auto group/link"
-                    style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                    class="inline-flex items-center gap-2 text-[#F8C52D] flex-shrink-0"
+                    style="font-family: 'Readex Pro', sans-serif; font-weight: 700; font-size: 1.125rem;"
                   >
                     Ver más
-                    <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                    <img src="/images/arrow.svg" alt="" class="w-5 h-auto arrow-icon" />
                   </NuxtLink>
+                </div>
+              </div>
+              <!-- Desktop Layout -->
+              <div class="hidden lg:block relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full">
+                <div class="h-full flex items-center">
+                  <div class="max-w-xl">
+                    <img :src="sponsor.logo" :alt="sponsor.name" class="w-64 mb-8" />
+                    <p class="text-white text-lg mb-8 leading-relaxed">{{ sponsor.tagline }}</p>
+                    <NuxtLink
+                      :to="`/patrocinador/${sponsor.slug}`"
+                      class="inline-flex items-center gap-3 text-[#F8C52D] group/link"
+                      style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                    >
+                      Ver más
+                      <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                    </NuxtLink>
+                  </div>
                 </div>
               </div>
             </div>
@@ -300,7 +322,7 @@
             <div
               v-for="item in otrosPlacements.slice(0, 2)"
               :key="item.id"
-              class="relative overflow-hidden group cursor-pointer bg-cover bg-center min-h-[500px]"
+              class="relative overflow-hidden group cursor-pointer bg-cover bg-center h-[229px] md:min-h-[500px]"
               :style="item.banner?.url ? `background-image: url('${item.banner.url}')` : 'background-color: #1e3a3a'"
             >
               <div class="absolute inset-0 bg-black/30"></div>
@@ -529,10 +551,10 @@
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.actividades }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.actividades }}</div>
                 </div>
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.arboles }}</div>
                 </div>
               </div>
             </div>
@@ -551,10 +573,10 @@
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.rutas }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.rutas }}</div>
                 </div>
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.bolts }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.bolts }}</div>
                 </div>
               </div>
             </div>
@@ -573,10 +595,10 @@
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.senalizaciones }}</div>
                 </div>
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.voluntarios }}</div>
                 </div>
               </div>
             </div>
@@ -595,10 +617,10 @@
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.anos_util }}</div>
                 </div>
                 <div class="py-8 px-6 text-center">
-                  <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.costo_reequipado }}</div>
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.costo_reequipado }}</div>
                 </div>
               </div>
             </div>
@@ -616,7 +638,7 @@
           <div>
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="py-8 px-6 text-center">
-                <div class="text-5xl text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
+                <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.monto_invertido }}</div>
               </div>
             </div>
             <div class="text-center">
@@ -759,13 +781,13 @@
       <div class="px-4 sm:px-6 lg:px-[6rem] 3xl:px-0 max-w-[1225px] mx-auto">
         <!-- Header -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-4">
-          <h2 class="text-2xl lg:text-[30px] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">{{ sec('mesa-directiva', nosotrosPage)?.heading ?? '' }}</h2>
+          <h2 class="text-[1.5625rem] lg:text-[1.875rem] text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-style: normal; font-weight: 500;">Nuestro team</h2>
           <NuxtLink
             :to="teamLinkUrl"
-            class="inline-flex items-center text-[#6A6867] font-medium hover:text-[#F8C52D] transition-colors text-sm lg:text-base"
-            style="font-family: 'Inter', sans-serif;"
+            class="inline-flex items-center text-[#F8C52D] hover:opacity-80 transition-opacity text-[0.75rem]"
+            style="font-family: 'Inter', sans-serif; font-style: normal; font-weight: 700; line-height: normal;"
           >
-            {{ (sec('mesa-directiva', nosotrosPage)?.settings?.link_label as string) ?? '' }}
+            CONOCE TODO NUESTRO TEAM
             <img src="/images/flecha-home-team.svg" alt="" class="w-4 h-4 ml-1" />
           </NuxtLink>
         </div>
@@ -775,9 +797,9 @@
           <div
             v-for="member in teamMembers"
             :key="member.id"
-            class="border border-[#6A6867] p-6 flex items-center gap-6"
+            class="border border-[#6A6867] p-6 flex items-start gap-6"
           >
-            <div class="flex-shrink-0 w-36 h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden bg-gray-200">
+            <div class="flex-shrink-0 w-[95px] h-[95px] lg:w-40 lg:h-40 rounded-full overflow-hidden bg-gray-200">
               <img
                 v-if="member.photo?.url"
                 :src="member.photo.url"
@@ -787,7 +809,7 @@
             </div>
             <div class="flex-1" style="font-family: 'Readex Pro', sans-serif; color: #6A6867;">
               <h3 class="text-xl lg:text-[25px] mb-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 700;">{{ member.name }}</h3>
-              <p class="mb-3" style="font-size: 15px; font-family: 'Readex Pro', sans-serif; font-weight: 600;">{{ member.role ?? '' }}</p>
+              <p class="mb-3" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.75rem; font-style: normal; font-weight: 600;">{{ member.role ?? '' }}</p>
               <p class="leading-relaxed" style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 600;">{{ member.bio }}</p>
             </div>
           </div>
@@ -1205,7 +1227,7 @@ onMounted(() => {
   height: 100dvh;
   min-height: 500px;
   margin-top: -80px;
-  padding-top: 160px;
+  padding-top: 89px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
