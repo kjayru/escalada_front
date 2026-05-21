@@ -66,9 +66,8 @@
             </div>
             <div
               v-else
-              class="w-full md:w-1/2 overflow-hidden"
+              class="w-full md:w-1/2 overflow-hidden min-h-[242px] md:min-h-[480px]"
               :style="{
-                minHeight: '480px',
                 backgroundImage: block.image ? `url(${block.image})` : 'none',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
@@ -80,10 +79,8 @@
             <!-- Texto + botón -->
             <div 
               class="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-8 md:py-12" 
-              :style="{
-                background: block.title?.toLowerCase().includes('proyecto') ? '#FFFFFF' : '#F6F6F6',
-                minHeight: block.title?.toLowerCase().includes('proyecto') ? 'auto' : '480px'
-              }"
+              :class="!block.title?.toLowerCase().includes('proyecto') ? 'min-h-[242px] md:min-h-[480px]' : ''"
+              :style="{ background: block.title?.toLowerCase().includes('proyecto') ? '#FFFFFF' : '#F6F6F6' }"
             >
               <h3 class="mb-4" :style="block.title?.toLowerCase().includes('proyecto')
                 ? 'color: #000; font-family: Readex Pro, sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;'

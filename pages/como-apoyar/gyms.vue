@@ -23,7 +23,7 @@
           </div>
 
           <!-- Right: gym photo -->
-          <div class="lg:w-[50%] overflow-hidden" style="height: 478px;">
+          <div class="hidden lg:block lg:w-[50%] overflow-hidden" style="height: 478px;">
             <img
               v-if="gymMethod?.image"
               :src="gymMethod.image"
