@@ -76,8 +76,8 @@
 
           <!-- Imagen principal -->
           <div 
-            class="relative overflow-hidden mb-4" 
-            style="height: 617px; border: 0.5px solid #6A6867;"
+            class="relative overflow-hidden mb-4 h-[380px] lg:h-[617px]" 
+            style="border: 0.5px solid #6A6867;"
             @touchstart="handleTouchStart"
             @touchend="handleTouchEnd"
           >
@@ -132,9 +132,9 @@
               v-for="(img, index) in gallery"
               :key="index"
               @click="imagenActiva = index"
-              class="transition-opacity"
+              class="transition-opacity h-[80px] lg:h-[148px]"
               :class="imagenActiva === index ? 'opacity-100 ring-2 ring-[#F8C52D]' : 'opacity-60 hover:opacity-80'"
-              style="height: 148px; border: 0.5px solid #6A6867; padding: 23px;"
+              style="border: 0.5px solid #6A6867; padding: 10px;"
             >
               <img
                 :src="img.url"
