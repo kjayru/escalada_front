@@ -351,9 +351,9 @@
       <!-- Pagination Dots - Outside slider -->
       <div v-if="sponsorsSlider.length" class="sp-slider-dots flex justify-center gap-2 pt-8 pb-12"></div>
 
-      <!-- ── Mountain Pre-Footer ──────────────────────────────────── -->
-      <!-- Mountain Pre-Footer -->
-    <SectionsMountainPrefooter />
+      <!-- ── Pre-Footer ──────────────────────────────────── -->
+      <SectionsPrefooterNewsletterSection />
+      <SectionsMountainPrefooter />
 
     </template>
   </div>
