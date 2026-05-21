@@ -169,8 +169,8 @@
                     :href="sponsor.buy_url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-block px-10 py-3 bg-[#F8C52D] text-[#6A6867] font-bold tracking-widest transition-colors hover:bg-[#6A6867] hover:text-[#F8C52D] rounded-[6.25rem]"
-                    style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; text-align: center;"
+                    class="block w-full lg:w-auto lg:inline-block px-10 py-4 bg-[#F8C52D] text-[#6A6867] font-bold tracking-widest transition-colors hover:bg-[#6A6867] hover:text-[#F8C52D] rounded-[6.25rem] text-center"
+                    style="font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem;"
                   >
                     COMPRAR AQUÍ
                   </a>
