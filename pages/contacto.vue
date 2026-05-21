@@ -2,14 +2,14 @@
   <div class="contacto-page">
 
     <!-- Hero Banner -->
-    <section class="relative overflow-hidden" style="min-height: 1080px;">
+    <section class="relative overflow-hidden h-[90vh] lg:h-auto" style="min-height: unset;">
       <img
         :src="heroBannerUrl ?? '/images/n-1.png'"
         :alt="heroBannerAlt"
         class="absolute inset-0 w-full h-full object-cover"
         :class="{ grayscale: !heroBannerUrl }"
       />
-      <div class="relative z-10" style="min-height: 1080px;"></div>
+      <div class="relative z-10 h-[90vh] lg:h-auto lg:min-h-[1080px]"></div>
     </section>
 
     <!-- Formulario de contacto -->
@@ -56,7 +56,7 @@
               v-model="form.nombre"
               type="text"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[50px] lg:h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
               style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
@@ -68,7 +68,7 @@
               v-model="form.apellido"
               type="text"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[50px] lg:h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
               style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
@@ -80,7 +80,7 @@
               v-model="form.correo"
               type="email"
               required
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[50px] lg:h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
               style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
@@ -91,7 +91,7 @@
             <input
               v-model="form.telefono"
               type="tel"
-              class="w-full h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
+              class="w-full h-[50px] lg:h-[66px] px-5 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors"
               style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             />
           </div>
