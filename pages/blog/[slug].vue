@@ -273,7 +273,7 @@
       </section>
 
       <!-- Partners Slider -->
-      <div v-if="sponsorsSliderData.length" class="bg-white pb-12">
+      <div v-if="sponsorsSliderData.length" class="bg-white pb-12 overflow-hidden">
         <section class="partners-slider relative h-[226px] lg:h-[80vh] lg:max-h-[800px]">
           <Swiper
             :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"

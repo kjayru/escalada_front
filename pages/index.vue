@@ -228,7 +228,7 @@
     </section>
 
     <!-- Partners Slider -->
-    <div class="bg-white pb-12">
+    <div class="bg-white pb-12 overflow-hidden">
       <section class="partners-slider relative h-[226px] lg:h-[80vh] lg:max-h-[800px]">
         <Swiper
           :modules="[SwiperNavigation, SwiperPagination, SwiperAutoplay]"
@@ -701,7 +701,7 @@
     </section>
 
     <!-- Cómo nos puedes apoyar -->
-    <section class="apoyo-section py-16 lg:py-24 bg-white">
+    <section class="apoyo-section py-16 lg:py-24 bg-white overflow-hidden">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <h2 class="text-3xl lg:text-[55px] leading-tight mb-4 text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500; color: #000;">
           {{ apoyarSliderSection?.heading ?? '' }}
