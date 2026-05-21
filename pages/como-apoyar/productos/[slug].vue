@@ -234,14 +234,13 @@
         </h2>
 
         <!-- Slider móvil -->
-        <div class="sm:hidden">
+        <div class="sm:hidden overflow-hidden">
         <Swiper
           class="w-full"
           :slides-per-view="1.3"
           :space-between="16"
           :slides-offset-before="16"
           :slides-offset-after="16"
-          style="overflow: visible;"
         >
           <SwiperSlide v-for="otro in otrosProductos" :key="otro.id" style="height: auto;">
             <div class="flex flex-col pb-2">
@@ -253,7 +252,7 @@
                   class="w-full h-full object-cover"
                 />
               </NuxtLink>
-              <div class="flex flex-col mb-4 px-1">
+              <div class="flex flex-col px-1">
                 <span
                   style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
                   class="leading-tight mb-2"
@@ -264,15 +263,6 @@
                 >
                   {{ formatPrecio(otro.price, otro.currency) }}
                 </span>
-              </div>
-              <div class="px-1">
-                <NuxtLink
-                  :to="`/como-apoyar/productos/${otro.slug}`"
-                  style="text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; border-radius: 6.25rem; text-decoration: none;"
-                  class="btn-otro-producto-hover inline-block w-full py-3"
-                >
-                  COMPRAR
-                </NuxtLink>
               </div>
             </div>
           </SwiperSlide>
