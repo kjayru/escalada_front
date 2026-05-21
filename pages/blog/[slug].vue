@@ -70,11 +70,11 @@
       <!-- Imagen hero -->
       <section v-if="post.featured_media" class="bg-white pb-0">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="overflow-hidden" style="height: 719px;">
+          <div class="overflow-hidden lg:h-[719px]">
             <img
               :src="post.featured_media.url"
               :alt="post.featured_media.alt || post.title"
-              class="w-full h-full object-cover"
+              class="w-full h-auto lg:h-full lg:object-cover"
             />
           </div>
         </div>
@@ -204,23 +204,53 @@
         <div class="max-w-[1114px] mx-auto px-4 sm:px-6 lg:px-8">
 
           <div class="border-t border-gray-300 pt-10 mb-10">
-            <h2 class="text-center" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; color: #6A6867;">
+            <h2 class="text-center uppercase" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500; color: #6A6867;">
               Lo más reciente
             </h2>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Móvil: lista horizontal con divisores -->
+          <div class="sm:hidden flex flex-col">
+            <NuxtLink
+              v-for="(reciente, idx) in recentPosts"
+              :key="reciente.id"
+              :to="`/blog/${reciente.slug}`"
+              class="group"
+              :class="idx > 0 ? 'border-t border-gray-200 pt-6 mt-6' : ''"
+            >
+              <!-- Categoría -->
+              <span class="uppercase tracking-[0.2em] text-xs text-[#F8C52D] font-semibold mb-3 block">
+                {{ reciente.category?.toUpperCase() ?? 'BLOG' }}
+              </span>
+              <!-- Imagen + título en fila -->
+              <div class="flex gap-4 items-start">
+                <div class="flex-shrink-0 overflow-hidden" style="width: 130px; height: 100px;">
+                  <img
+                    v-if="reciente.featured_media"
+                    :src="reciente.featured_media.url"
+                    :alt="reciente.featured_media.alt || reciente.title"
+                    class="w-full h-full object-cover"
+                  />
+                  <div v-else class="w-full h-full bg-gray-100"></div>
+                </div>
+                <h3 class="flex-1 text-[#6A6867] leading-snug" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
+                  {{ reciente.title }}
+                </h3>
+              </div>
+            </NuxtLink>
+          </div>
+
+          <!-- Desktop: grid de 3 columnas -->
+          <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <NuxtLink
               v-for="reciente in recentPosts"
               :key="reciente.id"
               :to="`/blog/${reciente.slug}`"
               class="flex flex-col group"
             >
-              <!-- Categoría -->
               <span class="uppercase tracking-[0.2em] text-xs text-[#F8C52D] font-semibold mb-3 block">
                 {{ reciente.category?.toUpperCase() ?? 'BLOG' }}
               </span>
-              <!-- Imagen -->
               <div class="overflow-hidden mb-4" style="height: 212px;">
                 <img
                   v-if="reciente.featured_media"
@@ -230,7 +260,6 @@
                 />
                 <div v-else class="w-full h-full bg-gray-100"></div>
               </div>
-              <!-- Título -->
               <h3 class="text-[#6A6867] leading-snug mb-2 group-hover:opacity-75 transition-opacity" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;">
                 {{ reciente.title }}
               </h3>
