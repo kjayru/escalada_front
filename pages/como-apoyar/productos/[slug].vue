@@ -316,99 +316,91 @@
 
     </template>
 
-    <!-- Modal lightbox: thumbnails izquierda + imagen grande derecha -->
+    <!-- Modal lightbox: imagen grande + thumbnails abajo -->
     <Teleport to="body">
       <Transition name="modal-fade">
         <div
           v-if="modalAbierto"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white px-4 py-16"
           role="dialog"
           aria-modal="true"
-          @click.self="modalAbierto = false"
         >
-          <!-- Contenedor principal del modal -->
-          <div class="relative flex w-full max-w-5xl max-h-[90vh] bg-white overflow-hidden rounded-sm shadow-2xl">
+          <!-- Botón cerrar -->
+          <button
+            class="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center text-gray-700 hover:text-black transition-colors"
+            aria-label="Cerrar galería"
+            @click="modalAbierto = false"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
 
-            <!-- Botón cerrar -->
+          <!-- Imagen principal con flechas -->
+          <div class="relative w-full flex items-center justify-center px-10" style="max-height: calc(100vh - 200px);">
+            <!-- Flecha anterior -->
             <button
-              class="absolute top-3 right-3 z-20 w-8 h-8 bg-black/10 hover:bg-black/20 rounded-full flex items-center justify-center text-gray-700 transition-colors"
-              aria-label="Cerrar galería"
-              @click="modalAbierto = false"
+              v-if="galeria.length > 1"
+              class="absolute left-0 w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-all z-10"
+              aria-label="Imagen anterior"
+              @click="indiceModal = (indiceModal - 1 + galeria.length) % galeria.length"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
 
-            <!-- Columna izquierda: grid de thumbnails -->
-            <div class="w-[260px] shrink-0 bg-gray-50 border-r border-gray-100 overflow-y-auto p-3">
-              <div class="grid grid-cols-3 gap-1.5">
-                <button
-                  v-for="(img, i) in galeria"
-                  :key="i"
-                  class="aspect-square overflow-hidden border-2 transition-all duration-150"
-                  :class="indiceModal === i
-                    ? 'border-[#F8C52D] opacity-100'
-                    : 'border-transparent opacity-70 hover:opacity-100 hover:border-gray-300'"
-                  @click="indiceModal = i"
-                >
-                  <img
-                    :src="img"
-                    :alt="`${producto?.name} miniatura ${i + 1}`"
-                    class="w-full h-full object-cover"
-                    draggable="false"
-                  />
-                </button>
+            <img
+              :src="galeria[indiceModal]"
+              :alt="`${producto?.name} - imagen ${indiceModal + 1}`"
+              class="max-w-full object-contain select-none"
+              style="max-height: calc(100vh - 200px);"
+              draggable="false"
+            />
+
+            <!-- Flecha siguiente -->
+            <button
+              v-if="galeria.length > 1"
+              class="absolute right-0 w-9 h-9 bg-[#F8C52D] hover:bg-[#e0b525] rounded-full flex items-center justify-center text-gray-900 transition-all z-10"
+              aria-label="Imagen siguiente"
+              @click="indiceModal = (indiceModal + 1) % galeria.length"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <!-- Contador + lupa -->
+            <div class="absolute bottom-2 right-10 flex items-center gap-2">
+              <span v-if="galeria.length > 1" class="text-xs text-gray-400">
+                {{ indiceModal + 1 }} / {{ galeria.length }}
+              </span>
+              <div class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                </svg>
               </div>
             </div>
+          </div>
 
-            <!-- Columna derecha: imagen grande con flechas -->
-            <div class="flex-1 relative flex items-center justify-center bg-white min-h-[400px]">
-
-              <!-- Flecha anterior -->
-              <button
-                v-if="galeria.length > 1"
-                class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md hover:shadow-lg rounded-full flex items-center justify-center text-gray-600 transition-all z-10"
-                aria-label="Imagen anterior"
-                @click="indiceModal = (indiceModal - 1 + galeria.length) % galeria.length"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <!-- Imagen principal -->
+          <!-- Thumbnails directamente debajo de la imagen -->
+          <div v-if="galeria.length > 1" class="mt-4 flex gap-2 justify-center overflow-x-auto max-w-full px-2">
+            <button
+              v-for="(img, i) in galeria"
+              :key="i"
+              class="flex-shrink-0 w-[80px] h-[80px] overflow-hidden border-2 transition-all duration-150"
+              :class="indiceModal === i
+                ? 'border-[#F8C52D] opacity-100'
+                : 'border-transparent opacity-60 hover:opacity-100 hover:border-gray-300'"
+              @click="indiceModal = i"
+            >
               <img
-                :src="galeria[indiceModal]"
-                :alt="`${producto?.name} - imagen ${indiceModal + 1}`"
-                class="max-w-full max-h-[88vh] object-contain select-none px-14"
+                :src="img"
+                :alt="`${producto?.name} miniatura ${i + 1}`"
+                class="w-full h-full object-cover"
                 draggable="false"
               />
-
-              <!-- Flecha siguiente + lupa decorativa -->
-              <button
-                v-if="galeria.length > 1"
-                class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-[#F8C52D] hover:bg-[#e0b525] rounded-full flex items-center justify-center text-gray-900 transition-all shadow-md z-10"
-                aria-label="Imagen siguiente"
-                @click="indiceModal = (indiceModal + 1) % galeria.length"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <!-- Lupa decorativa + contador -->
-              <div class="absolute bottom-3 right-4 flex items-center gap-2">
-                <span v-if="galeria.length > 1" class="text-xs text-gray-400">
-                  {{ indiceModal + 1 }} / {{ galeria.length }}
-                </span>
-                <div class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            </button>
           </div>
         </div>
       </Transition>
