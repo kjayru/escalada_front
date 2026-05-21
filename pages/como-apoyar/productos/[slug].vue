@@ -225,27 +225,75 @@
 
     <!-- Otros Productos -->
     <section v-if="otrosProductos.length" class="bg-white pb-20 lg:pb-28">
-      <div class="max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-[1060px] mx-auto">
         <h2
           style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-style: normal; font-weight: 500;"
-          class="text-center mb-10"
+          class="text-center mb-10 px-4 sm:px-6 lg:px-8"
         >
           OTROS PRODUCTOS
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+        <!-- Slider móvil -->
+        <div class="sm:hidden">
+        <Swiper
+          class="w-full"
+          :slides-per-view="1.3"
+          :space-between="16"
+          :slides-offset-before="16"
+          :slides-offset-after="16"
+          style="overflow: visible;"
+        >
+          <SwiperSlide v-for="otro in otrosProductos" :key="otro.id" style="height: auto;">
+            <div class="flex flex-col pb-2">
+              <NuxtLink :to="`/como-apoyar/productos/${otro.slug}`" class="block overflow-hidden mb-4 bg-gray-100" style="height: 240px;">
+                <img
+                  v-if="otro.featured_media?.url"
+                  :src="otro.featured_media.url"
+                  :alt="otro.name"
+                  class="w-full h-full object-cover"
+                />
+              </NuxtLink>
+              <div class="flex flex-col mb-4 px-1">
+                <span
+                  style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
+                  class="leading-tight mb-2"
+                >{{ otro.name }}</span>
+                <span
+                  style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-style: normal; font-weight: 600;"
+                  class="text-left"
+                >
+                  {{ formatPrecio(otro.price, otro.currency) }}
+                </span>
+              </div>
+              <div class="px-1">
+                <NuxtLink
+                  :to="`/como-apoyar/productos/${otro.slug}`"
+                  style="text-align: center; font-family: 'Readex Pro', sans-serif; font-size: 0.9375rem; font-style: normal; font-weight: 700; border-radius: 6.25rem; text-decoration: none;"
+                  class="btn-otro-producto-hover inline-block w-full py-3"
+                >
+                  COMPRAR
+                </NuxtLink>
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        </div>
+
+        <!-- Grid desktop -->
+        <div class="hidden sm:grid grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8">
           <div
             v-for="otro in otrosProductos"
             :key="otro.id"
             class="flex flex-col"
           >
-            <div class="overflow-hidden mb-4 bg-gray-100" style="height: 240px;">
+            <NuxtLink :to="`/como-apoyar/productos/${otro.slug}`" class="block overflow-hidden mb-4 bg-gray-100" style="height: 240px;">
               <img
                 v-if="otro.featured_media?.url"
                 :src="otro.featured_media.url"
                 :alt="otro.name"
                 class="w-full h-full object-cover"
               />
-            </div>
+            </NuxtLink>
             <div class="flex flex-col mb-4 px-1">
               <span
                 style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 400;"
@@ -271,6 +319,10 @@
         </div>
       </div>
     </section>
+
+    <!-- Prefooter -->
+    <SectionsPrefooterNewsletterSection />
+    <SectionsMountainPrefooter />
 
     </template>
 
@@ -376,6 +428,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
 import type { Product } from '~/types/api'
 
 const route = useRoute()
