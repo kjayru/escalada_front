@@ -10,6 +10,7 @@
           :src="heroImageMobile"
           :alt="heroLocation"
           class="w-full h-full object-fill lg:hidden"
+          style="transform: translateY(81px);"
         />
         <!-- Imagen para desktop -->
         <img 
@@ -17,6 +18,7 @@
           :src="heroImage"
           :alt="heroLocation"
           class="w-full h-full object-fill hidden lg:block"
+          style="transform: translateY(93px);"
         />
       </div>
       
