@@ -77,9 +77,9 @@
             v-for="tab in tabs"
             :key="tab.id"
             @click="tabActiva = tab.id"
-            class="flex-1 h-[53px] rounded-full transition-all text-center"
+            class="flex-1 h-[53px] rounded-full transition-all text-center text-[1rem] lg:text-[1.25rem]"
             :class="tabActiva === tab.id ? 'bg-white border-2 border-[#6a6867]' : ''"
-            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-weight: 400;"
+            style="color: #6A6867; font-family: 'Readex Pro', sans-serif; font-weight: 400;"
           >
             {{ tab.label }}
           </button>
