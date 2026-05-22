@@ -2,14 +2,14 @@
   <div class="contacto-page">
 
     <!-- Hero Banner -->
-    <section class="relative overflow-hidden h-[90vh] lg:h-auto" style="min-height: unset;">
+    <section class="relative overflow-hidden h-[360px] lg:h-auto" style="min-height: unset;">
       <img
         :src="heroBannerUrl ?? '/images/n-1.png'"
         :alt="heroBannerAlt"
         class="absolute inset-0 w-full h-full object-cover"
         :class="{ grayscale: !heroBannerUrl }"
       />
-      <div class="relative z-10 h-[90vh] lg:h-auto lg:min-h-[1080px]"></div>
+      <div class="relative z-10 h-[360px] lg:h-auto lg:min-h-[1080px]"></div>
     </section>
 
     <!-- Formulario de contacto -->

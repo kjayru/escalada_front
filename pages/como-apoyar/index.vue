@@ -2,7 +2,7 @@
   <div class="como-apoyar-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden h-[90vh] lg:h-[1080px]">
+    <section class="hero-banner relative overflow-hidden h-[360px] lg:h-[1080px]">
       <img
         :src="heroBannerImage ?? '/images/n-1.png'"
         alt="Cómo apoyar - Escalada Libre"

@@ -2,7 +2,7 @@
   <div class="nosotros-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden" style="height: 779px;">
+    <section class="hero-banner relative overflow-hidden h-[360px] lg:h-[779px]">
       <img
         v-if="heroSection?.featured_media?.url || heroSection?.settings?.image"
         :src="(heroSection?.featured_media?.url || heroSection?.settings?.image) as string"
