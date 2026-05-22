@@ -8,6 +8,11 @@ export default <RouterConfig>{
     if (to.hash) {
       return { el: to.hash, behavior: 'smooth' }
     }
-    return { top: 0, behavior: 'instant' }
+    // El scroll real está en document.body (body tiene h-full + overflow-x:hidden)
+    if (import.meta.client) {
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }
+    return false
   },
 }
