@@ -111,7 +111,7 @@
 
           <!-- Texto -->
           <div
-            class="lg:w-[45%] flex flex-col justify-center px-10 lg:px-16 py-12 order-2"
+            class="lg:w-[45%] flex flex-col justify-center px-0 lg:px-16 py-0 lg:py-12 order-2"
           >
             <!-- Tagline -->
             <div
@@ -292,7 +292,7 @@
           </NuxtLink>
 
           <!-- Texto -->
-          <div class="lg:w-[45%] flex flex-col justify-center px-10 lg:px-16 py-12">
+          <div class="lg:w-[45%] flex flex-col justify-center px-0 lg:px-16 py-0 lg:py-12">
             <div class="flex items-center gap-4 mb-5">
               <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>
               <span class="uppercase tracking-[0.2em] text-sm text-[#6A6867] font-medium">{{ post.tagline }}</span>
