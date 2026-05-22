@@ -2,7 +2,7 @@
   <div class="historia-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden" style="height: 1080px;">
+    <section class="hero-banner relative overflow-hidden h-[90vh] lg:h-[1080px]">
       <!-- Imagen para móviles -->
       <img
         v-if="heroBannerImageMobile"

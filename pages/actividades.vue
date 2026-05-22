@@ -2,11 +2,20 @@
   <div class="actividades-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden h-[400px] lg:h-[1080px]">
+    <section class="hero-banner relative overflow-hidden h-[90vh] lg:h-[1080px]">
+      <!-- Imagen para móviles -->
+      <img
+        v-if="heroImageMobile"
+        :src="heroImageMobile"
+        :alt="heroAlt"
+        class="absolute inset-0 w-full h-full object-cover object-top lg:hidden"
+      />
+      <!-- Imagen para desktop -->
       <img
         :src="heroImage"
         :alt="heroAlt"
         class="absolute inset-0 w-full h-full object-cover object-top"
+        :class="heroImageMobile ? 'hidden lg:block' : ''"
       />
     </section>
 
@@ -300,6 +309,10 @@ const apiImg = (path: string | null | undefined): string => {
 
 const heroImage = computed(
   () => sec('hero')?.featured_media?.url ?? apiImg(sec('hero')?.settings?.image as string | undefined),
+)
+
+const heroImageMobile = computed(
+  () => (sec('hero')?.mobile_image?.url as string | undefined) ?? null,
 )
 
 const heroAlt = computed(
