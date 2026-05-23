@@ -2,25 +2,15 @@
   <div class="historia-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden h-[360px] lg:h-[1080px]">
-      <!-- Imagen para móviles -->
-      <img
-        v-if="heroBannerImageMobile"
-        :src="heroBannerImageMobile"
-        alt="Historia - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover object-center lg:hidden"
-      />
-      <!-- Imagen para desktop -->
-      <img
-        :src="heroBannerImage ?? '/images/n-1.png'"
-        alt="Historia - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover object-center hidden lg:block"
-      />
-    </section>
+    <SectionsHeroPageBanner
+      :image="heroBannerImage ?? '/images/n-1.png'"
+      :image-mobile="heroBannerImageMobile"
+      alt="Historia - Escalada Libre"
+    />
 
     <!-- Intro Section -->
     <section class="py-20 lg:py-28 bg-white">
-      <div class="max-w-[860px] mx-auto px-8 lg:px-12">
+      <div class="max-w-[860px] mx-auto px-8 lg:px-12" data-reveal>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h1 class="text-[#6A6867] leading-tight mb-8" style="font-family: 'Readex Pro', sans-serif; font-weight: 400; font-size: 2.1875rem;" v-html="introHeading"></h1>
         <!-- eslint-disable-next-line vue/no-v-html -->
@@ -34,7 +24,7 @@
       :key="block.id"
       :style="{ background: block.background ?? (idx % 2 === 0 ? '#F6F6F6' : '#ffffff'), ...block.extraStyle }"
     >
-      <div class="flex flex-col lg:flex-row min-h-[700px]">
+      <div class="flex flex-col lg:flex-row min-h-[700px] max-w-[1400px] mx-auto w-full">
         <!-- Imagen con padding -->
         <div
           class="lg:w-1/2 flex items-center justify-center p-10 lg:p-14"
@@ -61,6 +51,8 @@
         <div
           class="lg:w-1/2 flex flex-col justify-center px-12 lg:px-24 py-16"
           :class="idx % 2 === 0 ? 'lg:order-2' : 'lg:order-1'"
+          data-reveal
+          :data-reveal="idx % 2 === 0 ? 'fade-right' : 'fade-left'"
         >
           <div class="flex items-center gap-4 mb-6">
             <div class="w-[72px] h-[2px] bg-[#F8C52D] flex-shrink-0"></div>

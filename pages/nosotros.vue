@@ -2,27 +2,25 @@
   <div class="nosotros-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden h-[360px] lg:h-[779px]">
-      <img
-        v-if="heroSection?.featured_media?.url || heroSection?.settings?.image"
-        :src="(heroSection?.featured_media?.url || heroSection?.settings?.image) as string"
-        :alt="(heroSection?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
-        class="absolute inset-0 w-full h-full object-cover object-center"
-      />
-    </section>
+    <SectionsHeroPageBanner
+      v-if="heroSection?.featured_media?.url || heroSection?.settings?.image"
+      :image="(heroSection?.featured_media?.url || heroSection?.settings?.image) as string"
+      :image-mobile="heroSection?.mobile_image?.url ?? null"
+      :alt="(heroSection?.settings?.alt as string) ?? 'Nosotros - Escalada Libre'"
+    />
 
     <!-- Misión / Visión -->
     <section class="mision-vision py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-6">
           <!-- Misión -->
-          <div class="border border-[#F8C52D] rounded-xl p-10 lg:p-14">
+          <div class="border border-[#F8C52D] rounded-xl p-10 lg:p-14" data-reveal>
             <h2 class="text-[35px] font-light text-[#6A6867] mb-6" style="font-family: 'Readex Pro', sans-serif;">{{ sec('mision')?.heading ?? 'Misión' }}</h2>
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="text-base lg:text-lg text-[#6A6867] leading-relaxed" style="font-family: 'Readex Pro', sans-serif;" v-html="misionBody"></div>
           </div>
           <!-- Visión -->
-          <div class="border border-[#F8C52D] rounded-xl p-10 lg:p-14">
+          <div class="border border-[#F8C52D] rounded-xl p-10 lg:p-14" data-reveal data-reveal-delay="200">
             <h2 class="text-[35px] font-light text-[#6A6867] mb-6" style="font-family: 'Readex Pro', sans-serif;">{{ sec('vision')?.heading ?? 'Visión' }}</h2>
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="text-base lg:text-lg text-[#6A6867] leading-relaxed" style="font-family: 'Readex Pro', sans-serif;" v-html="visionBody"></div>
@@ -33,7 +31,7 @@
 
     <!-- ¿Qué hacemos? -->
     <section class="que-hacemos py-12 bg-white">
-      <div class="text-center mb-16 px-4">
+      <div class="text-center mb-16 px-4" data-reveal>
         <div class="inline-block">
           <div class="w-36 h-3 bg-[#F8C52D] mx-auto mb-4"></div>
           <h2 class="text-3xl lg:text-[35px] font-medium text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif;">¿Qué hacemos?</h2>
@@ -46,6 +44,7 @@
           v-for="block in queHacemosBlocks"
           :key="block.id"
           class="max-w-6xl mx-auto overflow-hidden"
+          data-reveal
         >
           <div class="grid lg:grid-cols-2 items-stretch">
 

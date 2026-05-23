@@ -1,7 +1,7 @@
 <template>
   <section class="mountain-prefooter bg-white py-10 lg:py-24">
     <div class="max-w-4xl mx-auto px-6 lg:px-8">
-      <div class="flex flex-col items-center gap-6 lg:flex-row lg:justify-center lg:gap-20">
+      <div class="flex flex-col items-center gap-6 lg:flex-row lg:justify-center lg:gap-20" data-reveal>
         <!-- Logo -->
         <div class="flex-shrink-0 flex flex-col items-center">
           <img

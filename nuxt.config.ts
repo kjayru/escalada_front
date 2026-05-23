@@ -174,4 +174,10 @@ export default defineNuxtConfig({
   asyncDataDefaults: {
     getCachedData: () => null,
   },
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag: string) => tag === 'dotlottie-wc',
+    },
+  },
 })

@@ -4,6 +4,149 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =====================================================
+   SCROLL REVEAL ANIMATIONS
+   Inspiradas en el patrón AOS (Animate On Scroll)
+   Uso: <div data-reveal> fade-up (default)
+        <div data-reveal="fade"> solo opacity
+        <div data-reveal="fade-left"> desde la izquierda
+        <div data-reveal="fade-right"> desde la derecha
+        <div data-reveal="zoom-in"> zoom
+        data-reveal-delay="100" | "200" | "300" | "400"
+   ===================================================== */
+
+/* Estado inicial — oculto antes de entrar al viewport */
+[data-reveal],
+[data-reveal="fade-up"],
+[data-reveal="fade"],
+[data-reveal="fade-left"],
+[data-reveal="fade-right"],
+[data-reveal="zoom-in"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 600ms;
+  will-change: opacity, transform;
+}
+
+/* Posiciones iniciales por tipo */
+[data-reveal],
+[data-reveal="fade-up"]   { transform: translateY(40px); }
+[data-reveal="fade"]      { transform: translateY(0); }
+[data-reveal="fade-left"] { transform: translateX(-40px); }
+[data-reveal="fade-right"]{ transform: translateX(40px); }
+[data-reveal="zoom-in"]   { transform: scale(0.93); }
+
+/* Estado visible — al entrar al viewport el plugin agrega .is-revealed */
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* Delays escalonados */
+[data-reveal-delay="100"] { transition-delay: 100ms; }
+[data-reveal-delay="200"] { transition-delay: 200ms; }
+[data-reveal-delay="300"] { transition-delay: 300ms; }
+[data-reveal-delay="400"] { transition-delay: 400ms; }
+[data-reveal-delay="500"] { transition-delay: 500ms; }
+[data-reveal-delay="600"] { transition-delay: 600ms; }
+
+/* Para imágenes: efecto de zoom lento en hover */
+.img-reveal {
+  overflow: hidden;
+}
+.img-reveal img,
+.img-reveal .img-inner {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.img-reveal:hover img,
+.img-reveal:hover .img-inner {
+  transform: scale(1.04);
+}
+
+/* Reducir animaciones si el usuario prefiere movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="fade-up"],
+  [data-reveal="fade"],
+  [data-reveal="fade-left"],
+  [data-reveal="fade-right"],
+  [data-reveal="zoom-in"] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =====================================================
+   SCROLL EXPAND — imagen pequeña que crece al hacer scroll
+   Uso: <div class="scroll-expand-outer" data-scroll-expand style="height: clamp(...)">
+          <div class="scroll-expand-frame">
+            <img class="w-full h-full object-cover" />
+          </div>
+        </div>
+   ===================================================== */
+.scroll-expand-outer {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-expand-frame {
+  position: absolute;
+  overflow: hidden;
+  /* inset animado por JS */
+  top: 0; right: 0; bottom: 0; left: 0;
+  will-change: top, right, bottom, left;
+}
+
+.scroll-expand-frame img,
+.scroll-expand-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-expand-frame img,
+  .scroll-expand-frame video {
+    transform: none !important;
+  }
+}
+
+/* =====================================================
+   HERO ENTRANCE ANIMATION
+   Activa cuando el preloader cierra (body.loader-revealed).
+   Uso: <el data-hero-animate data-hero-delay="0|1|2|3|4">
+   ===================================================== */
+[data-hero-animate] {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+body.loader-revealed [data-hero-animate] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delays escalonados */
+[data-hero-animate][data-hero-delay="0"] { transition-delay: 0ms; }
+[data-hero-animate][data-hero-delay="1"] { transition-delay: 140ms; }
+[data-hero-animate][data-hero-delay="2"] { transition-delay: 280ms; }
+[data-hero-animate][data-hero-delay="3"] { transition-delay: 420ms; }
+[data-hero-animate][data-hero-delay="4"] { transition-delay: 560ms; }
+
+/* En visitas SPA posteriores (loader-revealed ya presente), sin animación */
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-animate] { opacity: 1; transform: none; transition: none; }
+}
+
 @layer base {
   html, body {
     @apply h-full;

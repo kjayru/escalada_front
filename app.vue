@@ -1,5 +1,8 @@
 <template>
   <div>
+    <ClientOnly>
+      <BasePageLoader />
+    </ClientOnly>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

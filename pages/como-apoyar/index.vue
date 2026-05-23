@@ -2,17 +2,15 @@
   <div class="como-apoyar-page">
 
     <!-- Hero Banner -->
-    <section class="hero-banner relative overflow-hidden h-[360px] lg:h-[1080px]">
-      <img
-        :src="heroBannerImage ?? '/images/n-1.png'"
-        alt="Cómo apoyar - Escalada Libre"
-        class="absolute inset-0 w-full h-full object-cover object-center"
-      />
-    </section>
+    <SectionsHeroPageBanner
+      :image="heroBannerImage ?? '/images/n-1.png'"
+      :image-mobile="heroSection?.mobile_image?.url ?? null"
+      alt="Cómo apoyar - Escalada Libre"
+    />
 
     <!-- Intro: ¿Por qué donar? -->
     <section class="intro-section py-12 lg:py-28 bg-white" :style="introExtraStyle">
-      <div class="max-w-[860px] mx-auto px-8 lg:px-12">
+      <div class="max-w-[860px] mx-auto px-8 lg:px-12" data-reveal>
         <h1 class="text-[#6A6867] mb-4" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; line-height: 40px;">
           {{ introHeading }}
         </h1>
@@ -27,7 +25,7 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Section header -->
-        <div class="text-center mb-12 lg:mb-16">
+        <div class="text-center mb-12 lg:mb-16" data-reveal>
           <h2 style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; color: #000000;">
             {{ intro2Heading }}
           </h2>
@@ -40,9 +38,11 @@
         <div class="max-w-[1400px] mx-auto">
 
           <div
-            v-for="block in splitBlocks"
+            v-for="(block, idx) in splitBlocks"
             :key="block.id"
             class="flex flex-col md:flex-row items-stretch mb-12 md:mb-20"
+            data-reveal
+            :data-reveal-delay="idx === 0 ? undefined : '200'"
           >
             <!-- Label vertical izquierdo — solo desktop -->
             <div class="hidden md:flex w-10 lg:w-14 items-center justify-center flex-shrink-0">

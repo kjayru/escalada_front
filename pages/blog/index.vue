@@ -5,7 +5,7 @@
     <section v-if="featured" class="bg-white">
       
       <!-- Versión MÓVIL: diseño estándar (imagen → categoría → título → descripción) -->
-      <div class="block lg:hidden max-w-[1200px] mx-auto px-6 mb-16">
+      <div class="block lg:hidden max-w-[1200px] mx-auto px-6 mb-16" data-reveal>
         <div class="flex flex-col">
           <!-- Imagen primero -->
           <NuxtLink
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Versión DESKTOP: diseño especial con overlay -->
-      <div class="hidden lg:block max-w-[1200px] mx-auto px-6 lg:px-12">
+      <div class="hidden lg:block max-w-[1200px] mx-auto px-6 lg:px-12" data-reveal>
         <!-- Contenedor con altura fija -->
         <div class="relative mb-16" style="height: 500px;">
 

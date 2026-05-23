@@ -156,7 +156,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, nextTick } from 'vue'
 
 const api = useApi()
 const route = useRoute()
@@ -268,6 +268,10 @@ onMounted(async () => {
   }
 
   if (success && token) {
+    const { lock, unlock } = usePageLoader()
+    lock()
+    window.scrollTo({ top: 0, behavior: 'instant' })
+
     try {
       loading.value = true
       
@@ -300,6 +304,10 @@ onMounted(async () => {
     } finally {
       loading.value = false
     }
+
+    // Esperar a que Vue renderice el mensaje en el DOM, luego liberar el loader
+    await nextTick()
+    unlock()
   }
 })
 </script>

@@ -3,7 +3,7 @@
     <div class="px-4 sm:px-6 lg:px-[6rem] 3xl:px-0 max-w-[1225px] mx-auto">
       <div class="grid md:grid-cols-3 gap-4">
         <!-- Newsletter Card -->
-        <div class="bg-[#F9D363] p-8 flex flex-col justify-between min-h-[357px]">
+        <div class="bg-[#F9D363] p-8 flex flex-col justify-between min-h-[357px]" data-reveal>
           <div>
             <p class="uppercase mb-4" style="color: #000; font-family: 'Readex Pro', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em;">{{ newsletterEtiqueta }}</p>
             <h3 class="leading-snug mb-6" style="color: #0D0D0D; font-family: 'Readex Pro', sans-serif; font-size: 1.875rem; font-weight: 700;">
@@ -51,6 +51,8 @@
               :target="card.link_url.startsWith('http') ? '_blank' : undefined"
               :rel="card.link_url.startsWith('http') ? 'noopener noreferrer' : undefined"
               class="relative overflow-hidden min-h-[357px] block cursor-pointer"
+              data-reveal
+              data-reveal-delay="200"
             >
               <img v-if="card.banner?.url" :src="card.banner.url" :alt="card.title ?? card.sponsor.name" class="w-full h-full object-cover absolute inset-0" />
               <div v-else class="bg-[#1a1a2e] p-8 flex items-center justify-center min-h-[357px]">

@@ -48,13 +48,13 @@
       <div class="hero-content relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="ml-auto hero-text-block" style="max-width: 50rem;">
           <!-- Small Title -->
-          <div v-if="heroLabel" class="flex items-center gap-3 mb-6">
+          <div v-if="heroLabel" class="flex items-center gap-3 mb-6" data-hero-animate data-hero-delay="0">
             <div class="w-12 h-px" style="background-color: #242424;"></div>
             <span class="text-sm tracking-[0.3em] uppercase" style="color: #242424; font-family: 'Bodoni Moda', serif;">{{ heroLabel }}</span>
           </div>
           
           <!-- Main Title -->
-          <h1 v-if="heroTitle" class="hero-title font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;">
+          <h1 v-if="heroTitle" class="hero-title font-normal mb-8 leading-tight" style="color: #242424; font-family: 'Readex Pro', sans-serif; font-weight: 400;" data-hero-animate data-hero-delay="1">
             {{ heroTitle }}
           </h1>
         </div>
@@ -64,6 +64,7 @@
       <button 
         @click="scrollToNextSection"
         class="absolute bottom-12 left-8 lg:left-1/2 lg:-translate-x-1/2 z-20 flex flex-row items-center gap-3 text-white hover:text-[#F5C400] transition-colors group"
+        data-hero-animate data-hero-delay="2"
       >
         <span class="text-sm tracking-wider" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">scroll down</span>
         <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +73,7 @@
       </button>
       
       <!-- Location Tag Mobile - Bottom Right (solo móviles) -->
-      <div v-if="heroLocationMobile" class="absolute bottom-8 right-8 z-20 lg:hidden">
+      <div v-if="heroLocationMobile" class="absolute bottom-8 right-8 z-20 lg:hidden" data-hero-animate data-hero-delay="3">
         <div class="text-white text-sm tracking-wider px-1 py-1 text-right" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
           {{ heroLocationMobile }}
         </div>
@@ -80,7 +81,7 @@
       </div>
       
       <!-- Location Tag Desktop - Bottom Left (solo desktop) -->
-      <div v-if="heroLocationHtml" class="absolute bottom-8 left-8 z-20 hidden lg:block">
+      <div v-if="heroLocationHtml" class="absolute bottom-8 left-8 z-20 hidden lg:block" data-hero-animate data-hero-delay="3">
         <div class="text-white text-sm tracking-wider px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="heroLocationHtml">
         </div>
         <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
@@ -92,14 +93,14 @@
       <!-- Text Content -->
       <div class="bg-gray-50 flex items-center justify-center" style="min-height: 420px; padding: 6rem 1rem;">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-2xl mx-auto">
+          <div class="max-w-2xl mx-auto" data-reveal>
             <div class="leading-relaxed" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 35px; text-align: left;" v-html="introText"></div>
           </div>
         </div>
       </div>
 
       <!-- Mountain Image Mobile -->
-      <div v-if="parallaxMountainImageMobile" class="w-full relative lg:hidden">
+      <div v-if="parallaxMountainImageMobile" class="w-full relative lg:hidden img-reveal">
         <img 
           :src="parallaxMountainImageMobile"
           :alt="parallaxLocation"
@@ -115,17 +116,25 @@
       </div>
 
       <!-- Mountain Image Desktop -->
-      <div v-if="parallaxMountainImage" class="w-full relative" :class="parallaxMountainImageMobile ? 'hidden lg:block' : ''">
-        <img 
-          :src="parallaxMountainImage"
-          :alt="parallaxLocation"
-          class="w-full h-auto block"
-        />
-        <!-- Location Tag -->
-        <div v-if="parallaxLocation" class="absolute bottom-8 right-8">
-          <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
-            {{ parallaxLocation }}
-            <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
+      <div
+        v-if="parallaxMountainImage"
+        class="scroll-expand-outer"
+        :class="parallaxMountainImageMobile ? 'hidden lg:block' : ''"
+        style="height: clamp(450px, 58vw, 1000px);"
+        data-scroll-expand
+      >
+        <div class="scroll-expand-frame">
+          <img
+            :src="parallaxMountainImage"
+            :alt="parallaxLocation"
+            class="w-full h-full object-cover block"
+          />
+          <!-- Location Tag -->
+          <div v-if="parallaxLocation" class="absolute bottom-8 right-8 z-10">
+            <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;">
+              {{ parallaxLocation }}
+              <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -137,10 +146,10 @@
       <div class="bg-gray-50 flex items-center justify-center" style="min-height: 600px; padding: 10rem 1rem;">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl mx-auto">
-            <h2 class="leading-snug mb-6" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 35px;">
+            <h2 class="leading-snug mb-6" data-reveal style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 35px;">
               {{ conservacionTitle }}
             </h2>
-            <div class="leading-relaxed conservacion-body" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 20px;" v-html="conservacionBody"></div>
+            <div class="leading-relaxed conservacion-body" data-reveal data-reveal-delay="200" style="font-family: 'Readex Pro', sans-serif; font-weight: 300; color: #6A6867; font-size: 20px;" v-html="conservacionBody"></div>
           </div>
         </div>
       </div>
@@ -161,17 +170,24 @@
       </div>
 
       <!-- Image Desktop -->
-      <div v-if="conservacionImage" class="w-full relative" :class="conservacionImageMobile ? 'hidden lg:block' : ''">
-        <img 
-          :src="conservacionImage"
-          :alt="conservacionLocation"
-          class="w-full h-auto block"
-        />
-        <!-- Location Tag -->
-        <div class="absolute bottom-8 left-8 z-20">
-          <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="conservacionLocationHtml">
+      <div
+        v-if="conservacionImage"
+        class="scroll-expand-outer"
+        :class="conservacionImageMobile ? 'hidden lg:block' : ''"
+        style="height: clamp(450px, 58vw, 1000px);"
+        data-scroll-expand
+      >
+        <div class="scroll-expand-frame">
+          <img
+            :src="conservacionImage"
+            :alt="conservacionLocation"
+            class="w-full h-full object-cover block"
+          />
+          <!-- Location Tag -->
+          <div class="absolute bottom-8 left-8 z-10">
+            <div class="text-white text-sm px-1 py-1" style="font-family: 'Readex Pro', sans-serif; font-weight: 600;" v-html="conservacionLocationHtml"></div>
+            <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
           </div>
-          <div class="mt-1 h-[2px]" style="background-color: #F8C52D;"></div>
         </div>
       </div>
     </section>
@@ -182,19 +198,19 @@
       :key="item.id ?? item.num"
       class="py-16 lg:py-24 bg-white"
     >
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <!-- Contenido de texto -->
-          <div :class="['relative overflow-hidden order-first', item.imagePosition === 'left' ? 'lg:order-last' : '']">
-            <!-- Número de fondo (decorativo) -->
+          <div :class="['relative overflow-hidden order-first', item.imagePosition === 'left' ? 'lg:order-last' : '']" data-reveal>
+            <!-- Número de fondo (decorativo) — espejo según lado -->
             <div
-              class="absolute top-0 left-0 leading-none select-none pointer-events-none"
+              :class="['absolute top-0 leading-none select-none pointer-events-none', item.imagePosition === 'left' ? 'right-0' : 'left-0']"
               style="font-family: 'Readex Pro', sans-serif; font-weight: 700; font-size: 220px; color: #242424; opacity: 0.12; line-height: 1;"
             >
               {{ item.num }}
             </div>
             <!-- Contenido fluido sobre el número -->
-            <div class="relative z-10 flex flex-col gap-5 pt-14 pb-4">
+            <div :class="['relative z-10 flex flex-col gap-5 pt-14 pb-4', item.imagePosition === 'left' ? 'lg:items-end lg:text-right' : '']">
               <!-- Etiqueta -->
               <div class="flex items-center gap-4">
                 <div class="w-[60px] h-[2px] bg-[#F8C52D]"></div>
@@ -222,7 +238,7 @@
             </div>
           </div>
           <!-- Imagen -->
-          <div :class="['order-last', item.imagePosition === 'left' ? 'lg:order-first' : 'lg:order-last']">
+          <div :class="['order-last img-reveal', item.imagePosition === 'left' ? 'lg:order-first' : 'lg:order-last']" :data-reveal="item.imagePosition === 'left' ? 'fade-right' : 'fade-left'">
             <img v-if="item.image" :src="item.image" :alt="item.title" class="w-full h-auto" />
           </div>
         </div>
@@ -315,16 +331,18 @@
     <!-- Otros Patrocinadores Section -->
     <section class="otros-patrocinadores py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl lg:text-4xl text-[#6A6867] mb-12" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+        <h2 class="text-3xl lg:text-4xl text-[#6A6867] mb-12" data-reveal style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
           Otros patrocinadores
         </h2>
 
         <div class="grid md:grid-cols-2 gap-6">
           <template v-if="otrosPlacements?.length">
             <div
-              v-for="item in otrosPlacements.slice(0, 2)"
+              v-for="(item, idx) in otrosPlacements.slice(0, 2)"
               :key="item.id"
               class="relative overflow-hidden group cursor-pointer bg-cover bg-center h-[229px] md:min-h-[500px]"
+              data-reveal
+              :data-reveal-delay="idx === 0 ? undefined : '200'"
               :style="item.banner?.url ? `background-image: url('${item.banner.url}')` : 'background-color: #1e3a3a'"
             >
               <div class="absolute inset-0 bg-black/30"></div>
@@ -364,7 +382,7 @@
     <!-- Quienes Nos Apoyan Section -->
     <section class="quienes-apoyan py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto text-center">
+        <div class="max-w-2xl mx-auto text-center" data-reveal>
           <!-- Title with line -->
           <div class="flex items-center justify-center mb-8">
             <div class="w-24 bg-[#F8C52D]" style="height: 0.75rem;"></div>
@@ -386,11 +404,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 sm:px-10 lg:px-16">
         <template v-if="sponsorTilesData">
           <component
-            v-for="item in sponsorTilesData"
+            v-for="(item, idx) in sponsorTilesData"
             :key="item.id"
             :is="item.link_url ? 'a' : 'div'"
             v-bind="item.link_url ? { href: item.link_url, target: '_blank', rel: 'noopener noreferrer' } : {}"
             class="sponsor-tile flex items-center justify-center p-8 min-h-[200px] lg:min-h-[547px] bg-[#F6F6F6]"
+            data-reveal="zoom-in"
+            :data-reveal-delay="idx === 0 ? undefined : idx === 1 ? '200' : '400'"
           >
             <template v-if="'sponsor' in item">
               <img
@@ -427,7 +447,7 @@
     <!-- Small Sponsor Logos Row -->
     <section class="sponsor-logos-row py-16 lg:py-20 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-10 lg:gap-x-16 lg:gap-y-12">
+        <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-10 lg:gap-x-16 lg:gap-y-12" data-reveal>
           <template v-if="logoRowItems.length">
             <template v-for="item in logoRowItems" :key="item.id">
               <component
@@ -457,7 +477,7 @@
       <!-- Título -->
       <section v-if="mapaTitle" class="bg-white pt-12 pb-6">
         <div class="container mx-auto px-4">
-          <h2 class="text-3xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+          <h2 class="text-3xl text-[#6A6867] text-center" data-reveal style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
             {{ mapaTitle }}
           </h2>
         </div>
@@ -485,51 +505,65 @@
     <!-- ¿Dónde hemos trabajado? Map Section - DESKTOP -->
     <section v-if="mapaImage || mapaTitle" class="map-section bg-white hidden lg:block">
       <div v-if="mapaTitle" class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <h2 class="text-4xl text-[#6A6867] text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+        <h2 class="text-4xl text-[#6A6867] text-center" data-reveal style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
           {{ mapaTitle }}
         </h2>
       </div>
-      <div v-if="mapaImage" class="relative w-full overflow-hidden" style="height: clamp(480px, 80vw, 1300px);">
-        <img
-          :src="mapaImage"
-          alt="Mapa de trabajo - Nuevo León"
-          class="w-full h-full object-cover"
-        />
-        <!-- Potrero Chico label - right side -->
-        <div v-if="mapaLabel1" class="absolute" style="right: 10%; top: 30%;">
-          <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
-            {{ mapaLabel1 }}
-          </p>
-        </div>
-        <!-- La Huasteca label - left side -->
-        <div v-if="mapaLabel2" class="absolute" style="left: 11%; top: 55%;">
-          <p class="text-base lg:text-lg font-medium text-gray-800 leading-snug max-w-xs">
-            {{ mapaLabel2 }}
-          </p>
-        </div>
-        <!-- El Salto label - right bottom -->
-        <div v-if="mapaLabel3" class="absolute" style="right: 10%; bottom: 16%;">
-          <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
-            {{ mapaLabel3 }}
-          </p>
+      <div
+        v-if="mapaImage"
+        class="scroll-expand-outer"
+        style="height: clamp(480px, 80vw, 1300px);"
+        data-scroll-expand
+      >
+        <div class="scroll-expand-frame">
+          <img
+            :src="mapaImage"
+            alt="Mapa de trabajo - Nuevo León"
+            class="w-full h-full object-cover"
+          />
+          <!-- Potrero Chico label - right side -->
+          <div v-if="mapaLabel1" class="absolute" style="right: 10%; top: 30%;">
+            <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
+              {{ mapaLabel1 }}
+            </p>
+          </div>
+          <!-- La Huasteca label - left side -->
+          <div v-if="mapaLabel2" class="absolute" style="left: 11%; top: 55%;">
+            <p class="text-base lg:text-lg font-medium text-gray-800 leading-snug max-w-xs">
+              {{ mapaLabel2 }}
+            </p>
+          </div>
+          <!-- El Salto label - right bottom -->
+          <div v-if="mapaLabel3" class="absolute" style="right: 10%; bottom: 16%;">
+            <p class="text-base lg:text-lg font-medium text-gray-800 text-right leading-snug max-w-xs">
+              {{ mapaLabel3 }}
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- IMG_3366 - Climbing / App Section - DESKTOP -->
-    <section v-if="numerosBackgroundImage" class="climbing-app-section relative overflow-hidden hidden lg:block" style="height: clamp(400px, 100vw, 1313px);">
-      <img
-        :src="numerosBackgroundImage"
-        alt="Escalada en roca"
-        class="w-full h-full object-cover"
-      />
-      <!-- Logo overlay - right side -->
-      <div v-if="numerosLogoImage" class="absolute top-1/2 -translate-y-1/2 right-24 flex flex-col items-center gap-6">
+    <section
+      v-if="numerosBackgroundImage"
+      class="climbing-app-section scroll-expand-outer hidden lg:block"
+      style="height: clamp(400px, 100vw, 1313px);"
+      data-scroll-expand
+    >
+      <div class="scroll-expand-frame">
         <img
-          :src="numerosLogoImage"
-          alt="Escalada Libre"
-          class="w-56"
+          :src="numerosBackgroundImage"
+          alt="Escalada en roca"
+          class="w-full h-full object-cover"
         />
+        <!-- Logo overlay - right side -->
+        <div v-if="numerosLogoImage" class="absolute top-1/2 -translate-y-1/2 right-24 flex flex-col items-center gap-6">
+          <img
+            :src="numerosLogoImage"
+            alt="Escalada Libre"
+            class="w-56"
+          />
+        </div>
       </div>
     </section>
 
@@ -537,7 +571,7 @@
     <section class="numeros-section py-16 lg:py-24 bg-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Title -->
-        <div class="text-center mb-12 lg:mb-16">
+        <div class="text-center mb-12 lg:mb-16" data-reveal>
           <div class="inline-block">
             <div class="w-48 h-3 bg-[#F8C52D] mx-auto mb-4"></div>
             <h2 class="text-3xl lg:text-[35px] text-gray-900" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
@@ -650,7 +684,7 @@
         </div>
 
         <!-- Versión Desktop -->
-        <div class="hidden lg:block">
+        <div class="hidden lg:block" data-reveal data-reveal-delay="100">
           <!-- Row 1: 5 stats -->
           <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
             <div class="grid grid-cols-5 divide-x divide-gray-200">
@@ -704,7 +738,7 @@
 
     <!-- Cómo nos puedes apoyar -->
     <section class="apoyo-section py-16 lg:py-24 bg-white overflow-hidden">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center" data-reveal>
         <h2 class="text-3xl lg:text-[55px] leading-tight mb-4 text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 500; color: #000;">
           {{ apoyarSliderSection?.heading ?? '' }}
         </h2>
@@ -953,7 +987,7 @@ const featuredSections = computed(() => {
     .sort((a: PageSection, b: PageSection) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
 
   if (cmsSections.length) {
-    return cmsSections.map((s: PageSection) => ({
+    return cmsSections.map((s: PageSection, i: number) => ({
       id: s.id,
       num: (s.settings?.number as string) ?? '',
       tag: (s.settings?.tag as string) ?? '',
@@ -961,7 +995,7 @@ const featuredSections = computed(() => {
       body: s.body ?? '',
       image: s.featured_media?.url ?? null,
       link: (s.settings?.link_url as string) ?? '#',
-      imagePosition: (s.settings?.image_position as string) ?? 'right',
+      imagePosition: (s.settings?.image_position as string) ?? (i % 2 === 0 ? 'right' : 'left'),
     }))
   }
 

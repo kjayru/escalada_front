@@ -2,14 +2,11 @@
   <div class="transparencia-page">
 
     <!-- Hero Banner -->
-    <section v-if="heroBannerUrl" class="relative overflow-hidden min-h-[360px] lg:min-h-[1080px]">
-      <img
-        :src="heroBannerUrl"
-        :alt="heroBannerAlt"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="relative z-10 min-h-[360px] lg:min-h-[1080px]"></div>
-    </section>
+    <SectionsHeroPageBanner
+      v-if="heroBannerUrl"
+      :image="heroBannerUrl"
+      :alt="heroBannerAlt"
+    />
 
     <!-- Intro: mobile = texto arriba + foto abajo | desktop = tarjeta sobrelapada -->
     <section v-if="textSection" class="bg-white pt-8 lg:pt-28 pb-8 lg:pb-24">
