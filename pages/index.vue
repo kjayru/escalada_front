@@ -586,22 +586,26 @@
           <div>
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
+                 <div class="py-8 px-6 text-center">
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.voluntarios }}</div>
+                </div>
+
                 <div class="py-8 px-6 text-center">
                   <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.actividades }}</div>
                 </div>
-                <div class="py-8 px-6 text-center">
-                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.arboles }}</div>
+               
+              </div>
+            </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                  <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Actividades<br>realizadas</div>
+                </div>
+
+                <div class="text-center">
+                  <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Voluntarios</div>
                 </div>
               </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Actividades<br>realizadas</div>
-              </div>
-              <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Árboles<br>sembrados</div>
-              </div>
-            </div>
           </div>
 
           <!-- Card 2: Rutas + Bolts -->
@@ -617,43 +621,43 @@
               </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
-              <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Rutas<br>rehabilitadas</div>
-              </div>
-              <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Bolts<br>instalados</div>
-              </div>
+                <div class="text-center">
+                  <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Rutas<br>rehabilitadas</div>
+                </div>
+                <div class="text-center">
+                  <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Bolts<br>instalados</div>
+                </div>
             </div>
           </div>
 
-          <!-- Card 3: Señalamientos + Voluntarios -->
-          <div>
-            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
-              <div class="grid grid-cols-2 divide-x divide-gray-200">
-                <div class="py-8 px-6 text-center">
-                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.senalizaciones }}</div>
-                </div>
-                <div class="py-8 px-6 text-center">
-                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.voluntarios }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Señalamientos<br>instalados</div>
-              </div>
-              <div class="text-center">
-                <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Voluntarios</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Años útil + Costo reequipado -->
+          <!-- Card 3: Años de vida nueva + Árboles -->
           <div>
             <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
               <div class="grid grid-cols-2 divide-x divide-gray-200">
                 <div class="py-8 px-6 text-center">
                   <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.anos_util }}</div>
+                </div>
+                <div class="py-8 px-6 text-center">
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.arboles }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Años de vida nueva<br>a cada vía</div>
+              </div>
+              <div class="text-center">
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Árboles<br>sembrados</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Señalamientos + Costo reequipado -->
+          <div>
+            <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
+              <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="py-8 px-6 text-center">
+                  <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.senalizaciones }}</div>
                 </div>
                 <div class="py-8 px-6 text-center">
                   <div class="text-[#6A6867] leading-none" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2rem;">{{ statDisplayValues.costo_reequipado }}</div>
@@ -662,10 +666,10 @@
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Años de vida útil<br>de una vía</div>
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Señalamientos<br>instalados</div>
               </div>
               <div class="text-center">
-                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Costo por reequipado<br>de rutas</div>
+                <div class="leading-snug" style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Costo individual invertido<br>por rutas</div>
               </div>
             </div>
           </div>
@@ -678,7 +682,7 @@
               </div>
             </div>
             <div class="text-center">
-              <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">Monto total invertido</div>
+              <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;">+Total invertido</div>
             </div>
           </div>
         </div>
@@ -688,14 +692,18 @@
           <!-- Row 1: 5 stats -->
           <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)] mb-4">
             <div class="grid grid-cols-5 divide-x divide-gray-200">
+
+
+              <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
+                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Voluntarios</div>
+              </div>
+
               <div class="p-8 text-center">
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.actividades }}</div>
                 <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Actividades<br>realizadas</div>
               </div>
-              <div class="p-8 text-center">
-                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
-                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Árboles<br>sembrados</div>
-              </div>
+             
               <div class="p-8 text-center">
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.rutas }}</div>
                 <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Rutas<br>rehabilitadas</div>
@@ -704,31 +712,38 @@
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.bolts }}</div>
                 <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Bolts<br>instalados</div>
               </div>
-              <div class="p-8 text-center">
-                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
-                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Señalamientos<br>instalados</div>
+
+               <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Años de vida nueva<br>a cada vía</div>
               </div>
+              
             </div>
           </div>
 
           <!-- Row 2: 4 stats -->
           <div class="bg-white rounded-xl shadow-[0px_0px_10.9px_4px_rgba(0,0,0,0.07)]">
             <div class="grid grid-cols-4 divide-x divide-gray-200">
-              <div class="p-8 text-center">
-                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.voluntarios }}</div>
-                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Voluntarios</div>
+            
+               <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.arboles }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Árboles<br>sembrados</div>
               </div>
-              <div class="p-8 text-center">
-                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.anos_util }}</div>
-                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Años de vida útil<br>de una vía</div>
+
+
+                <div class="p-8 text-center">
+                <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.senalizaciones }}</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Señalamientos<br>instalados</div>
               </div>
+            
+             
               <div class="p-8 text-center">
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.costo_reequipado }}</div>
-                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Costo por reequipado<br>de rutas</div>
+                <div class="text-[18px] text-[#585858] leading-snug" style="font-family: 'Bodoni Moda', serif;">Costo individual invertido<br>por rutas</div>
               </div>
               <div class="p-8 text-center">
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
-                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">Monto total invertido</div>
+                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;">+Total invertido</div>
               </div>
             </div>
           </div>
