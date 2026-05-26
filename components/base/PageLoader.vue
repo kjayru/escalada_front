@@ -8,7 +8,7 @@
       >
         <!-- Animación SVG (autoplay nativo en el navegador) -->
         <img
-          src="/images/AXxi1da4YF.svg"
+          src="/images/preloader2.svg"
           alt=""
           aria-hidden="true"
           class="page-loader-animation"

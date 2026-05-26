@@ -69,7 +69,7 @@
               class="w-full md:w-1/2 overflow-hidden min-h-[242px] md:min-h-[480px]"
               :style="{
                 backgroundImage: block.image ? `url(${block.image})` : 'none',
-                backgroundSize: 'contain',
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: block.background ?? '#f6f6f6'

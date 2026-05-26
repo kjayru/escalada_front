@@ -9,7 +9,7 @@ export default defineNitroPlugin((nitroApp) => {
       `<div id="__pls-top" style="position:absolute;top:0;left:0;right:0;height:50%;background:#ffffff;"></div>` +
       `<div id="__pls-bot" style="position:absolute;bottom:0;left:0;right:0;height:50%;background:#ffffff;"></div>` +
       `<div id="__pls-logo" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;">` +
-        `<img src="/images/AXxi1da4YF.svg" alt="" aria-hidden="true" style="width:300px;max-width:75vw;height:auto;display:block;" />` +
+        `<img src="/images/preloader2.svg" alt="" aria-hidden="true" style="width:300px;max-width:75vw;height:auto;display:block;" />` +
       `</div>` +
     `</div>`
 
