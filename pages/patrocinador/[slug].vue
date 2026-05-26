@@ -445,10 +445,23 @@ const hasSocial = computed(() => {
 // SEO dinámico
 watchEffect(() => {
   if (!sponsor.value) return
+
+  const og = sponsor.value.og
+  const fallbackImage = sponsor.value.logo?.url ?? sponsor.value.gallery?.[0]?.url
+
   useSeoMeta({
-    title: `${sponsor.value.name} - Patrocinador - Escalada Libre`,
-    description: sponsor.value.tagline || sponsor.value.description || undefined,
-    ogImage: sponsor.value.logo?.url || sponsor.value.gallery?.[0]?.url,
+    title: og?.title || `${sponsor.value.name} - Patrocinador - Escalada Libre`,
+    description: og?.description || sponsor.value.tagline || sponsor.value.description || undefined,
+    ogTitle: og?.title || `${sponsor.value.name} - Patrocinador - Escalada Libre`,
+    ogDescription: og?.description || sponsor.value.tagline || sponsor.value.description || undefined,
+    ogImage: og?.image?.url || fallbackImage,
+    ogImageWidth: og?.image_width ?? undefined,
+    ogImageHeight: og?.image_height ?? undefined,
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterTitle: og?.title || `${sponsor.value.name} - Patrocinador - Escalada Libre`,
+    twitterDescription: og?.description || sponsor.value.tagline || sponsor.value.description || undefined,
+    twitterImage: og?.image?.url || fallbackImage,
   })
 })
 </script>

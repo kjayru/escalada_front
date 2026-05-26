@@ -122,7 +122,16 @@ export interface Sponsor {
     twitter: string | null
     email: string | null
   }
+  og: {
+    title: string | null
+    description: string | null
+    image: MediaItem | null
+    image_width: number | null
+    image_height: number | null
+  } | null
   status: string
+  section_logo?: MediaItem | null
+  highlight_image?: MediaItem | null
 }
 
 export interface MenuItem {
