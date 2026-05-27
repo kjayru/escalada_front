@@ -119,6 +119,7 @@ export interface Sponsor {
   }
   social: {
     facebook: string | null
+    instagram: string | null
     twitter: string | null
     email: string | null
   }
