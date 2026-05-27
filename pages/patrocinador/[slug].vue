@@ -363,6 +363,52 @@
       <!-- Pagination Dots - Outside slider -->
       <div v-if="sponsorsSlider.length" class="sp-slider-dots flex justify-center gap-2 pt-8 pb-12"></div>
 
+      <!-- ── Otros Patrocinadores ───────────────────────────── -->
+      <section v-if="otrosPlacements?.length" class="otros-patrocinadores py-16 lg:py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl lg:text-4xl text-[#6A6867] mb-12" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
+            Otros patrocinadores
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div
+              v-for="(item, idx) in otrosPlacements.slice(0, 2)"
+              :key="item.id"
+              class="relative overflow-hidden group cursor-pointer bg-cover bg-center h-[229px] md:min-h-[500px]"
+              data-reveal
+              :data-reveal-delay="idx === 0 ? undefined : '200'"
+              :style="item.banner?.url ? `background-image: url('${item.banner.url}')` : 'background-color: #1e3a3a'"
+            >
+              <div class="absolute inset-0 bg-black/30"></div>
+              <div class="absolute bottom-8 right-8 z-10">
+                <!-- Enlace interno (NuxtLink) -->
+                <NuxtLink
+                  v-if="item.link_url && !item.link_url.startsWith('http') && item.link_url !== '#'"
+                  :to="item.link_url"
+                  class="inline-flex items-center gap-3 text-white group/link"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                >
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                </NuxtLink>
+                <!-- Enlace externo (a) -->
+                <a
+                  v-else
+                  :href="item.link_url ?? '#'"
+                  :target="item.link_url && item.link_url.startsWith('http') ? '_blank' : undefined"
+                  :rel="item.link_url && item.link_url.startsWith('http') ? 'noopener noreferrer' : undefined"
+                  class="inline-flex items-center gap-3 text-white group/link"
+                  style="font-family: 'Readex Pro', sans-serif; font-weight: 700;"
+                >
+                  Ver más
+                  <img src="/images/arrow.svg" alt="" class="w-6 h-auto arrow-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ── Pre-Footer ──────────────────────────────────── -->
       <SectionsPrefooterNewsletterSection />
       <SectionsMountainPrefooter />
@@ -376,7 +422,7 @@ import { ref, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation as SwiperNavigation, Pagination as SwiperPagination, Autoplay as SwiperAutoplay } from 'swiper/modules'
 import 'swiper/css'
-import type { Sponsor } from '~/types/api'
+import type { Sponsor, SponsorPlacement } from '~/types/api'
 
 const route = useRoute()
 const api = useApi()
@@ -392,6 +438,11 @@ const { data: sponsor, pending, error } = await useAsyncData<Sponsor>(
 const { data: allSponsors } = await useAsyncData<Sponsor[]>(
   'sponsors-landing-slider',
   () => api.sponsors.getAll().catch(() => [] as Sponsor[])
+)
+
+const { data: otrosPlacements } = await useAsyncData<SponsorPlacement[]>(
+  'otros-patrocinadores-slug',
+  () => api.sponsorPlacements.getAll({ placement: 'otros_patrocinadores' }).catch(() => [] as SponsorPlacement[])
 )
 
 const sponsorsSlider = computed(() => {
@@ -448,6 +499,7 @@ const handleSwipe = () => {
     anterior()
   }
 }
+
 
 const hasSocial = computed(() => {
   const s = sponsor.value?.social
