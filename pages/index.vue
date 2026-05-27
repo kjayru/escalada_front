@@ -780,11 +780,6 @@
         :modules="[SwiperNavigation, SwiperAutoplay]"
         :slides-per-view="1"
         :space-between="0"
-        :centered-slides="true"
-        :breakpoints="{
-          768: { slidesPerView: 1.2, spaceBetween: 0 },
-          1024: { slidesPerView: 1.5, spaceBetween: 0 },
-        }"
         :navigation="{
           prevEl: '.apoyo-prev',
           nextEl: '.apoyo-next',
