@@ -94,10 +94,11 @@
 
           <!-- Mensaje -->
           <div class="flex flex-col gap-2">
-            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Mensaje</label>
+            <label class="text-[#6A6867]" style="font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;">Mensaje*</label>
             <textarea
               v-model="form.mensaje"
               rows="8"
+              required
               class="w-full px-5 py-4 border border-[#6a6867] rounded-[10px] text-[#6A6867] placeholder-[#6A6867]/40 bg-white focus:outline-none focus:border-[#F8C52D] transition-colors resize-none"
               style="height: 289px; font-family: 'Readex Pro', sans-serif; font-size: 1.25rem; font-style: normal; font-weight: 300;"
             ></textarea>
