@@ -389,12 +389,10 @@
           </div>
           
           <h2 class="text-3xl lg:text-4xl text-[#6A6867] mb-8" style="font-family: 'Readex Pro', sans-serif; font-weight: 500;">
-            Quienes nos apoyan
+            {{ quienesHeading }}
           </h2>
-          
-          <p class="text-base text-[#6A6867] leading-relaxed text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;">
-            Trabajamos para preservar los entornos naturales donde practicamos la escalada, colaborando con organizaciones que promueven la conservación y la ciencia ciudadana. Fomentamos los principios de "no dejar rastro" y aplicamos estos valores en cada ascenso y travesía. Nos aseguramos de minimizar nuestro impacto, dejando cada ruta y campamento en mejores condiciones de las que encontramos, y transmitimos este compromiso a las futuras generaciones de montañistas y escaladores.
-          </p>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-if="quienesBody" class="text-base text-[#6A6867] leading-relaxed text-center" style="font-family: 'Readex Pro', sans-serif; font-weight: 400;" v-html="quienesBody"></div>
         </div>
       </div>
     </section>
@@ -968,6 +966,11 @@ const parallaxLocation = computed(() =>
   (sec('intro')?.settings?.location as string) ?? '')
 
 // Conservation
+const quienesHeading = computed(() =>
+  sec('quienes-apoyan')?.heading ?? 'Quienes nos apoyan')
+const quienesBody = computed(() =>
+  sec('quienes-apoyan')?.body ?? '')
+
 const conservacionTitle = computed(() =>
   sec('conservacion')?.heading ?? '')
 const conservacionBody = computed(() =>
