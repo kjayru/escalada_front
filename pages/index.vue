@@ -210,7 +210,7 @@
       <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <!-- Contenido de texto -->
-          <div :class="['relative overflow-hidden order-first', item.imagePosition === 'left' ? 'lg:order-last' : '']" data-reveal>
+          <div :class="['relative order-first', item.imagePosition === 'left' ? 'lg:order-last' : '']" data-reveal>
             <!-- Número de fondo (decorativo) — espejo según lado -->
             <div
               :class="['absolute top-0 leading-none select-none pointer-events-none', item.imagePosition === 'left' ? 'right-0' : 'left-0']"
