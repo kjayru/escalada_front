@@ -33,7 +33,7 @@
                 v-if="imagenActiva"
                 :src="imagenActiva"
                 :alt="producto?.name"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-contain"
               />
               <!-- Flecha izquierda (oculta en móvil) -->
               <button
@@ -92,7 +92,7 @@
                 class="w-[6.25rem] h-[6.25rem] shrink-0 overflow-hidden border-2 transition-colors"
                 :class="indiceActivo === i ? 'border-[#F8C52D]' : 'border-[#D9D9D9]'"
                 :style="indiceActivo === i ? '' : 'border-color: #D9D9D9;'"
-                @click="indiceActivo = i"
+                @click="abrirModal(i)"
               >
                 <img :src="img" :alt="`${producto?.name} imagen ${i + 1}`" class="w-full h-full object-cover" />
               </button>
@@ -102,7 +102,7 @@
                 class="w-[6.25rem] h-[6.25rem] shrink-0 overflow-hidden border-2 transition-colors relative"
                 :class="indiceActivo >= 5 ? 'border-[#F8C52D]' : 'border-[#D9D9D9]'"
                 :style="indiceActivo >= 5 ? '' : 'border-color: #D9D9D9;'"
-                @click="indiceActivo = 5"
+                @click="abrirModal(5)"
               >
                 <img :src="galeria[5]" :alt="`${producto?.name} más imágenes`" class="w-full h-full object-cover" />
                 <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
