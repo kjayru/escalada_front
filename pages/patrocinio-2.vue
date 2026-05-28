@@ -120,8 +120,8 @@
               <!-- Imagen del producto (circular) -->
               <div class="w-[220px] h-[220px] rounded-full overflow-hidden bg-[#f5f5f0] mb-8 flex-shrink-0 flex items-center justify-center">
                 <img
-                  :src="imagenActual.src"
-                  :alt="imagenActual.alt"
+                  :src="highlightImage"
+                  :alt="sponsor?.name ?? 'Producto'"
                   class="w-full h-full object-contain p-4"
                 />
               </div>
@@ -217,6 +217,14 @@
     const sponsor = computed(() => sponsors.value?.[0] ?? null)
     const sponsorLogoSrc = computed(() => sponsor.value?.logo?.url ?? null)
     const sponsorUrl = computed(() => sponsor.value?.website_url ?? '#')
+
+    // Imagen destacada para box "¿Te gustó este producto?"
+    const highlightImage = computed(() => {
+      // Usar highlight_image si existe, sino usar la primera imagen de gallery, sino fallback
+      return sponsor.value?.highlight_image?.url 
+        || sponsor.value?.gallery?.[0]?.url 
+        || '/images/patrocinador1.png'
+    })
 
     const imagenActiva = ref(0)
     const imagenActual = computed(() => imagenes[imagenActiva.value] ?? imagenes[0]!)
