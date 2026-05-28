@@ -156,7 +156,7 @@
                 >
                   <div class="flex-shrink-0 w-14 h-14 lg:w-[70px] lg:h-[70px] rounded-full overflow-hidden bg-gray-300">
                     <img
-                      :src="member.photo?.url ?? '/images/img-20200308-wa-00051.png'"
+                      :src="member.photo?.url ?? '/images/miembros.png'"
                       :alt="member.photo?.alt ?? member.name"
                       class="w-full h-full object-cover grayscale"
                     />
