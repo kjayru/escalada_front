@@ -87,21 +87,27 @@
             <!-- Thumbnails (ocultos en móvil) -->
             <div class="hidden lg:flex gap-2 mt-2">
               <button
-                v-for="(img, i) in galeria.slice(0, 4)"
+                v-for="(img, i) in galeria.slice(0, 5)"
                 :key="i"
                 class="w-[6.25rem] h-[6.25rem] shrink-0 overflow-hidden border-2 transition-colors"
-                :class="indiceActivo === i ? 'border-[#F8C52D]' : 'border-transparent hover:border-gray-200'"
+                :class="indiceActivo === i ? 'border-[#F8C52D]' : 'border-[#D9D9D9]'"
+                :style="indiceActivo === i ? '' : 'border-color: #D9D9D9;'"
                 @click="indiceActivo = i"
               >
                 <img :src="img" :alt="`${producto?.name} imagen ${i + 1}`" class="w-full h-full object-cover" />
               </button>
-              <!-- Contador si hay más de 4 -->
+              <!-- Contador si hay más de 5 -->
               <button
-                v-if="galeria.length > 4"
-                class="w-[6.25rem] h-[6.25rem] shrink-0 bg-gray-900 flex items-center justify-center text-white text-sm font-semibold hover:bg-gray-700 transition-colors"
-                @click="indiceActivo = 4"
+                v-if="galeria.length > 5"
+                class="w-[6.25rem] h-[6.25rem] shrink-0 overflow-hidden border-2 transition-colors relative"
+                :class="indiceActivo >= 5 ? 'border-[#F8C52D]' : 'border-[#D9D9D9]'"
+                :style="indiceActivo >= 5 ? '' : 'border-color: #D9D9D9;'"
+                @click="indiceActivo = 5"
               >
-                +{{ galeria.length - 4 }}
+                <img :src="galeria[5]" :alt="`${producto?.name} más imágenes`" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
+                  <span class="text-white text-2xl font-semibold">+{{ galeria.length - 5 }}</span>
+                </div>
               </button>
             </div>
           </div>
