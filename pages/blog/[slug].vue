@@ -56,7 +56,7 @@
               <img src="/images/blog-instagram.svg" alt="Instagram" class="w-5 h-5" />
             </a>
             <a
-              :href="`mailto:${socialLinks.email}`"
+              :href="emailHref"
               aria-label="Enviar correo electrónico"
               class="hover:opacity-80 transition-opacity"
             >
@@ -401,8 +401,13 @@ const { data: settings } = await useAsyncData(
 const socialLinks = computed(() => ({
   facebook: settings.value?.settings?.facebook || 'https://www.facebook.com/escaladalibreac',
   instagram: settings.value?.settings?.instagram || 'https://www.instagram.com/escaladalibreac',
-  email: settings.value?.settings?.email || 'contacto@escaladalibre.org'
+  email: settings.value?.settings?.contact_email || 'contacto@escaladalibre.org',
+  emailSubject: settings.value?.settings?.email_subject || 'Contacto desde Blog - Escalada PRO'
 }))
+
+const emailHref = computed(() => 
+  `mailto:${socialLinks.value.email}?subject=${encodeURIComponent(socialLinks.value.emailSubject)}`
+)
 
 // Artículos recientes (excluyendo el actual, máximo 3)
 const { data: allPosts } = await useAsyncData(
