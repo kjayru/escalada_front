@@ -54,7 +54,7 @@
             <!-- Imagen como fondo del bloque o img para proyecto -->
             <div
               v-if="block.title?.toLowerCase().includes('proyecto')"
-              class="w-full md:w-1/2 overflow-hidden"
+              class="w-full md:w-1/2"
               style="border-radius: 0 0 0 40px;"
             >
               <img
@@ -62,6 +62,7 @@
                 :src="block.image"
                 :alt="block.title"
                 class="w-full h-full object-cover"
+                style="border-radius: 0 0 0 40px;"
               />
             </div>
             <div
