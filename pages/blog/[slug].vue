@@ -399,10 +399,10 @@ const { data: settings } = await useAsyncData(
 )
 
 const socialLinks = computed(() => ({
-  facebook: settings.value?.settings?.facebook || 'https://www.facebook.com/escaladalibreac',
-  instagram: settings.value?.settings?.instagram || 'https://www.instagram.com/escaladalibreac',
-  email: settings.value?.settings?.contact_email || 'contacto@escaladalibre.org',
-  emailSubject: settings.value?.settings?.email_subject || 'Contacto desde Blog - Escalada PRO'
+  facebook: settings.value?.facebook || 'https://www.facebook.com/escaladalibreac',
+  instagram: settings.value?.instagram || 'https://www.instagram.com/escaladalibreac',
+  email: settings.value?.contact_email || 'contacto@escaladalibre.org',
+  emailSubject: settings.value?.email_subject || 'Contacto desde Blog - Escalada PRO'
 }))
 
 const emailHref = computed(() => 
