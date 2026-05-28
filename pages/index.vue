@@ -793,6 +793,10 @@
           prevEl: '.apoyo-prev',
           nextEl: '.apoyo-next',
         }"
+        :autoplay="{
+          delay: 3000,
+          disableOnInteraction: false,
+        }"
         :loop="true"
         @slideChange="onApoyarSlideChange"
         class="apoyo-swiper w-full"
