@@ -29,10 +29,11 @@
           <!-- Título -->
           <NuxtLink
             :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
-            class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 block hover:opacity-80 transition-opacity"
+            class="blog-title-hover text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 block relative overflow-hidden"
             style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
           >
-            {{ featured.titulo }}
+            <div class="blog-title-hover-bg"></div>
+            <span class="blog-title-hover-text">{{ featured.titulo }}</span>
           </NuxtLink>
 
           <!-- Descripción -->
@@ -71,10 +72,11 @@
             <div class="bg-white px-10 lg:px-14 pt-8 pb-6">
               <NuxtLink
                 :to="featured.slug ? '/blog/' + featured.slug : '/blog'"
-                class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight max-w-[400px] block hover:opacity-80 transition-opacity"
+                class="blog-title-hover text-[2.8125rem] font-medium text-[#6A6867] leading-tight max-w-[400px] block relative overflow-hidden"
                 style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
               >
-                {{ featured.titulo }}
+                <div class="blog-title-hover-bg"></div>
+                <span class="blog-title-hover-text">{{ featured.titulo }}</span>
               </NuxtLink>
             </div>
             <!-- Descripción: sin fondo -->
@@ -123,10 +125,11 @@
             </div>
             <NuxtLink
               :to="post.slug ? '/blog/' + post.slug : '#'"
-              class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              class="blog-title-hover text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block relative overflow-hidden"
               style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
             >
-              {{ post.titulo }}
+              <div class="blog-title-hover-bg"></div>
+              <span class="blog-title-hover-text">{{ post.titulo }}</span>
             </NuxtLink>
             <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed max-w-[412px]" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
               {{ post.descripcion }}
@@ -299,10 +302,11 @@
             </div>
             <NuxtLink
               :to="post.slug ? '/blog/' + post.slug : '#'"
-              class="text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block hover:opacity-80 transition-opacity"
+              class="blog-title-hover text-[2.8125rem] font-medium text-[#6A6867] leading-tight mb-4 max-w-[422px] block relative overflow-hidden"
               style="font-family: 'Readex Pro', sans-serif; font-style: normal;"
             >
-              {{ post.titulo }}
+              <div class="blog-title-hover-bg"></div>
+              <span class="blog-title-hover-text">{{ post.titulo }}</span>
             </NuxtLink>
             <p class="text-[1.25rem] font-normal text-[#6A6867] leading-relaxed max-w-[412px]" style="font-family: 'Readex Pro', sans-serif; font-style: normal;">
               {{ post.descripcion }}
@@ -441,3 +445,32 @@ const postsAfterSerieOne = computed(() => {
   return sl.length ? sl : fallbackPosts
 })
 </script>
+
+<style scoped>
+.blog-title-hover {
+  position: relative;
+  display: block;
+}
+
+.blog-title-hover-bg {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 25px;
+  width: 0;
+  background-color: #F8C52D;
+  transition: width 0.4s ease-out;
+  z-index: 0;
+}
+
+.blog-title-hover-text {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.blog-title-hover:hover .blog-title-hover-bg {
+  width: 50%;
+}
+</style>
