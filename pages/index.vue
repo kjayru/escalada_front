@@ -773,13 +773,13 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex justify-center">
         <div class="flex items-center gap-6">
           <button class="apoyo-prev flex items-center justify-center">
-            <img src="/images/arrow.svg" alt="" class="w-6 h-auto rotate-180" />
+            <img src="/images/arrow.svg" alt="" class="w-[36px] h-auto rotate-180" />
           </button>
-          <span class="text-[#6A6867] text-lg font-medium tracking-wide">
+          <span class="text-[#6A6867] text-[25px] font-medium tracking-wide">
             {{ String(apoyarCurrent).padStart(2, '0') }} / {{ String(apoyarTotal).padStart(2, '0') }}
           </span>
           <button class="apoyo-next flex items-center justify-center">
-            <img src="/images/arrow.svg" alt="" class="w-6 h-auto" />
+            <img src="/images/arrow.svg" alt="" class="w-[36px] h-auto" />
           </button>
         </div>
       </div>
