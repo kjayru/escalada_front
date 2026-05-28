@@ -33,7 +33,7 @@
         min-height: 487px;
         background-image: url('/images/footer-sierra-madre.jpg');
         background-size: cover;
-        background-position: 0px -595px;
+        background-position: 0px -295px;
         background-repeat: no-repeat;
       "
     ></div>
