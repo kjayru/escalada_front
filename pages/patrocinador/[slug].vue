@@ -76,8 +76,7 @@
 
           <!-- Imagen principal -->
           <div 
-            class="relative overflow-hidden mb-4 h-[380px] lg:h-[617px]" 
-            style="border: 0.5px solid #6A6867;"
+            class="relative overflow-hidden mb-4 h-[380px] lg:h-[617px]"
             @touchstart="handleTouchStart"
             @touchend="handleTouchEnd"
           >
