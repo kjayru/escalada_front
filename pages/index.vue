@@ -689,7 +689,7 @@
               </div>
             </div>
             <div class="text-center">
-              <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;"><strong>+</strong>Total invertido</div>
+              <div style="color: #585858; -webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #585858; font-family: 'Chronicle Display', serif; font-size: 1.125rem; font-style: normal; font-weight: 325;"><strong style="font-weight: bold; font-size: 23px; font-family: 'Inter';">+</strong>Total invertido</div>
             </div>
           </div>
         </div>
@@ -750,7 +750,7 @@
               </div>
               <div class="p-8 text-center">
                 <div class="text-[50px] text-[#6A6867] leading-none mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ statDisplayValues.monto_invertido }}</div>
-                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;"><strong>+</strong>Total invertido</div>
+                <div class="text-[18px] text-[#585858]" style="font-family: 'Bodoni Moda', serif;"><strong style="font-weight: bold; font-size: 23px; font-family: 'Inter';">+</strong>Total invertido</div>
               </div>
             </div>
           </div>
