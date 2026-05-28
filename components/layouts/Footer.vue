@@ -31,9 +31,9 @@
       class="w-full footer-mountain" 
       style="
         min-height: 487px;
-        background-image: url('/images/back_footer.png');
+        background-image: url('/images/footer-sierra-madre.jpg');
         background-size: cover;
-        background-position: 0 -146px;
+        background-position: 0px -595px;
         background-repeat: no-repeat;
       "
     ></div>

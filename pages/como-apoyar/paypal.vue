@@ -8,9 +8,6 @@
 
           <!-- Left: Form -->
           <div class="lg:w-[55%]">
-            <h1 class="leading-tight mb-10" style="font-family: 'Readex Pro', sans-serif; font-size: 2.1875rem; font-weight: 500; font-style: normal; color: #6A6867;">
-              Tu aportación es de mucha ayuda
-            </h1>
 
             <!-- Panel resultado post-pago -->
             <div v-if="paymentCompleted" class="mt-6 py-8">
