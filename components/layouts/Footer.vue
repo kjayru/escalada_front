@@ -30,10 +30,10 @@
     <div 
       class="w-full footer-mountain lg:hidden" 
       style="
-        min-height: 487px;
+        min-height: 318px;
         background-image: url('/images/footer-sierra-madre-celular.jpg');
         background-size: cover;
-        background-position-y: -164px;
+        background-position-y: -330px !important;
         background-repeat: no-repeat;
       "
     ></div>
@@ -42,10 +42,10 @@
     <div 
       class="w-full footer-mountain hidden lg:block" 
       style="
-        min-height: 487px;
+        min-height: 547px;
         background-image: url('/images/footer-sierra-madre.jpg');
         background-size: cover;
-        background-position: 0px -295px;
+        background-position: 0px -411px;
         background-repeat: no-repeat;
       "
     ></div>
