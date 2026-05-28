@@ -26,9 +26,21 @@
       </div>
     </div>
 
-    <!-- Imagen de fondo montaña -->
+    <!-- Imagen de fondo montaña - Mobile -->
     <div 
-      class="w-full footer-mountain" 
+      class="w-full footer-mountain lg:hidden" 
+      style="
+        min-height: 487px;
+        background-image: url('/images/footer-sierra-madre-celular.jpg');
+        background-size: cover;
+        background-position-y: -164px;
+        background-repeat: no-repeat;
+      "
+    ></div>
+
+    <!-- Imagen de fondo montaña - Desktop -->
+    <div 
+      class="w-full footer-mountain hidden lg:block" 
       style="
         min-height: 487px;
         background-image: url('/images/footer-sierra-madre.jpg');
