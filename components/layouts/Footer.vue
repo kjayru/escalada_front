@@ -117,7 +117,24 @@ const isParentActive = (url: string) => {
   color: #F8C52D;
 }
 
-@media (max-width: 1300px) {
+@media (min-width: 1300px) and (max-width: 1674px) {
+  .footer-mountain {
+    min-height: 347px;
+    background-position: 0px -296px !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1299px) {
+  .footer-mountain {
+    min-height: 347px !important;
+    background-image: url('/images/footer-sierra-madre.jpg') !important;
+    background-size: cover !important;
+    background-position: 0px -277px !important;
+    background-repeat: no-repeat !important;
+  }
+}
+
+@media (max-width: 1023px) {
   .footer-mountain {
     background-position: 0 -82px !important;
   }
