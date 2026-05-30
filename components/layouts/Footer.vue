@@ -119,7 +119,7 @@ const isParentActive = (url: string) => {
 
 @media (min-width: 1300px) and (max-width: 1674px) {
   .footer-mountain {
-    min-height: 347px;
+    min-height: 347px !important;
     background-position: 0px -296px !important;
   }
 }
